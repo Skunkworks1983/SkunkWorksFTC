@@ -1,0 +1,7 @@
+#Wed Oct 05 19:42:28 PDT 2016
+base.0=C\:\\Users\\s-4041730\\Desktop\\SkunkWorksFTC\\TeamCode\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run_08a4e9d23317af91d0052138e1eed58a8a118a65
+renamed.1=classes.dex
+renamed.0=classes2.dex
+file.1=C\:\\Users\\s-4041730\\Desktop\\SkunkWorksFTC\\TeamCode\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run-bootstrap_ab90a85ccdb4a292f4135b175a413a75325daa4c\\classes.dex
+base.1=C\:\\Users\\s-4041730\\Desktop\\SkunkWorksFTC\\TeamCode\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run-bootstrap_ab90a85ccdb4a292f4135b175a413a75325daa4c
+file.0=C\:\\Users\\s-4041730\\Desktop\\SkunkWorksFTC\\TeamCode\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run_08a4e9d23317af91d0052138e1eed58a8a118a65\\classes.dex
