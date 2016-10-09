@@ -87,6 +87,12 @@ public class TemplateOpMode_Linear extends LinearOpMode {
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("Lstick", gamepad1.left_stick_y);
             telemetry.addData("Rstick", gamepad1.right_stick_y);
+            if(gamepad1.a){
+                telemetry.addData("Button A", "true");
+            }
+            else{
+                telemetry.addData("Button A", "false");
+            }
             telemetry.update();
 
             // eg: Run wheels in tank mode (note: The joystick goes negative when pushed forwards)
