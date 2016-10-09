@@ -53,7 +53,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  */
 
 @TeleOp(name="Tank Drive", group="Linear Opmode")  // @Autonomous(...) is the other common choice
-public class TemplateOpMode_Linear extends LinearOpMode {
+public class TeleOpTankDrive extends LinearOpMode {
 
     /* Declare OpMode members. */
     private ElapsedTime runtime = new ElapsedTime();
