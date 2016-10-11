@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -12,7 +12,7 @@ public class DriveForwardEncoders extends LinearOpMode {
 
     DcMotor rightMotor;
     DcMotor leftMotor;
-
+//Comments are cool
     final static int ENCODER_CPR = 1120;
     final static int GEAR_RATIO = 2;
     final static int WHEEL_DIAMETER = 3;
