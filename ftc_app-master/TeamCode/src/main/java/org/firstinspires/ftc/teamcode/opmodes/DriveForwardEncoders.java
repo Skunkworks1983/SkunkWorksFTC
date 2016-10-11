@@ -14,7 +14,7 @@ public class DriveForwardEncoders extends LinearOpMode {
     DcMotor leftMotor;
 //Comments are cool
     final static int ENCODER_CPR = 1120;
-    final static int GEAR_RATIO = 2;
+    final static int GEAR_RATIO = 2; //** rotations of driving gear/ rotations of driven gear or driven gear diameter/ driving gear diameter
     final static int WHEEL_DIAMETER = 3;
     final static int DISTANCE = 10; //in inches
 
