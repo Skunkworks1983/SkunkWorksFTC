@@ -16,7 +16,7 @@ public class DriveForwardEncoders extends LinearOpMode {
     final static int ENCODER_CPR = 1120;
     final static int GEAR_RATIO = 2;
     final static int WHEEL_DIAMETER = 3;
-    final static int DISTANCE = 10;
+    final static int DISTANCE = 10; //in inches
 
     final static double CIRCUMFERENCE = Math.PI * WHEEL_DIAMETER;
     final static double ROTATIONS = DISTANCE / CIRCUMFERENCE;
