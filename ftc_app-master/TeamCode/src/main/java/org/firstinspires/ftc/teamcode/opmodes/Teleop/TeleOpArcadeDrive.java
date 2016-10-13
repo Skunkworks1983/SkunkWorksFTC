@@ -30,14 +30,15 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR
 TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-package org.firstinspires.ftc.teamcode.opmodes;
+package org.firstinspires.ftc.teamcode.opmodes.Teleop;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import android.os.SystemClock;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
 
 /**
  * This file contains an minimal example of a Linear "OpMode". An OpMode is a 'program' that runs in either
@@ -52,8 +53,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="Tank Drive", group="Linear Opmode")  // @Autonomous(...) is the other common choice
-public class TeleOpTankDrive extends LinearOpMode {
+@TeleOp(name="Arcade Drive", group="Linear Opmode")  // @Autonomous(...) is the other common choice
+public class TeleOpArcadeDrive extends LinearOpMode {
 
     /* Declare OpMode members. */
     private ElapsedTime runtime = new ElapsedTime();
@@ -85,19 +86,22 @@ public class TeleOpTankDrive extends LinearOpMode {
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             telemetry.addData("Status", "Run Time: " + runtime.toString());
-            telemetry.addData("Lstick", gamepad1.left_stick_y);
-            telemetry.addData("Rstick", gamepad1.right_stick_y);
-            if(gamepad1.a){
-                telemetry.addData("Button A", "true");
-            }
-            else{
-                telemetry.addData("Button A", "false");
-            }
+            telemetry.addData("xstick", gamepad1.left_stick_x);
+            telemetry.addData("ystick", gamepad1.left_stick_y);
+            telemetry.addData("Buttons", "a:" + gamepad1.a + " b:" + gamepad1.b + " x:" + gamepad1.x + " y:" + gamepad1.y);
             telemetry.update();
 
-            // eg: Run wheels in tank mode (note: The joystick goes negative when pushed forwards)
-             leftMotor.setPower(-gamepad1.left_stick_y);
-             rightMotor.setPower(-gamepad1.right_stick_y);
+            float xVal = -gamepad1.left_stick_x;   //forward backward
+            float yVal = -gamepad1.left_stick_y;   //left right
+
+            float lPow = yVal + xVal; //calc power per motor
+            float rPow = yVal - xVal;
+
+            lPow = Range.clip(lPow, -1, 1); //Make sure values don't go over 1
+            rPow = Range.clip(rPow, -1, 1);
+
+             leftMotor.setPower(rPow);
+             rightMotor.setPower(lPow);
 
             idle(); // Always call idle() at the bottom of your while(opModeIsActive()) loop
         }
