@@ -13,7 +13,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 
 
-ic class VuforiaOp extends LinearOpMode {
+public class VuforiaOp extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         VuforiaLocalizer.Parameters params = new VuforiaLocalizer.Parameters(R.id.cameraMonitorViewId);
