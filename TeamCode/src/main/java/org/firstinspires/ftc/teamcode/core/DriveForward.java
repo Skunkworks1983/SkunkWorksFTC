@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
  Created by Adam.
  October 12, 2016 at 8:03 PM
  */
-@Autonomous(name="Drive Forward ;)", group="Drive Forward")
+@Autonomous(name="Drive Forward", group="Drive Forward")
 public class DriveForward extends LinearOpMode
 {
     DcMotor leftMotor1;
@@ -35,20 +35,6 @@ public class DriveForward extends LinearOpMode
         rightMotor1.setPower(0.25);
         leftMotor2.setPower(0.25);
         rightMotor2.setPower(0.25);
-        sleep(900);
-
-        leftMotor1.setPower(0.5);
-        rightMotor1.setPower(0.5);
-        leftMotor2.setPower(0.5);
-        rightMotor2.setPower(0.5);
-        sleep(900);
-
-        leftMotor1.setPower(0.8);
-        rightMotor1.setPower(0.8);
-        leftMotor2.setPower(0.8);
-        rightMotor2.setPower(0.8);
-        sleep(2500);
-
-        
+        sleep(6000);
     }
 }
