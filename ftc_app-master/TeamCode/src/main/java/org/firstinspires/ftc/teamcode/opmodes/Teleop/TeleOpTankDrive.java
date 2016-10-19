@@ -58,8 +58,10 @@ public class TeleOpTankDrive extends LinearOpMode {
     /* Declare OpMode members. */
     private ElapsedTime runtime = new ElapsedTime();
 
-    DcMotor leftMotor;
-    DcMotor rightMotor;
+    DcMotor leftFrontMotor;
+    DcMotor leftBackMotor;
+    DcMotor rightFrontMotor;
+    DcMotor rightBackMotor;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -70,13 +72,18 @@ public class TeleOpTankDrive extends LinearOpMode {
          * to 'get' must correspond to the names assigned during the robot configuration
          * step (using the FTC Robot Controller app on the phone).
          */
-         leftMotor  = hardwareMap.dcMotor.get("left_drive");
-         rightMotor = hardwareMap.dcMotor.get("right_drive");
+         leftFrontMotor  = hardwareMap.dcMotor.get("leftFront");
+         leftBackMotor  = hardwareMap.dcMotor.get("leftBack");
+         rightFrontMotor = hardwareMap.dcMotor.get("rightFront");
+         rightBackMotor = hardwareMap.dcMotor.get("rightBack");
+
 
         // eg: Set the drive motor directions:
         // "Reverse" the motor that runs backwards when connected directly to the battery
-         leftMotor.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
-         rightMotor.setDirection(DcMotor.Direction.FORWARD);// Set to FORWARD if using AndyMark motors
+         leftFrontMotor.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
+         rightFrontMotor.setDirection(DcMotor.Direction.FORWARD);// Set to FORWARD if using AndyMark motors
+         leftBackMotor.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
+         rightBackMotor.setDirection(DcMotor.Direction.FORWARD);// Set to FORWARD if using AndyMark motors
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
@@ -96,8 +103,10 @@ public class TeleOpTankDrive extends LinearOpMode {
             telemetry.update();
 
             // eg: Run wheels in tank mode (note: The joystick goes negative when pushed forwards)
-             leftMotor.setPower(-gamepad1.left_stick_y);
-             rightMotor.setPower(-gamepad1.right_stick_y);
+             leftFrontMotor.setPower(-gamepad1.left_stick_y);
+             leftBackMotor.setPower(-gamepad1.left_stick_y);
+             rightFrontMotor.setPower(-gamepad1.right_stick_y);
+             rightBackMotor.setPower(-gamepad1.right_stick_y);
 
             idle(); // Always call idle() at the bottom of your while(opModeIsActive()) loop
         }
