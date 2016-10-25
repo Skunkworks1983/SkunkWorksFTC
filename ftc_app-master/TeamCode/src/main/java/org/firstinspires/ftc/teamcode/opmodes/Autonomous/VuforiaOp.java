@@ -17,8 +17,11 @@ import org.firstinspires.ftc.teamcode.R;
 
 @Autonomous(name="Vuforia", group="Sight")  // @Autonomous(...) is the other common choice
 public class VuforiaOp extends LinearOpMode {
+
     @Override
+
     public void runOpMode() throws InterruptedException {
+
         VuforiaLocalizer.Parameters params = new VuforiaLocalizer.Parameters(R.id.cameraMonitorViewId);
         params.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
         params.vuforiaLicenseKey = "AZkqQkH/////AAAAGdiGT5c3sUI4rBa3mJU4jt18f+jlyz2znmOo2EiHBSTv77Q5ujdYwemMmLblk51L+dDswjbz3BwJtlNdupU7ee5LMwuE+pRmJhJSTfzmHsL5+z9enLQv88uQj7yGuy1WCfKDQS7lNh6FMlRoswyIfH3aPc9ncQFgk4Hk22gOosnpA6ugrbrqKzg802X4INkGq/ozNtt/RdR/xW0KfMFNRpiNX5VwvjV6mgx2i6XuRfAemjeCmcansRUsdpy54RmrwdH57krn48/L9xAouVvNK+6Boq8PXo+OB0jTngIo0JCWmr58T7qwW2b27EL6FSdoOFbd94hjzfnRvZilROP9IwQULyYgbqKZWyAvym/dzwYT";
@@ -44,7 +47,7 @@ public class VuforiaOp extends LinearOpMode {
                     VectorF translation = pose.getTranslation();
 
                     telemetry.addData(beac.getName() + "~Translation", translation);
-
+                    
                     double degreesToTurn = Math.toDegrees(Math.atan2(translation.get(1), translation.get(2)));
 
                     telemetry.addData(beac.getName() + "~Degrees", degreesToTurn);
