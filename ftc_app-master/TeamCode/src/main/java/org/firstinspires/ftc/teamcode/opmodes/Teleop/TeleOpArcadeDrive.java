@@ -37,6 +37,7 @@ import android.os.SystemClock;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -59,8 +60,10 @@ public class TeleOpArcadeDrive extends LinearOpMode {
     /* Declare OpMode members. */
     private ElapsedTime runtime = new ElapsedTime();
 
-    DcMotor leftMotor;
-    DcMotor rightMotor;
+    DcMotor MotorFL;
+    DcMotor MotorFR;
+    DcMotor MotorBL;
+    DcMotor MotorBR;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -71,13 +74,17 @@ public class TeleOpArcadeDrive extends LinearOpMode {
          * to 'get' must correspond to the names assigned during the robot configuration
          * step (using the FTC Robot Controller app on the phone).
          */
-         leftMotor  = hardwareMap.dcMotor.get("left_drive");
-         rightMotor = hardwareMap.dcMotor.get("right_drive");
+         MotorFL  = hardwareMap.dcMotor.get("leftFront");
+         MotorFR = hardwareMap.dcMotor.get("rightFront");
+        MotorBL = hardwareMap.dcMotor.get("leftBack");
+        MotorBR = hardwareMap.dcMotor.get("rightBack");
 
         // eg: Set the drive motor directions:
         // "Reverse" the motor that runs backwards when connected directly to the battery
-         leftMotor.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
-         rightMotor.setDirection(DcMotor.Direction.FORWARD);// Set to FORWARD if using AndyMark motors
+         MotorFL.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
+        MotorBL.setDirection(DcMotor.Direction.REVERSE);
+         MotorFR.setDirection(DcMotor.Direction.FORWARD);// Set to FORWARD if using AndyMark motors
+        MotorBR.setDirection(DcMotor.Direction.FORWARD);
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
@@ -100,8 +107,10 @@ public class TeleOpArcadeDrive extends LinearOpMode {
             lPow = Range.clip(lPow, -1, 1); //Make sure values don't go over 1
             rPow = Range.clip(rPow, -1, 1);
 
-             leftMotor.setPower(rPow);
-             rightMotor.setPower(lPow);
+             MotorFL.setPower(rPow);
+            MotorBL.setPower(rPow);
+             MotorFR.setPower(lPow);
+            MotorBR.setPower(lPow);
 
             idle(); // Always call idle() at the bottom of your while(opModeIsActive()) loop
         }
