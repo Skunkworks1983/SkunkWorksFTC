@@ -35,8 +35,8 @@ public class TankDrive extends OpMode
     public void loop()
     {
         // Left stick is power for left side, etc
-        float leftPower = gamepad1.left_stick_x;
-        float rightPower = -gamepad1.left_stick_y;
+        float leftPower = gamepad1.left_stick_y;
+        float rightPower = gamepad1.right_stick_y;
 
         //Clip the power values so that it only goes from -1 to 1
         leftPower = Range.clip(leftPower, -1, 1);
@@ -47,8 +47,5 @@ public class TankDrive extends OpMode
         leftMotor2.setPower(leftPower);
         rightMotor1.setPower(rightPower);
         rightMotor2.setPower(rightPower);
-        telemetry.addData("Left side: " + leftPower, "l");
-        telemetry.addData("Right side: " + rightPower, "r");
-        telemetry.update();
     }
 }
