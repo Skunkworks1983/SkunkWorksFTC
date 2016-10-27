@@ -160,7 +160,7 @@ public class ConceptVuforiaNavigation extends LinearOpMode {
          * target configuration files *must* correspond for the math to work out correctly.
          */
         float mmPerInch        = 25.4f;
-        float mmBotWidth       = 18 * mmPerInch;            // ... or whatever is right for your robot
+        float mmBotWidth       = 16.5f * mmPerInch;            // ... or whatever is right for your robot
         float mmFTCFieldWidth  = (12*12 - 2) * mmPerInch;   // the FTC field is ~11'10" center-to-center of the glass panels
 
         /**
@@ -222,11 +222,11 @@ public class ConceptVuforiaNavigation extends LinearOpMode {
         OpenGLMatrix wheelsTargetLocationOnField = OpenGLMatrix
                 /* Then we translate the target off to the RED WALL. Our translation here
                 is a negative translation in X.*/
-                .translation(-mmFTCFieldWidth/2, 0, 0)
+                .translation(mmFTCFieldWidth/300, mmFTCFieldWidth/1790, 0)
                 .multiplied(Orientation.getRotationMatrix(
                         /* First, in the fixed (field) coordinate system, we rotate 90deg in X, then 90 in Z */
                         AxesReference.EXTRINSIC, AxesOrder.XZX,
-                        AngleUnit.DEGREES, 90, 90, 0));
+                        AngleUnit.DEGREES, 90, -90, 0));
         wheels.setLocation(wheelsTargetLocationOnField);
         RobotLog.ii(TAG, "Wheels Target=%s", format(wheelsTargetLocationOnField));
 
@@ -238,22 +238,22 @@ public class ConceptVuforiaNavigation extends LinearOpMode {
         OpenGLMatrix toolsTargetLocationOnField = OpenGLMatrix
                 /* Then we translate the target off to the Blue Audience wall.
                 Our translation here is a positive translation in Y.*/
-                .translation(0, mmFTCFieldWidth/2, 0)
+                .translation(-mmFTCFieldWidth/1790, mmFTCFieldWidth/900, 0)
                 .multiplied(Orientation.getRotationMatrix(
                         /* First, in the fixed (field) coordinate system, we rotate 90deg in X */
                         AxesReference.EXTRINSIC, AxesOrder.XZX,
-                        AngleUnit.DEGREES, 90, 0, 0));
+                        AngleUnit.DEGREES, 90, -90, 0));
         tools.setLocation(toolsTargetLocationOnField);
         RobotLog.ii(TAG, "Tools Target=%s", format(toolsTargetLocationOnField));
 
         OpenGLMatrix legoTargetLocationOnField = OpenGLMatrix
                 /* Then we translate the target off to the RED WALL. Our translation here
                 is a negative translation in X.*/
-                .translation(-mmFTCFieldWidth/2, 0, 0)
+                .translation(-mmFTCFieldWidth/900, mmFTCFieldWidth/1790, 0)
                 .multiplied(Orientation.getRotationMatrix(
                         /* First, in the fixed (field) coordinate system, we rotate 90deg in X, then 90 in Z */
                         AxesReference.EXTRINSIC, AxesOrder.XZX,
-                        AngleUnit.DEGREES, 90, 90, 0));
+                        AngleUnit.DEGREES, 0, -90, 0));
         lego.setLocation(legoTargetLocationOnField);
         RobotLog.ii(TAG, "Lego Target=%s", format(legoTargetLocationOnField));
 
@@ -265,11 +265,11 @@ public class ConceptVuforiaNavigation extends LinearOpMode {
         OpenGLMatrix gearsTargetLocationOnField = OpenGLMatrix
                 /* Then we translate the target off to the Blue Audience wall.
                 Our translation here is a positive translation in Y.*/
-                .translation(0, mmFTCFieldWidth/2, 0)
+                .translation(-mmFTCFieldWidth/1790, -mmFTCFieldWidth/300, 0)
                 .multiplied(Orientation.getRotationMatrix(
                         /* First, in the fixed (field) coordinate system, we rotate 90deg in X */
                         AxesReference.EXTRINSIC, AxesOrder.XZX,
-                        AngleUnit.DEGREES, 90, 0, 0));
+                        AngleUnit.DEGREES, 0, -90, 0));
         gears.setLocation(gearsTargetLocationOnField);
         RobotLog.ii(TAG, "Gears Target=%s", format(gearsTargetLocationOnField));
         /**
