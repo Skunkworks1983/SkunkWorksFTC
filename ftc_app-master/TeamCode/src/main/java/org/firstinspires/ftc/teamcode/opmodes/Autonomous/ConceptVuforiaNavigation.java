@@ -145,14 +145,14 @@ public class ConceptVuforiaNavigation extends LinearOpMode {
         VuforiaTrackables beacons = vuforia.loadTrackablesFromAsset("FTC_2016-17");
 
         VuforiaTrackable wheels = beacons.get(0);
-        VuforiaTrackable tools = beacons.get(0);
-        VuforiaTrackable lego = beacons.get(0);
-        VuforiaTrackable gears = beacons.get(0);
+        VuforiaTrackable tools = beacons.get(1);
+        VuforiaTrackable lego = beacons.get(2);
+        VuforiaTrackable gears = beacons.get(3);
 
-        beacons.get(0).setName("Wheels");
-        beacons.get(1).setName("Tools");
-        beacons.get(2).setName("Lego");
-        beacons.get(3).setName("Gears");
+        wheels.setName("Wheels");
+        tools.setName("Tools");
+        lego.setName("Lego");
+        gears.setName("Gears");
 
         /** For convenience, gather together all the trackable objects in one easily-iterable collection */
         List<VuforiaTrackable> allTrackables = new ArrayList<VuforiaTrackable>();
