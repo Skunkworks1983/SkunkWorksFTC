@@ -38,7 +38,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpModeRegister;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.ConceptNullOp;
 
-// Build on robot
+// Build on robot phone
 
 /**
  * {@link FtcOpModeRegister} is responsible for registering opmodes for use in an FTC game.
