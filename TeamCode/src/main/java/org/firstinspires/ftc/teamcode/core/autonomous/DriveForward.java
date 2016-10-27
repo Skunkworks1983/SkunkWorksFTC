@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.core;
+package org.firstinspires.ftc.teamcode.core.autonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -22,10 +22,10 @@ public class DriveForward extends LinearOpMode
     @Override
     public void runOpMode() throws InterruptedException {
         //setup the left and right motors from the configuration file
-        leftMotor1 = hardwareMap.dcMotor.get("left1");
-        rightMotor1 = hardwareMap.dcMotor.get("right1");
-        leftMotor2 = hardwareMap.dcMotor.get("left2");
-        rightMotor2 = hardwareMap.dcMotor.get("right2");
+        leftMotor1 = hardwareMap.dcMotor.get("left_drive1");
+        leftMotor2 = hardwareMap.dcMotor.get("left_drive2");
+        rightMotor1 = hardwareMap.dcMotor.get("right_drive1");
+        rightMotor2 = hardwareMap.dcMotor.get("right_drive2");
 
         waitForStart();
 

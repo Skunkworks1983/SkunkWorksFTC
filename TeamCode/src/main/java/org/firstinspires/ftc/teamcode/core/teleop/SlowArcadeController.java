@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.core.linear;
+package org.firstinspires.ftc.teamcode.core.teleop;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.util.Range;
  * Created by Adam.
  * October 17, 2016 at 7:56 PM
  */
-@TeleOp(name="Arcade ArcadeController", group="Linear Opmode")
+@TeleOp(name="Slow Arcade Drive", group="Linear Opmode")
 public class SlowArcadeController extends OpMode
 {
 
@@ -21,7 +21,6 @@ public class SlowArcadeController extends OpMode
     @Override
     public void init()
     {
-
         leftMotor1 = hardwareMap.dcMotor.get("left_drive1");
         rightMotor1 = hardwareMap.dcMotor.get("right_drive1");
         leftMotor2 = hardwareMap.dcMotor.get("left_drive2");
