@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.core.teleop;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.util.Range;
 
 /**
  * Created by Adam.
@@ -17,6 +16,13 @@ public class TankDrive extends OpMode
     DcMotor rightMotor1;
     DcMotor leftMotor2;
     DcMotor rightMotor2;
+    int power;
+    int location;//find more efficient way later - Adam
+    int[] powerTypes;
+
+    /*
+        Shift up and down with power
+     */
 
     @Override
     public void init()
@@ -25,6 +31,10 @@ public class TankDrive extends OpMode
         rightMotor1 = hardwareMap.dcMotor.get("right_drive1");
         leftMotor2 = hardwareMap.dcMotor.get("left_drive2");
         rightMotor2 = hardwareMap.dcMotor.get("right_drive2");
+        power = 100;
+        powerTypes = new int[]{100, 75, 50, 25, 15, 10, 5};
+        location = 0;
+
 
         //Reverse the right motor
         rightMotor1.setDirection(DcMotor.Direction.REVERSE);
@@ -34,13 +44,21 @@ public class TankDrive extends OpMode
     @Override
     public void loop()
     {
-        // Left stick is power for left side, etc
-        float leftPower = gamepad1.left_stick_y;
-        float rightPower = gamepad1.right_stick_y;
+        // Toggle Slow Mode
+        if(gamepad1.a)
+        {
+            if(location == powerTypes.length)
+                location = 0;
+            else
+                power = powerTypes[++location];
+        }
 
-        //Clip the power values so that it only goes from -1 to 1
-        leftPower = Range.clip(leftPower, -1, 1);
-        rightPower = Range.clip(rightPower, -1, 1);
+        telemetry.addData("Power", power + "%");
+        telemetry.update();
+
+        // Left stick is power for left side, etc
+        float leftPower = -gamepad1.left_stick_y * power;
+        float rightPower = -gamepad1.right_stick_y * power;
 
         //Set the power of the motors with the gamepad values
         leftMotor1.setPower(leftPower);
