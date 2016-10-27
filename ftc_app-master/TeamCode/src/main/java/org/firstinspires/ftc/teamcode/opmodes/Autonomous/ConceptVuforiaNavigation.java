@@ -143,6 +143,12 @@ public class ConceptVuforiaNavigation extends LinearOpMode {
         blueTarget.setName("BlueTarget");  // Chips
 
         VuforiaTrackables beacons = vuforia.loadTrackablesFromAsset("FTC_2016-17");
+
+        VuforiaTrackable wheels = beacons.get(0);
+        VuforiaTrackable tools = beacons.get(0);
+        VuforiaTrackable lego = beacons.get(0);
+        VuforiaTrackable gears = beacons.get(0);
+
         beacons.get(0).setName("Wheels");
         beacons.get(1).setName("Tools");
         beacons.get(2).setName("Lego");
