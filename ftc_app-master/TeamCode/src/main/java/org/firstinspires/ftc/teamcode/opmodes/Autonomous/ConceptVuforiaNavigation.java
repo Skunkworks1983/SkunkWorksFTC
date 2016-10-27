@@ -237,7 +237,7 @@ public class ConceptVuforiaNavigation extends LinearOpMode {
                         AxesReference.EXTRINSIC, AxesOrder.XZX,
                         AngleUnit.DEGREES, 90, 90, 0));
         wheels.setLocation(wheelsTargetLocationOnField);
-        RobotLog.ii(TAG, "Red Target=%s", format(wheelsTargetLocationOnField));
+        RobotLog.ii(TAG, "Wheels Target=%s", format(wheelsTargetLocationOnField));
 
        /*
         * To place the Stones Target on the Blue Audience wall:
@@ -253,7 +253,7 @@ public class ConceptVuforiaNavigation extends LinearOpMode {
                         AxesReference.EXTRINSIC, AxesOrder.XZX,
                         AngleUnit.DEGREES, 90, 0, 0));
         tools.setLocation(toolsTargetLocationOnField);
-        RobotLog.ii(TAG, "Blue Target=%s", format(toolsTargetLocationOnField));
+        RobotLog.ii(TAG, "Tools Target=%s", format(toolsTargetLocationOnField));
 
         OpenGLMatrix legoTargetLocationOnField = OpenGLMatrix
                 /* Then we translate the target off to the RED WALL. Our translation here
@@ -264,7 +264,7 @@ public class ConceptVuforiaNavigation extends LinearOpMode {
                         AxesReference.EXTRINSIC, AxesOrder.XZX,
                         AngleUnit.DEGREES, 90, 90, 0));
         lego.setLocation(legoTargetLocationOnField);
-        RobotLog.ii(TAG, "Red Target=%s", format(legoTargetLocationOnField));
+        RobotLog.ii(TAG, "Lego Target=%s", format(legoTargetLocationOnField));
 
        /*
         * To place the Stones Target on the Blue Audience wall:
@@ -280,7 +280,7 @@ public class ConceptVuforiaNavigation extends LinearOpMode {
                         AxesReference.EXTRINSIC, AxesOrder.XZX,
                         AngleUnit.DEGREES, 90, 0, 0));
         gears.setLocation(gearsTargetLocationOnField);
-        RobotLog.ii(TAG, "Blue Target=%s", format(gearsTargetLocationOnField));
+        RobotLog.ii(TAG, "Gears Target=%s", format(gearsTargetLocationOnField));
         /**
          * Create a transformation matrix describing where the phone is on the robot. Here, we
          * put the phone on the right hand side of the robot with the screen facing in (see our
