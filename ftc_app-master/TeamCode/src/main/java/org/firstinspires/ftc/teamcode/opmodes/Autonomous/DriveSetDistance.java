@@ -36,6 +36,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
@@ -95,10 +96,15 @@ public class DriveSetDistance extends LinearOpMode {
          * The init() method of the hardware class does all the work here
          */
 
-        MotorFL  = hardwareMap.dcMotor.get("left_front_drive");
-        MotorFR = hardwareMap.dcMotor.get("right_front_drive");
-        MotorBL = hardwareMap.dcMotor.get("left_back_drive");
-        MotorBR = hardwareMap.dcMotor.get("right_back_drive");
+        MotorFL  = hardwareMap.dcMotor.get("leftFront");
+        MotorFR = hardwareMap.dcMotor.get("rightFront");
+        MotorBL = hardwareMap.dcMotor.get("leftBack");
+        MotorBR = hardwareMap.dcMotor.get("rightBack");
+
+        MotorFL.setDirection(DcMotor.Direction.REVERSE);
+        MotorBL.setDirection(DcMotor.Direction.REVERSE);
+        MotorFR.setDirection(DcMotor.Direction.FORWARD);
+        MotorBR.setDirection(DcMotor.Direction.FORWARD);
 
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Status", "Resetting Encoders");    //
@@ -128,9 +134,9 @@ public class DriveSetDistance extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        encoderDrive(DRIVE_SPEED,  48,  48, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
-        encoderDrive(TURN_SPEED,   12, -12, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
-        encoderDrive(DRIVE_SPEED, -24, -24, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
+        encoderDrive(DRIVE_SPEED,  16,  -16, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
+        //encoderDrive(TURN_SPEED,   12, -12, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
+        //encoderDrive(DRIVE_SPEED, -24, -24, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
 
         //robot.leftClaw.setPosition(1.0);            // S4: Stop and close the claw.
         //robot.rightClaw.setPosition(0.0);
@@ -151,21 +157,23 @@ public class DriveSetDistance extends LinearOpMode {
     public void encoderDrive(double speed,
                              double leftInches, double rightInches,
                              double timeoutS) {
-        int newLeftTarget;
-        int newRightTarget;
+        int newFLTarget;
+        int newFRTarget;
+        int newBLTarget;
+        int newBRTarget;
 
         // Ensure that the opmode is still active
         if (opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller
-            newLeftTarget = MotorFL.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
-            newRightTarget = MotorFR.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
-            newLeftTarget = MotorBL.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
-            newRightTarget = MotorBR.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
-            MotorFL.setTargetPosition(newLeftTarget);
-            MotorFR.setTargetPosition(newRightTarget);
-            MotorBL.setTargetPosition(newLeftTarget);
-            MotorBR.setTargetPosition(newRightTarget);
+            newFLTarget = MotorFL.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
+            newFRTarget = MotorFR.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
+            newBLTarget = MotorBL.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
+            newBRTarget = MotorBR.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
+            MotorFL.setTargetPosition(newFLTarget);
+            MotorFR.setTargetPosition(newFRTarget);
+            MotorBL.setTargetPosition(newBLTarget);
+            MotorBR.setTargetPosition(newBRTarget);
 
             // Turn On RUN_TO_POSITION
             MotorFL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -189,7 +197,7 @@ public class DriveSetDistance extends LinearOpMode {
                    (MotorFL.isBusy() && MotorFR.isBusy() && MotorBL.isBusy() && MotorBR.isBusy())) {
 
                 // Display it for the driver.
-                telemetry.addData("Path1",  "Running to %7d :%7d", newLeftTarget,  newRightTarget);
+                telemetry.addData("Path1",  "Running to %7d :%7d", newFLTarget,  newFRTarget);
                 telemetry.addData("Path2",  "Running at %7d :%7d",
                                             MotorFL.getCurrentPosition(),
                         MotorFR.getCurrentPosition(),

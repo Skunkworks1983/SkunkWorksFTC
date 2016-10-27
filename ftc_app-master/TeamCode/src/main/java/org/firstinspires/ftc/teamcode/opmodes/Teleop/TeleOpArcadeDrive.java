@@ -107,10 +107,10 @@ public class TeleOpArcadeDrive extends LinearOpMode {
             lPow = Range.clip(lPow, -1, 1); //Make sure values don't go over 1
             rPow = Range.clip(rPow, -1, 1);
 
-             MotorFL.setPower(rPow);
-            MotorBL.setPower(rPow);
-             MotorFR.setPower(lPow);
-            MotorBR.setPower(lPow);
+             MotorFL.setPower(lPow);
+            MotorBL.setPower(lPow);
+             MotorFR.setPower(rPow);
+            MotorBR.setPower(rPow);
 
             idle(); // Always call idle() at the bottom of your while(opModeIsActive()) loop
         }
