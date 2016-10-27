@@ -142,10 +142,19 @@ public class ConceptVuforiaNavigation extends LinearOpMode {
         VuforiaTrackable blueTarget  = stonesAndChips.get(1);
         blueTarget.setName("BlueTarget");  // Chips
 
+        VuforiaTrackables beacons = vuforia.loadTrackablesFromAsset("FTC_2016-17");
+        beacons.get(0).setName("Wheels");
+        beacons.get(1).setName("Tools");
+        beacons.get(2).setName("Lego");
+        beacons.get(3).setName("Gears");
+
         /** For convenience, gather together all the trackable objects in one easily-iterable collection */
         List<VuforiaTrackable> allTrackables = new ArrayList<VuforiaTrackable>();
-        allTrackables.addAll(stonesAndChips);
+        allTrackables.addAll(beacons);
 
+        List<VuforiaTrackable> exampleTrackables = new ArrayList<VuforiaTrackable>();
+        allTrackables.addAll(stonesAndChips);
+        
         /**
          * We use units of mm here because that's the recommended units of measurement for the
          * size values specified in the XML for the ImageTarget trackables in data sets. E.g.:
