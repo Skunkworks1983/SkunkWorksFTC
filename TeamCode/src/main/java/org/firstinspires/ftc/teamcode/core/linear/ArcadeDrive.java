@@ -10,8 +10,8 @@ import com.qualcomm.robotcore.util.Range;
  * Created by Adam.
  * October 17, 2016 at 7:56 PM
  */
-@TeleOp(name="Arcade ArcadeController", group="Linear Opmode")
-public class ArcadeController extends OpMode
+@TeleOp(name="Arcade Drive", group="Linear Opmode")
+public class ArcadeDrive extends OpMode
 {
 //    final double LEFT_OPEN_POSITION = 0.0;
 //    final double LEFT_CLOSED_POSITION = 0.5;
@@ -49,12 +49,8 @@ public class ArcadeController extends OpMode
         //Get the values from the gamepads
         //Note: pushing the stick all the way up returns -1,
         // so we need to reverse the y values
-        float xValue = gamepad1.left_stick_x;
-        float yValue = -gamepad1.left_stick_y;
-
-        //Calculate the power needed for each motor
-        float leftPower = yValue + xValue;
-        float rightPower = yValue - xValue;
+        float leftPower = gamepad1.left_stick_x;
+        float rightPower = -gamepad1.left_stick_y;
 
         //Clip the power values so that it only goes from -1 to 1
         leftPower = Range.clip(leftPower, -1, 1);
