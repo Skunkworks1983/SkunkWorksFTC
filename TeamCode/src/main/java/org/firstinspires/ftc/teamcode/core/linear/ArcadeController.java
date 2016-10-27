@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.core;
+package org.firstinspires.ftc.teamcode.core.linear;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -10,8 +10,8 @@ import com.qualcomm.robotcore.util.Range;
  * Created by Adam.
  * October 17, 2016 at 7:56 PM
  */
-@TeleOp(name="Controller", group="Linear Opmode")
-public class Controller extends OpMode
+@TeleOp(name="Arcade ArcadeController", group="Linear Opmode")
+public class ArcadeController extends OpMode
 {
 //    final double LEFT_OPEN_POSITION = 0.0;
 //    final double LEFT_CLOSED_POSITION = 0.5;
