@@ -352,10 +352,23 @@ public class ConceptVuforiaNavigation extends LinearOpMode {
              */
             if (lastLocation != null) {
                 //  RobotLog.vv(TAG, "robot=%s", format(lastLocation));
-                telemetry.addData("Pos", format(lastLocation));
+
+                float[] robotLocationArray = lastLocation.getData();
+                float x = robotLocationArray[12];
+                float y = robotLocationArray[13];
+                float z = robotLocationArray[14];
+
+
+
+                telemetry.addData("RealPos", format(lastLocation));
+
+                telemetry.addData("FakePos:", "x:" + x + "y:" + y + "zee:" + z);
+
+                telemetry.addData("Robot:", "true");
             } else {
                 telemetry.addData("Pos", "Unknown");
             }
+
             telemetry.update();
         }
     }
