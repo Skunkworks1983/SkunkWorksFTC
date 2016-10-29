@@ -20,7 +20,8 @@ public class DriveForward extends LinearOpMode
     DcMotor rightMotor2;
 
     @Override
-    public void runOpMode() throws InterruptedException {
+    public void runOpMode() throws InterruptedException
+    {
         //setup the left and right motors from the configuration file
         leftMotor1 = hardwareMap.dcMotor.get("left_drive1");
         leftMotor2 = hardwareMap.dcMotor.get("left_drive2");

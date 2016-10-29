@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.core.CustomOpMode;
  * October 26, 2016 at 7:03 PM
  */
 
-@TeleOp(name="Tank Drive", group="Linear Opmode")
+@TeleOp(name="Tank Drive", group="Drive")
 public class TankDrive extends CustomOpMode
 {
     DcMotor leftMotor1;
@@ -29,6 +29,7 @@ public class TankDrive extends CustomOpMode
         //Reverse the right motor
         rightMotor1.setDirection(DcMotor.Direction.REVERSE);
         rightMotor2.setDirection(DcMotor.Direction.REVERSE);
+        displayPower = false;
     }
 
     @Override

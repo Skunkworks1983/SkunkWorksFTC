@@ -13,10 +13,12 @@ import org.firstinspires.ftc.teamcode.core.utils.RechargeUtil;
 public abstract class CustomOpMode extends OpMode
 {
     private int power;
+    public boolean displayPower;
 
     public CustomOpMode()
     {
         power = 10;
+        displayPower = true;
     }
 
     public float getPower()
@@ -32,7 +34,7 @@ public abstract class CustomOpMode extends OpMode
         if(gamepad1.right_bumper && power < 10)
         {
             power++;
-            RechargeUtil.recharge("powerUpDown", 3000);
+            RechargeUtil.recharge("powerUpDown", 600);
         }
 
 
@@ -41,6 +43,8 @@ public abstract class CustomOpMode extends OpMode
             power--;
             RechargeUtil.recharge("powerUpDown", 600);
         }
+
+        if(!displayPower) return;
 
         telemetry.addData("Power", (power * 10) + "%");
         telemetry.update();

@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.core.CustomOpMode;
  * Created by Adam.
  * October 17, 2016 at 7:56 PM
  */
-@TeleOp(name="Arcade Drive", group="Linear Opmode")
+@TeleOp(name="Arcade Drive", group="Drive")
 public class ArcadeDrive extends CustomOpMode
 {
 //    final double LEFT_OPEN_POSITION = 0.0;
