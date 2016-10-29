@@ -35,6 +35,7 @@ public class TankDrive extends CustomOpMode
     public void loop()
     {
         // Check for powering up or down
+
         powerUpDown();
 
         // Left stick is power for left side, etc

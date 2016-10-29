@@ -1,16 +1,17 @@
 package org.firstinspires.ftc.teamcode.core.teleop;
 
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.Range;
+
+import org.firstinspires.ftc.teamcode.core.CustomOpMode;
 
 /**
  * Created by Adam.
  * October 17, 2016 at 7:56 PM
  */
 @TeleOp(name="Arcade Drive", group="Linear Opmode")
-public class ArcadeDrive extends OpMode
+public class ArcadeDrive extends CustomOpMode
 {
 //    final double LEFT_OPEN_POSITION = 0.0;
 //    final double LEFT_CLOSED_POSITION = 0.5;
@@ -44,6 +45,7 @@ public class ArcadeDrive extends OpMode
     @Override
     public void loop()
     {
+        powerUpDown();
 
         //Get the values from the gamepads
         //Note: pushing the stick all the way up returns -1,

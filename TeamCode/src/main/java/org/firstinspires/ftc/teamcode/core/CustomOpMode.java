@@ -2,34 +2,47 @@ package org.firstinspires.ftc.teamcode.core;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
+import org.firstinspires.ftc.teamcode.core.utils.RechargeUtil;
+
 /**
  * Created by Adam.
  * October 29, 2016 at 10:36 AM
  */
 
+// Only use for TeleOp
 public abstract class CustomOpMode extends OpMode
 {
-    private float power;
+    private int power;
 
     public CustomOpMode()
     {
-        power = 1;
+        power = 10;
     }
 
     public float getPower()
     {
-       return power;
+       return (float) power / 10;
     }
 
     public void powerUpDown()
     {
-        if(gamepad1.right_bumper/* power up /\ */ && power < 1)
-            power += 0.1f;
+        if(!RechargeUtil.canUse("powerUpDown"))
+            return;
 
-        else if(gamepad1.left_bumper/* power down /\ */ && power > 0.1)
-            power -= 0.1f;
+        if(gamepad1.right_bumper && power < 10)
+        {
+            power++;
+            RechargeUtil.recharge("powerUpDown", 3000);
+        }
 
-        telemetry.addData("Power", (power * 100) + "%");
+
+        else if(gamepad1.left_bumper && power > 3)
+        {
+            power--;
+            RechargeUtil.recharge("powerUpDown", 600);
+        }
+
+        telemetry.addData("Power", (power * 10) + "%");
         telemetry.update();
     }
 }
