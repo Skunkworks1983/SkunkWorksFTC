@@ -29,7 +29,6 @@ public class TankDrive extends CustomOpMode
         //Reverse the right motor
         rightMotor1.setDirection(DcMotor.Direction.REVERSE);
         rightMotor2.setDirection(DcMotor.Direction.REVERSE);
-        displayPower = false;
     }
 
     @Override
