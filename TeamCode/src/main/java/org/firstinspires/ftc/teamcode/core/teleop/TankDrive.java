@@ -16,13 +16,7 @@ public class TankDrive extends OpMode
     DcMotor rightMotor1;
     DcMotor leftMotor2;
     DcMotor rightMotor2;
-    int power;
-    int location;//find more efficient way later - Adam
-    int[] powerTypes;
-
-    /*
-        Shift up and down with power
-     */
+    float power;
 
     @Override
     public void init()
@@ -31,9 +25,7 @@ public class TankDrive extends OpMode
         rightMotor1 = hardwareMap.dcMotor.get("right_drive1");
         leftMotor2 = hardwareMap.dcMotor.get("left_drive2");
         rightMotor2 = hardwareMap.dcMotor.get("right_drive2");
-        power = 100;
-        powerTypes = new int[]{100, 75, 50, 25, 15, 10, 5};
-        location = 0;
+        power = 1;
 
 
         //Reverse the right motor
@@ -45,15 +37,14 @@ public class TankDrive extends OpMode
     public void loop()
     {
         // Toggle Slow Mode
-        if(gamepad1.a)
-        {
-            if(location == powerTypes.length)
-                location = 0;
-            else
-                power = powerTypes[++location];
-        }
+        if(gamepad1.right_bumper/* power up /\ */ && power < 1)
+            power += 0.1f;
 
-        telemetry.addData("Power", power + "%");
+        else if(gamepad1.left_bumper/* power down /\ */ && power > 0.1)
+            power -= 0.1f;
+
+        // Printing the power level
+        telemetry.addData("Power", (power * 100) + "%");
         telemetry.update();
 
         // Left stick is power for left side, etc
