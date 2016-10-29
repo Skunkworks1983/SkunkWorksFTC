@@ -1,8 +1,9 @@
 package org.firstinspires.ftc.teamcode.core.teleop;
 
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+
+import org.firstinspires.ftc.teamcode.core.CustomOpMode;
 
 /**
  * Created by Adam.
@@ -10,13 +11,12 @@ import com.qualcomm.robotcore.hardware.DcMotor;
  */
 
 @TeleOp(name="Tank Drive", group="Linear Opmode")
-public class TankDrive extends OpMode
+public class TankDrive extends CustomOpMode
 {
     DcMotor leftMotor1;
     DcMotor rightMotor1;
     DcMotor leftMotor2;
     DcMotor rightMotor2;
-    float power;
 
     @Override
     public void init()
@@ -25,8 +25,6 @@ public class TankDrive extends OpMode
         rightMotor1 = hardwareMap.dcMotor.get("right_drive1");
         leftMotor2 = hardwareMap.dcMotor.get("left_drive2");
         rightMotor2 = hardwareMap.dcMotor.get("right_drive2");
-        power = 1;
-
 
         //Reverse the right motor
         rightMotor1.setDirection(DcMotor.Direction.REVERSE);
@@ -36,20 +34,12 @@ public class TankDrive extends OpMode
     @Override
     public void loop()
     {
-        // Toggle Slow Mode
-        if(gamepad1.right_bumper/* power up /\ */ && power < 1)
-            power += 0.1f;
-
-        else if(gamepad1.left_bumper/* power down /\ */ && power > 0.1)
-            power -= 0.1f;
-
-        // Printing the power level
-        telemetry.addData("Power", (power * 100) + "%");
-        telemetry.update();
+        // Check for powering up or down
+        powerUpDown();
 
         // Left stick is power for left side, etc
-        float leftPower = -gamepad1.left_stick_y * power;
-        float rightPower = -gamepad1.right_stick_y * power;
+        float leftPower = -gamepad1.left_stick_y * getPower();
+        float rightPower = -gamepad1.right_stick_y * getPower();
 
         //Set the power of the motors with the gamepad values
         leftMotor1.setPower(leftPower);
