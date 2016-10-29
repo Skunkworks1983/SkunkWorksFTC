@@ -80,11 +80,11 @@ public class DriveSetDistance extends LinearOpMode {
     private ElapsedTime     runtime = new ElapsedTime();
 
     static final double     COUNTS_PER_MOTOR_REV    = 1120 ;    // eg: TETRIX Motor Encoder
-    static final double     DRIVE_GEAR_REDUCTION    = 0.778 ;     // This is < 1.0 if geared UP, driven gear diameter / driving gear diameter
+    static final double     DRIVE_GEAR_REDUCTION    = 0.7777778 ;     // This is < 1.0 if geared UP, driven gear diameter / driving gear diameter
     static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
                                                       (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double     DRIVE_SPEED             = 0.6;
+    static final double     DRIVE_SPEED             = 0.25;
     static final double     TURN_SPEED              = 0.5;
 
 
@@ -103,8 +103,8 @@ public class DriveSetDistance extends LinearOpMode {
 
         MotorFL.setDirection(DcMotor.Direction.REVERSE);
         MotorBL.setDirection(DcMotor.Direction.REVERSE);
-        MotorFR.setDirection(DcMotor.Direction.FORWARD);
-        MotorBR.setDirection(DcMotor.Direction.FORWARD);
+        MotorFR.setDirection(DcMotor.Direction.REVERSE);
+        MotorBR.setDirection(DcMotor.Direction.REVERSE);
 
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Status", "Resetting Encoders");    //
@@ -134,7 +134,7 @@ public class DriveSetDistance extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        encoderDrive(DRIVE_SPEED,  16,  -16, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
+        encoderDrive(DRIVE_SPEED,  4,  -4, 3.0);  // S1: Forward 47 Inches with 5 Sec timeout
         //encoderDrive(TURN_SPEED,   12, -12, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
         //encoderDrive(DRIVE_SPEED, -24, -24, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
 
