@@ -35,6 +35,7 @@ package org.firstinspires.ftc.teamcode.opmodes.Autonomous;
 import com.qualcomm.ftcrobotcontroller.R;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.RobotLog;
@@ -85,7 +86,7 @@ import java.util.List;
  * is explained below.
  */
 
-@Autonomous(name="Letsgetitbaby")
+@TeleOp(name="Letsgetitbaby")
 
 public class VuforiaNavigation extends LinearOpMode {
 
@@ -114,6 +115,10 @@ public class VuforiaNavigation extends LinearOpMode {
     static final double     DRIVE_SPEED             = 0.25; //Maximum speed with no load is around 50 inches per second, between 4 and 5 feet per second
     static final double     TURN_SPEED              = 0.5;
 
+    float x;
+    float y;
+    float z;
+    float d;
 
     @Override public void runOpMode() {
 
@@ -364,13 +369,18 @@ public class VuforiaNavigation extends LinearOpMode {
             /**
              * Provide feedback as to where the robot was last located (if we know).
              */
+
+            int counter = 0;
+
             if (lastLocation != null) {
                 //  RobotLog.vv(TAG, "robot=%s", format(lastLocation));
 
                 float[] robotLocationArray = lastLocation.getData();
-                float x = robotLocationArray[12];
-                float y = robotLocationArray[13];
-                float z = robotLocationArray[14];
+                x = robotLocationArray[12];
+                y = robotLocationArray[13];
+                z = robotLocationArray[14];
+                //d =
+
 
 
 
@@ -430,7 +440,7 @@ public class VuforiaNavigation extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        encoderDrive(DRIVE_SPEED,  4,  -4, 3.0);  // S1: Forward 47 Inches with 5 Sec timeout
+        encoderDrive(DRIVE_SPEED,  x,  y, 6.0);  // S1: Forward 47 Inches with 5 Sec timeout
         //encoderDrive(TURN_SPEED,   12, -12, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
         //encoderDrive(DRIVE_SPEED, -24, -24, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
 
