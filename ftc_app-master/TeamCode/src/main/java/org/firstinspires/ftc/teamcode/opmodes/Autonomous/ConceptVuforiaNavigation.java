@@ -373,7 +373,7 @@ public class ConceptVuforiaNavigation extends LinearOpMode {
                 telemetry.addData("FakePos:", "x:" + x + "y:" + y + "zee:" + z);
 */
 //                telemetry.addData("currentValue: ", counter + " " + robotLocationArray[counter]);
-                telemetry.addData("memedreamfightingmachine: ", "[" + robotLocationArray[0] + "," + robotLocationArray[1] + "," + robotLocationArray[2] + "," + robotLocationArray[3] + "," + robotLocationArray[4] + "," + robotLocationArray[5] + "," + robotLocationArray[6] + "," + robotLocationArray[7] + "," + robotLocationArray[8] + "," + robotLocationArray[9] + "," + robotLocationArray[10] + "," + robotLocationArray[11] + "," + robotLocationArray[12] + "," + robotLocationArray[13] + "," + robotLocationArray[14] + "," + robotLocationArray[15] + "]");
+                //telemetry.addData("memedreamfightingmachine: ", "[" + robotLocationArray[0] + "," + robotLocationArray[1] + "," + robotLocationArray[2] + "," + robotLocationArray[3] + "," + robotLocationArray[4] + "," + robotLocationArray[5] + "," + robotLocationArray[6] + "," + robotLocationArray[7] + "," + robotLocationArray[8] + "," + robotLocationArray[9] + "," + robotLocationArray[10] + "," + robotLocationArray[11] + "," + robotLocationArray[12] + "," + robotLocationArray[13] + "," + robotLocationArray[14] + "," + robotLocationArray[15] + "]");
                 telemetry.addData("Robot", "true");
             } else {
                 telemetry.addData("Pos", "Unknown");
