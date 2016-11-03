@@ -90,7 +90,7 @@ import java.util.Vector;
  * is explained below.
  */
 
-@TeleOp(name="Concept: Vuforia Navigation", group ="Concept")
+@Autonomous(name="Please work")
 
 public class ConceptVuforiaNavigation extends LinearOpMode {
 
@@ -100,9 +100,12 @@ public class ConceptVuforiaNavigation extends LinearOpMode {
     float y;
     float z;
 
-    float robotX;
-    float robotY;
+    //float robotX;
+    //float robotY;
     float robotBearing;
+
+    //VectorF trans;
+    Orientation rot;
 
     OpenGLMatrix lastLocation = null;
 
@@ -356,14 +359,6 @@ public class ConceptVuforiaNavigation extends LinearOpMode {
                 if (robotLocationTransform != null) {
                     lastLocation = robotLocationTransform;
                 }
-
-                VectorF trans = robotLocationTransform.getTranslation();
-                Orientation rot = Orientation.getOrientation(robotLocationTransform, AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
-
-                robotX = trans.get(0);
-                robotY = trans.get(1);
-
-                robotBearing = rot.thirdAngle;
             }
             /**
              * Provide feedback as to where the robot was last located (if we know).
@@ -374,15 +369,23 @@ public class ConceptVuforiaNavigation extends LinearOpMode {
             if (lastLocation != null) {
                 //  RobotLog.vv(TAG, "robot=%s", format(lastLocation));
 
-                /**
+
                 float[] robotLocationArray = lastLocation.getData();
                 x = robotLocationArray[12];
                 y = robotLocationArray[13];
                 z = robotLocationArray[14];
-                */
+
+
+                //trans = lastLocation.getTranslation();
+                rot = Orientation.getOrientation(lastLocation, AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
+
+                //robotX = trans.get(0);
+                //robotY = trans.get(1);
+
+                robotBearing = rot.thirdAngle;
 
                 //telemetry.addData("RealPos", format(lastLocation));
-                telemetry.addData("FakePos:", "x:" + robotX + "y:" + robotY);
+                telemetry.addData("FakePos:", "x:" + x + "y:" + y, "zee:" + z);
                 telemetry.addData("Rotation:", robotBearing);
                 //telemetry.addData("Robot", "true");
             } else {
