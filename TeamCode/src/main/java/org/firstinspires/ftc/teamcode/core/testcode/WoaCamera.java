@@ -25,6 +25,10 @@ import java.util.List;
  * October 31, 2016 at 8:12 PM
  */
 
+/* Vuforia */
+// email: adamczuk@comcast.net
+// password: 1983bestTeam
+
 @Autonomous(name="Concept: Vuforia Navigation", group ="Concept")
 public class WoaCamera extends LinearOpMode
 {
