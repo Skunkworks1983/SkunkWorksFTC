@@ -383,6 +383,7 @@ public class ConceptVuforiaNavigation extends LinearOpMode {
 
                 //telemetry.addData("RealPos", format(lastLocation));
                 telemetry.addData("FakePos:", "x:" + robotX + "y:" + robotY);
+                telemetry.addData("Rotation:", robotBearing);
                 //telemetry.addData("Robot", "true");
             } else {
                 telemetry.addData("Pos", "Unknown");
