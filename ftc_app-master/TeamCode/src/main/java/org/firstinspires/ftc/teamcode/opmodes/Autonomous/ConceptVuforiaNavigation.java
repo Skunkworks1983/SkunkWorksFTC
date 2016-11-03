@@ -96,7 +96,13 @@ public class ConceptVuforiaNavigation extends LinearOpMode {
 
     public static final String TAG = "Vuforia Sample";
 
-    int counter = 0;
+    float x;
+    float y;
+    float z;
+
+    float robotX;
+    float robotY;
+    float robotBearing;
 
     OpenGLMatrix lastLocation = null;
 
@@ -346,11 +352,18 @@ public class ConceptVuforiaNavigation extends LinearOpMode {
                  */
                 telemetry.addData(trackable.getName(), ((VuforiaTrackableDefaultListener)trackable.getListener()).isVisible() ? "Visible" : "Not Visible");    //
 
-
                 OpenGLMatrix robotLocationTransform = ((VuforiaTrackableDefaultListener)trackable.getListener()).getUpdatedRobotLocation();
                 if (robotLocationTransform != null) {
                     lastLocation = robotLocationTransform;
                 }
+
+                VectorF trans = robotLocationTransform.getTranslation();
+                Orientation rot = Orientation.getOrientation(robotLocationTransform, AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
+
+                robotX = trans.get(0);
+                robotY = trans.get(1);
+
+                robotBearing = rot.thirdAngle;
             }
             /**
              * Provide feedback as to where the robot was last located (if we know).
@@ -361,33 +374,20 @@ public class ConceptVuforiaNavigation extends LinearOpMode {
             if (lastLocation != null) {
                 //  RobotLog.vv(TAG, "robot=%s", format(lastLocation));
 
+                /**
                 float[] robotLocationArray = lastLocation.getData();
-                float x = robotLocationArray[12];
-                float y = robotLocationArray[13];
-                float z = robotLocationArray[14];
+                x = robotLocationArray[12];
+                y = robotLocationArray[13];
+                z = robotLocationArray[14];
+                */
 
-
-/**
-                telemetry.addData("RealPos", format(lastLocation));
-
-                telemetry.addData("FakePos:", "x:" + x + "y:" + y + "zee:" + z);
-*/
-//                telemetry.addData("currentValue: ", counter + " " + robotLocationArray[counter]);
-                //telemetry.addData("memedreamfightingmachine: ", "[" + robotLocationArray[0] + "," + robotLocationArray[1] + "," + robotLocationArray[2] + "," + robotLocationArray[3] + "," + robotLocationArray[4] + "," + robotLocationArray[5] + "," + robotLocationArray[6] + "," + robotLocationArray[7] + "," + robotLocationArray[8] + "," + robotLocationArray[9] + "," + robotLocationArray[10] + "," + robotLocationArray[11] + "," + robotLocationArray[12] + "," + robotLocationArray[13] + "," + robotLocationArray[14] + "," + robotLocationArray[15] + "]");
-                telemetry.addData("Robot", "true");
+                //telemetry.addData("RealPos", format(lastLocation));
+                telemetry.addData("FakePos:", "x:" + robotX + "y:" + robotY);
+                //telemetry.addData("Robot", "true");
             } else {
                 telemetry.addData("Pos", "Unknown");
             }
 
-            if(gamepad1.a){
-                if (counter < 15) {
-                    counter++;
-                    sleep(250);
-                }
-                else{
-                    counter = 0;
-                }
-            }
 
             telemetry.update();
         }
