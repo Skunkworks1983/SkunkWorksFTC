@@ -103,8 +103,8 @@ public class DriveSetDistance extends LinearOpMode {
 
         MotorFL.setDirection(DcMotor.Direction.REVERSE);
         MotorBL.setDirection(DcMotor.Direction.REVERSE);
-        MotorFR.setDirection(DcMotor.Direction.REVERSE);
-        MotorBR.setDirection(DcMotor.Direction.REVERSE);
+        MotorFR.setDirection(DcMotor.Direction.FORWARD);
+        MotorBR.setDirection(DcMotor.Direction.FORWARD);
 
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Status", "Resetting Encoders");    //
@@ -134,8 +134,8 @@ public class DriveSetDistance extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        encoderDrive(DRIVE_SPEED,  10,  -10, 3.0);  // S1: Forward 47 Inches with 5 Sec timeout
-        //encoderDrive(TURN_SPEED,   12, -12, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
+        //encoderDrive(DRIVE_SPEED,  10,  -10, 3.0);  // S1: Forward 47 Inches with 5 Sec timeout
+        encoderDrive(TURN_SPEED,   12, 12, 2.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
         //encoderDrive(DRIVE_SPEED, -24, -24, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
 
         //robot.leftClaw.setPosition(1.0);            // S4: Stop and close the claw.
