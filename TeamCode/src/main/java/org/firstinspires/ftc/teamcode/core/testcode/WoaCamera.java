@@ -42,53 +42,31 @@ public class WoaCamera extends LinearOpMode
      */
     VuforiaLocalizer vuforia;
 
-    @Override public void runOpMode() throws InterruptedException {
-        /**
-         * Start up Vuforia, telling it the id of the view that we wish to use as the parent for
-         * the camera monitor feedback; if no camera monitor feedback is desired, use the parameterless
-         * constructor instead. We also indicate which camera on the RC that we wish to use. For illustration
-         * purposes here, we choose the back camera; for a competition robot, the front camera might
-         * prove to be more convenient.
-         *
-         * Note that in addition to indicating which camera is in use, we also need to tell the system
-         * the location of the phone on the robot; see phoneLocationOnRobot below.
-         *
-         * IMPORTANT: You need to obtain your own license key to use Vuforia. The string below with which
-         * 'parameters.vuforiaLicenseKey' is initialized is for illustration only, and will not function.
-         * Vuforia will not load without a valid license being provided. Vuforia 'Development' license
-         * keys, which is what is needed here, can be obtained free of charge from the Vuforia developer
-         * web site at https://developer.vuforia.com/license-manager.
-         *
-         * Valid Vuforia license keys are always 380 characters long, and look as if they contain mostly
-         * random data. As an example, here is a example of a fragment of a valid key:
-         *      ... yIgIzTqZ4mWjk9wd3cZO9T1axEqzuhxoGlfOOI2dRzKS4T0hQ8kT ...
-         * Once you've obtained a license key, copy the string form of the key from the Vuforia web site
-         * and paste it in to your code as the value of the 'vuforiaLicenseKey' field of the
-         * {@link Parameters} instance with which you initialize Vuforia.
-         */
+    @Override public void runOpMode() throws InterruptedException
+    {
+
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(com.qualcomm.ftcrobotcontroller.R.id.cameraMonitorViewId);
         parameters.vuforiaLicenseKey = "AcysFCv/////AAAAGU+6qxVe10kJlTULoOQAcrkzfvgmgt5PDrL+ho/I1mX/TXlXLGeylgmNqXRyYOyr+wg8zPWXuNUR8NPyXzSEly7gMrK93SOCY/q1VKlZA0CSoifvyW8+j+TgUJT5sf6yGdB9CUK669teYc2jEz75f7b61pnZpfgIRBEypVR0lHdgFNb0Y27rXzmwwXqCwNP/WYUjMgAI5R03d1BohQao1HjC8yf+ehw+lMZznENMBCSNrYiZfMR/r5Op68p+paOTxxL4ngXC8Im2WyHtsJvt3Y96G4M3Wdx89Slj/P2nZPBFbuya0In06K4egRMc5yfZiLBIWbo67M15Q6wIzYOi8aED8bDAylYoc/+9A8vnt78d";
         parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
         this.vuforia = ClassFactory.createVuforiaLocalizer(parameters);
 
-        /**
-         * Load the data sets that for the trackable objects we wish to track. These particular data
-         * sets are stored in the 'assets' part of our application (you'll see them in the Android
-         * Studio 'Project' view over there on the left of the screen). You can make your own datasets
-         * with the Vuforia Target Manager: https://developer.vuforia.com/target-manager. PDFs for the
-         * example "StonesAndChips", datasets can be found in in this project in the
-         * documentation directory.
-         */
-        VuforiaTrackables stonesAndChips = this.vuforia.loadTrackablesFromAsset("StonesAndChips");
-        VuforiaTrackable redTarget = stonesAndChips.get(0);
-        redTarget.setName("RedTarget");  // Stones
+        // Pictures
+        VuforiaTrackables pictures = this.vuforia.loadTrackablesFromAsset("FTC_2016-17");
+        VuforiaTrackable wheels = pictures.get(0);
+        wheels.setName("Wheels");
 
-        VuforiaTrackable blueTarget  = stonesAndChips.get(1);
-        blueTarget.setName("BlueTarget");  // Chips
+        VuforiaTrackable tools  = pictures.get(1);
+        tools.setName("Tools");
+
+        VuforiaTrackable legos  = pictures.get(2);
+        legos.setName("legos");
+
+        VuforiaTrackable gears  = pictures.get(3);
+        gears.setName("Gears");
 
         /** For convenience, gather together all the trackable objects in one easily-iterable collection */
         List<VuforiaTrackable> allTrackables = new ArrayList<VuforiaTrackable>();
-        allTrackables.addAll(stonesAndChips);
+        allTrackables.addAll(pictures);
 
         /**
          * We use units of mm here because that's the recommended units of measurement for the
@@ -157,7 +135,7 @@ public class WoaCamera extends LinearOpMode
          * - Then we rotate it  90 around the field's Z access to face it away from the audience.
          * - Finally, we translate it back along the X axis towards the red audience wall.
          */
-        OpenGLMatrix redTargetLocationOnField = OpenGLMatrix
+        OpenGLMatrix wheelsLocationOnField = OpenGLMatrix
                 /* Then we translate the target off to the RED WALL. Our translation here
                 is a negative translation in X.*/
                 .translation(-mmFTCFieldWidth/2, 0, 0)
@@ -165,15 +143,10 @@ public class WoaCamera extends LinearOpMode
                         /* First, in the fixed (field) coordinate system, we rotate 90deg in X, then 90 in Z */
                         AxesReference.EXTRINSIC, AxesOrder.XZX,
                         AngleUnit.DEGREES, 90, 90, 0));
-        redTarget.setLocation(redTargetLocationOnField);
-        RobotLog.ii(TAG, "Red Target=%s", format(redTargetLocationOnField));
+        wheels.setLocation(wheelsLocationOnField);
+        RobotLog.ii(TAG, "Wheels=%s", format(wheelsLocationOnField));
 
-       /*
-        * To place the Stones Target on the Blue Audience wall:
-        * - First we rotate it 90 around the field's X axis to flip it upright
-        * - Finally, we translate it along the Y axis towards the blue audience wall.
-        */
-        OpenGLMatrix blueTargetLocationOnField = OpenGLMatrix
+        OpenGLMatrix toolsLocationOnField = OpenGLMatrix
                 /* Then we translate the target off to the Blue Audience wall.
                 Our translation here is a positive translation in Y.*/
                 .translation(0, mmFTCFieldWidth/2, 0)
@@ -181,8 +154,30 @@ public class WoaCamera extends LinearOpMode
                         /* First, in the fixed (field) coordinate system, we rotate 90deg in X */
                         AxesReference.EXTRINSIC, AxesOrder.XZX,
                         AngleUnit.DEGREES, 90, 0, 0));
-        blueTarget.setLocation(blueTargetLocationOnField);
-        RobotLog.ii(TAG, "Blue Target=%s", format(blueTargetLocationOnField));
+        tools.setLocation(toolsLocationOnField);
+        RobotLog.ii(TAG, "Tools=%s", format(toolsLocationOnField));
+
+        OpenGLMatrix legosLocationOnField = OpenGLMatrix
+                /* Then we translate the target off to the Blue Audience wall.
+                Our translation here is a positive translation in Y.*/
+                .translation(0, mmFTCFieldWidth/2, 0)
+                .multiplied(Orientation.getRotationMatrix(
+                        /* First, in the fixed (field) coordinate system, we rotate 90deg in X */
+                        AxesReference.EXTRINSIC, AxesOrder.XZX,
+                        AngleUnit.DEGREES, 90, 0, 0));
+        legos.setLocation(legosLocationOnField);
+        RobotLog.ii(TAG, "Legos=%s", format(legosLocationOnField));
+
+        OpenGLMatrix gearsLocationOnField = OpenGLMatrix
+                /* Then we translate the target off to the Blue Audience wall.
+                Our translation here is a positive translation in Y.*/
+                .translation(0, mmFTCFieldWidth/2, 0)
+                .multiplied(Orientation.getRotationMatrix(
+                        /* First, in the fixed (field) coordinate system, we rotate 90deg in X */
+                        AxesReference.EXTRINSIC, AxesOrder.XZX,
+                        AngleUnit.DEGREES, 90, 0, 0));
+        gears.setLocation(gearsLocationOnField);
+        RobotLog.ii(TAG, "Gears=%s", format(gearsLocationOnField));
 
         /**
          * Create a transformation matrix describing where the phone is on the robot. Here, we
@@ -208,8 +203,10 @@ public class WoaCamera extends LinearOpMode
          * listener is a {@link VuforiaTrackableDefaultListener} and can so safely cast because
          * we have not ourselves installed a listener of a different type.
          */
-        ((VuforiaTrackableDefaultListener)redTarget.getListener()).setPhoneInformation(phoneLocationOnRobot, parameters.cameraDirection);
-        ((VuforiaTrackableDefaultListener)blueTarget.getListener()).setPhoneInformation(phoneLocationOnRobot, parameters.cameraDirection);
+        ((VuforiaTrackableDefaultListener)wheels.getListener()).setPhoneInformation(phoneLocationOnRobot, parameters.cameraDirection);
+        ((VuforiaTrackableDefaultListener)tools.getListener()).setPhoneInformation(phoneLocationOnRobot, parameters.cameraDirection);
+        ((VuforiaTrackableDefaultListener)legos.getListener()).setPhoneInformation(phoneLocationOnRobot, parameters.cameraDirection);
+        ((VuforiaTrackableDefaultListener)gears.getListener()).setPhoneInformation(phoneLocationOnRobot, parameters.cameraDirection);
 
         /**
          * A brief tutorial: here's how all the math is going to work:
@@ -236,11 +233,13 @@ public class WoaCamera extends LinearOpMode
         waitForStart();
 
         /** Start tracking the data sets we care about. */
-        stonesAndChips.activate();
+        pictures.activate();
 
-        while (opModeIsActive()) {
+        while (opModeIsActive())
+        {
 
-            for (VuforiaTrackable trackable : allTrackables) {
+            for (VuforiaTrackable trackable : allTrackables)
+            {
                 /**
                  * getUpdatedRobotLocation() will return null if no new information is available since
                  * the last time that call was made, or if the trackable is not currently visible.
@@ -249,19 +248,14 @@ public class WoaCamera extends LinearOpMode
                 telemetry.addData(trackable.getName(), ((VuforiaTrackableDefaultListener)trackable.getListener()).isVisible() ? "Visible" : "Not Visible");    //
 
                 OpenGLMatrix robotLocationTransform = ((VuforiaTrackableDefaultListener)trackable.getListener()).getUpdatedRobotLocation();
-                if (robotLocationTransform != null) {
+                if (robotLocationTransform != null)
                     lastLocation = robotLocationTransform;
-                }
             }
             /**
              * Provide feedback as to where the robot was last located (if we know).
              */
-            if (lastLocation != null) {
-                //  RobotLog.vv(TAG, "robot=%s", format(lastLocation));
-                telemetry.addData("Pos", format(lastLocation));
-            } else {
-                telemetry.addData("Pos", "Unknown");
-            }
+            telemetry.addData("Pos", lastLocation != null ? format(lastLocation) : "Unkown D:");
+
             telemetry.update();
             idle();
         }
@@ -271,7 +265,8 @@ public class WoaCamera extends LinearOpMode
      * A simple utility that extracts positioning information from a transformation matrix
      * and formats it in a form palatable to a human being.
      */
-    String format(OpenGLMatrix transformationMatrix) {
+    String format(OpenGLMatrix transformationMatrix)
+    {
         return transformationMatrix.formatAsTransform();
     }
 }
