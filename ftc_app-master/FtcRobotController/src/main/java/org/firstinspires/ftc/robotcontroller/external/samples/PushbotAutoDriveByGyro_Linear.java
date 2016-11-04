@@ -76,8 +76,13 @@ import com.qualcomm.robotcore.util.Range;
 public class PushbotAutoDriveByGyro_Linear extends LinearOpMode {
 
     /* Declare OpMode members. */
-    HardwarePushbot         robot   = new HardwarePushbot();   // Use a Pushbot's hardware
+    //HardwarePushbot         robot   = new HardwarePushbot();   // Use a Pushbot's hardware
     ModernRoboticsI2cGyro   gyro    = null;                    // Additional Gyro device
+
+    DcMotor MotorFL; //Front Left
+    DcMotor MotorFR; //Front Right
+    DcMotor MotorBL; //Back Left
+    DcMotor MotorBR; //Back Right
 
     static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
     static final double     DRIVE_GEAR_REDUCTION    = 2.0 ;     // This is < 1.0 if geared UP
@@ -102,12 +107,14 @@ public class PushbotAutoDriveByGyro_Linear extends LinearOpMode {
          * Initialize the standard drive system variables.
          * The init() method of the hardware class does most of the work here
          */
-        robot.init(hardwareMap);
+        //robot.init(hardwareMap);
         gyro = (ModernRoboticsI2cGyro)hardwareMap.gyroSensor.get("gyro");
 
         // Ensure the robot it stationary, then reset the encoders and calibrate the gyro.
-        robot.leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        MotorFL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        MotorBL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        MotorFR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        MotorBR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         // Send telemetry message to alert driver that we are calibrating;
         telemetry.addData(">", "Calibrating Gyro");    //
@@ -124,8 +131,10 @@ public class PushbotAutoDriveByGyro_Linear extends LinearOpMode {
         telemetry.addData(">", "Robot Ready.");    //
         telemetry.update();
 
-        robot.leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        MotorFL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        MotorBL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        MotorFR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        MotorBR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Wait for the game to start (Display Gyro value), and reset gyro before we move..
         while (!isStarted()) {
@@ -171,36 +180,48 @@ public class PushbotAutoDriveByGyro_Linear extends LinearOpMode {
 
         int     newLeftTarget;
         int     newRightTarget;
+        int     newLeftTarget1;
+        int     newRightTarget1;
         int     moveCounts;
         double  max;
         double  error;
         double  steer;
         double  leftSpeed;
         double  rightSpeed;
+        double  leftSpeed1;
+        double  rightSpeed1;
 
         // Ensure that the opmode is still active
         if (opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller
             moveCounts = (int)(distance * COUNTS_PER_INCH);
-            newLeftTarget = robot.leftMotor.getCurrentPosition() + moveCounts;
-            newRightTarget = robot.rightMotor.getCurrentPosition() + moveCounts;
+            newLeftTarget = MotorFL.getCurrentPosition() + moveCounts;
+            newRightTarget = MotorFR.getCurrentPosition() + moveCounts;
+            newLeftTarget1 = MotorBL.getCurrentPosition() + moveCounts;
+            newRightTarget1 = MotorBR.getCurrentPosition() + moveCounts;
 
             // Set Target and Turn On RUN_TO_POSITION
-            robot.leftMotor.setTargetPosition(newLeftTarget);
-            robot.rightMotor.setTargetPosition(newRightTarget);
+            MotorFL.setTargetPosition(newLeftTarget);
+            MotorBR.setTargetPosition(newRightTarget);
+            MotorBL.setTargetPosition(newLeftTarget1);
+            MotorBR.setTargetPosition(newRightTarget1);
 
-            robot.leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            robot.rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            MotorFL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            MotorFR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            MotorBL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            MotorBR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // start motion.
             speed = Range.clip(Math.abs(speed), 0.0, 1.0);
-            robot.leftMotor.setPower(speed);
-            robot.rightMotor.setPower(speed);
+            MotorFL.setPower(speed);
+            MotorFR.setPower(speed);
+            MotorBL.setPower(speed);
+            MotorBR.setPower(speed);
 
             // keep looping while we are still active, and BOTH motors are running.
             while (opModeIsActive() &&
-                   (robot.leftMotor.isBusy() && robot.rightMotor.isBusy())) {
+                   (MotorFL.isBusy() && MotorFR.isBusy() && MotorBL.isBusy() && MotorBR.isBusy())) {
 
                 // adjust relative speed based on heading error.
                 error = getError(angle);
@@ -212,6 +233,8 @@ public class PushbotAutoDriveByGyro_Linear extends LinearOpMode {
 
                 leftSpeed = speed - steer;
                 rightSpeed = speed + steer;
+                leftSpeed1 = speed - steer;
+                rightSpeed1 = speed + steer;
 
                 // Normalize speeds if any one exceeds +/- 1.0;
                 max = Math.max(Math.abs(leftSpeed), Math.abs(rightSpeed));
@@ -221,25 +244,31 @@ public class PushbotAutoDriveByGyro_Linear extends LinearOpMode {
                     rightSpeed /= max;
                 }
 
-                robot.leftMotor.setPower(leftSpeed);
-                robot.rightMotor.setPower(rightSpeed);
+                MotorFL.setPower(leftSpeed);
+                MotorFR.setPower(rightSpeed);
+                MotorBL.setPower(leftSpeed1);
+                MotorBR.setPower(rightSpeed1);
 
                 // Display drive status for the driver.
                 telemetry.addData("Err/St",  "%5.1f/%5.1f",  error, steer);
                 telemetry.addData("Target",  "%7d:%7d",      newLeftTarget,  newRightTarget);
-                telemetry.addData("Actual",  "%7d:%7d",      robot.leftMotor.getCurrentPosition(),
-                                                             robot.rightMotor.getCurrentPosition());
+                telemetry.addData("Actual",  "%7d:%7d",      MotorFL.getCurrentPosition(),
+                                                             MotorFR.getCurrentPosition(), MotorBL.getCurrentPosition(), MotorBR.getCurrentPosition());
                 telemetry.addData("Speed",   "%5.2f:%5.2f",  leftSpeed, rightSpeed);
                 telemetry.update();
             }
 
             // Stop all motion;
-            robot.leftMotor.setPower(0);
-            robot.rightMotor.setPower(0);
+            MotorFL.setPower(0);
+            MotorFR.setPower(0);
+            MotorBL.setPower(0);
+            MotorBR.setPower(0);
 
             // Turn off RUN_TO_POSITION
-            robot.leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            robot.rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            MotorFL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            MotorFR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            MotorBL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            MotorBR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
     }
 
@@ -286,8 +315,10 @@ public class PushbotAutoDriveByGyro_Linear extends LinearOpMode {
         }
 
         // Stop all motion;
-        robot.leftMotor.setPower(0);
-        robot.rightMotor.setPower(0);
+        MotorFL.setPower(0);
+        MotorFR.setPower(0);
+        MotorBL.setPower(0);
+        MotorBR.setPower(0);
     }
 
     /**
@@ -306,6 +337,8 @@ public class PushbotAutoDriveByGyro_Linear extends LinearOpMode {
         boolean  onTarget = false ;
         double leftSpeed;
         double rightSpeed;
+        double leftSpeed1;
+        double rightSpeed1;
 
         // determine turn power based on +/- error
         error = getError(angle);
@@ -314,17 +347,23 @@ public class PushbotAutoDriveByGyro_Linear extends LinearOpMode {
             steer = 0.0;
             leftSpeed  = 0.0;
             rightSpeed = 0.0;
+            leftSpeed1  = 0.0;
+            rightSpeed1 = 0.0;
             onTarget = true;
         }
         else {
             steer = getSteer(error, PCoeff);
             rightSpeed  = speed * steer;
             leftSpeed   = -rightSpeed;
+            rightSpeed1  = speed * steer;
+            leftSpeed1   = -rightSpeed1;
         }
 
         // Send desired speeds to motors.
-        robot.leftMotor.setPower(leftSpeed);
-        robot.rightMotor.setPower(rightSpeed);
+        MotorFL.setPower(leftSpeed);
+        MotorFR.setPower(rightSpeed);
+        MotorBL.setPower(leftSpeed1);
+        MotorBR.setPower(rightSpeed1);
 
         // Display it for the driver.
         telemetry.addData("Target", "%5.2f", angle);
