@@ -110,7 +110,7 @@ public class TeleOpArcadeDrive extends LinearOpMode {
              MotorFL.setPower(lPow);
             MotorBL.setPower(lPow);
              MotorFR.setPower(rPow);
-            MotorBR.setPower(rPow);
+            MotorBR.setPower(rPow); //what does this stuff mean
 
             idle(); // Always call idle() at the bottom of your while(opModeIsActive()) loop
         }
