@@ -85,7 +85,7 @@ public class DriveSetDistance extends LinearOpMode {
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
                                                       (WHEEL_DIAMETER_INCHES * 3.1415);
     static final double     DRIVE_SPEED             = 0.25; //Maximum speed with no load is around 50 inches per second, between 4 and 5 feet per second
-    static final double     TURN_SPEED              = 0.5;
+    static final double     TURN_SPEED              = 0.25;
 
 
     @Override
@@ -135,7 +135,8 @@ public class DriveSetDistance extends LinearOpMode {
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
         //encoderDrive(DRIVE_SPEED,  10,  -10, 3.0);  // S1: Forward 47 Inches with 5 Sec timeout
-        encoderDrive(TURN_SPEED,   12, 12, 2.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
+        //encoderDrive(TURN_SPEED,   12, 12, 2.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
+        //encoderTick(TURN_SPEED, 100, -100, 20.0); // 4 ticks = 1 degree or 4 degrees is one tick??? Help???
         //encoderDrive(DRIVE_SPEED, -24, -24, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
 
         //robot.leftClaw.setPosition(1.0);            // S4: Stop and close the claw.
@@ -143,6 +144,7 @@ public class DriveSetDistance extends LinearOpMode {
         //sleep(1000);     // pause for servos to move
 
         telemetry.addData("Path", "Complete");
+        telemetry.addData("Ticks", MotorBL.getCurrentPosition());
         telemetry.update();
     }
 
@@ -154,6 +156,74 @@ public class DriveSetDistance extends LinearOpMode {
      *  2) Move runs out of time
      *  3) Driver stops the opmode running.
      */
+
+    public void encoderTick(double speed, int tickRight, int tickLeft, double timeoutS) {
+
+        int newFLTarget;
+        int newFRTarget;
+        int newBLTarget;
+        int newBRTarget;
+
+        // Ensure that the opmode is still active
+        if (opModeIsActive()) {
+
+            // Determine new target position, and pass to motor controller
+            newFLTarget = MotorFL.getCurrentPosition() + tickLeft;
+            newFRTarget = MotorFR.getCurrentPosition() + tickRight;
+            newBLTarget = MotorBL.getCurrentPosition() + tickLeft;
+            newBRTarget = MotorBR.getCurrentPosition() + tickRight;
+            MotorFL.setTargetPosition(newFLTarget);
+            MotorFR.setTargetPosition(newFRTarget);
+            MotorBL.setTargetPosition(newBLTarget);
+            MotorBR.setTargetPosition(newBRTarget);
+
+            // Turn On RUN_TO_POSITION
+            MotorFL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            MotorFR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            MotorBL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            MotorBR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+
+            // reset the timeout time and start motion.
+            runtime.reset();
+            MotorFL.setPower(Math.abs(speed));
+            MotorFR.setPower(Math.abs(speed));
+            MotorBL.setPower(Math.abs(speed));
+            MotorBR.setPower(Math.abs(speed));
+
+
+            // keep looping while we are still active, and there is time left, and both motors are running.
+            while (opModeIsActive() &&
+                    (runtime.seconds() < timeoutS) &&
+                    (MotorFL.isBusy() && MotorFR.isBusy() && MotorBL.isBusy() && MotorBR.isBusy())) {
+
+                // Display it for the driver.
+                telemetry.addData("Path1", "Running to %7d :%7d", newFLTarget, newFRTarget);
+                telemetry.addData("Path2", "Running at %7d :%7d",
+                        MotorFL.getCurrentPosition(),
+                        MotorFR.getCurrentPosition(),
+                        MotorBL.getCurrentPosition(),
+                        MotorBR.getCurrentPosition());
+                telemetry.update();
+            }
+
+            // Stop all motion;
+            MotorFL.setPower(0);
+            MotorFR.setPower(0);
+            MotorBL.setPower(0);
+            MotorBR.setPower(0);
+
+            // Turn off RUN_TO_POSITION
+            MotorFL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            MotorFR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            MotorBL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            MotorBR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+            //  sleep(250);   // optional pause after each move
+
+        }
+    }
+
     public void encoderDrive(double speed,
                              double leftInches, double rightInches,
                              double timeoutS) {
