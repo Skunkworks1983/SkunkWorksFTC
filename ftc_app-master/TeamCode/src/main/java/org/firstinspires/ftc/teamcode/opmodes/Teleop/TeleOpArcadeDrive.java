@@ -224,6 +224,8 @@ public class TeleOpArcadeDrive extends LinearOpMode {
 //meow
             MotorBR.setPower(rPow); //what does this stuff mean
 //meow
+            MotorBR.setPower(rPow);
+
 
 //meow
             idle(); // Always call idle() at the bottom of your while(opModeIsActive()) loop
