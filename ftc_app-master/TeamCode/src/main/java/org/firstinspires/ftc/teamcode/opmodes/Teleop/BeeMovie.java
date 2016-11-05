@@ -111,27 +111,13 @@ import com.qualcomm.robotcore.util.Range;
 //meow
 
 //meow
-@TeleOp(name="Arcade Drive", group="Linear Opmode")  // @Autonomous(...) is the other common choice
+@TeleOp(name="beeeeemovie", group="Linear Opmode")  // @Autonomous(...) is the other common choice
 //meow
 public class BeeMovie extends LinearOpMode {
 //meow
 
 //meow
     /* Declare OpMode members. */
-//meow
-    private ElapsedTime runtime = new ElapsedTime();
-//meow
-
-//meow
-    DcMotor MotorFL;
-//meow
-    DcMotor MotorFR;
-//meow
-    DcMotor MotorBL;
-//meow
-    DcMotor MotorBR;
-//meow
-
 //meow
     @Override
 //meow
@@ -140,42 +126,6 @@ public class BeeMovie extends LinearOpMode {
         telemetry.addData("Status", "Initialized");
 //meow
         telemetry.update();
-//meow
-
-//meow
-        /* eg: Initialize the hardware variables. Note that the strings used here as parameters
-//meow
-         * to 'get' must correspond to the names assigned during the robot configuration
-//meow
-         * step (using the FTC Robot Controller app on the phone).
-//meow
-         */
-//meow
-         MotorFL  = hardwareMap.dcMotor.get("leftFront");
-//meow
-         MotorFR = hardwareMap.dcMotor.get("rightFront");
-//meow
-        MotorBL = hardwareMap.dcMotor.get("leftBack");
-//meow
-        MotorBR = hardwareMap.dcMotor.get("rightBack");
-//meow
-
-//meow
-        // eg: Set the drive motor directions:
-//meow
-        // "Reverse" the motor that runs backwards when connected directly to the battery
-//meow
-         MotorFL.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
-//meow
-        MotorBL.setDirection(DcMotor.Direction.REVERSE);
-//meow
-         MotorFR.setDirection(DcMotor.Direction.FORWARD);// Set to FORWARD if using AndyMark motors
-//meow
-        MotorBR.setDirection(DcMotor.Direction.FORWARD);
-//meow
-
-//meow
-        // Wait for the game to start (driver presses PLAY)
 //meow
         waitForStart();
 //meow
