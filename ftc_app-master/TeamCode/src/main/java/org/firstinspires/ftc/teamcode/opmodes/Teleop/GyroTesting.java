@@ -45,21 +45,22 @@ public class GyroTesting extends LinearOpMode {
         mrGyro.calibrate();  //Calibrate the sensor so it knows where 0 is and what still is. DO NOT MOVE SENSOR WHILE BLUE LIGHT IS SOLID
 
         while (mrGyro.isCalibrating()) { //Ensure calibration is complete (usually 2 seconds)
-        }
-        telemetry.addData(">", "Gyro Calibrated.  Press Start.");
-        telemetry.update();
-        waitForStart();  //Wait for play button to be pressed
+
+            telemetry.addData(">", "Gyro Calibrated.  Press Start.");
+            telemetry.update();
+            waitForStart();  //Wait for play button to be pressed
 
 
-        while (opModeIsActive()) {
-            if (gamepad1.a)
-                target = target + 45;
-            if (gamepad1.b)
-                target = target - 45;
+            while (opModeIsActive()) {
+                if (gamepad1.a)
+                    target = target + 45;
+                if (gamepad1.b)
+                    target = target - 45;
 
-            turnAbsolute(target);
+                turnAbsolute(target);
 
 
+            }
         }
     }
     //This function turns a number of degrees compared to where the robot is. Positive numbers trn left.
@@ -87,7 +88,12 @@ public class GyroTesting extends LinearOpMode {
                 mr2.setPower(turnSpeed);
             }
 
-
+            if (Math.abs(zAccumulated - target) < 50){ //how close are you to the target?
+                turnSpeed = Math.abs(zAccumulated - target) *2; //set the speed based on distance (Note: distance value of 50 will give 100% speed, Distance value of 25 gives 50%, ext.)
+            }
+            else {
+                turnSpeed = 1;
+            }
 
             zAccumulated = mrGyro.getIntegratedZValue();  //Set variables to gyro readings
             telemetry.addData("1. accu", String.format("%03d", zAccumulated));
