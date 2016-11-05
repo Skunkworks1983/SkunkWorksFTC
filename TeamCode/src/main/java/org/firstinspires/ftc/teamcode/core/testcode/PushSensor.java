@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.core.testcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -10,7 +11,7 @@ import com.qualcomm.robotcore.hardware.TouchSensor;
  * November 04, 2016 at 4:00 PM
  */
 
-@TeleOp(name = "Touch Sensor", group = "Sensor")
+@Autonomous(name = "Touch Sensor", group = "Sensor")
 public class PushSensor extends LinearOpMode
 {
 

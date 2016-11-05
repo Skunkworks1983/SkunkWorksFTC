@@ -31,6 +31,7 @@ public abstract class CustomOpMode extends OpMode
         telemetry.addData("", "");
         telemetry.addData(" Right Bumper", "Decrease max speed by 10%");
         telemetry.addData(" Left Bumper", "Increase max speed by 10%");
+        telemetry.update();
     }
 
     public float getPower()
@@ -46,7 +47,7 @@ public abstract class CustomOpMode extends OpMode
 
     public void powerUpDown()
     {
-        if(gamepad1.right_bumper)
+        if(gamepad1.right_bumper || gamepad2.right_bumper)
         {
             if(buttonUp && power < 10)
                 power++;
@@ -54,7 +55,7 @@ public abstract class CustomOpMode extends OpMode
         }
 
 
-        else if(gamepad1.left_bumper)
+        else if(gamepad1.left_bumper || gamepad2.left_bumper)
         {
             if(buttonUp && power > 3)
                 power--;

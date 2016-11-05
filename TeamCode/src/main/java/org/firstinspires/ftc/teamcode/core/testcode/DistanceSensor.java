@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.core.testcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
@@ -12,7 +13,7 @@ import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 /*
     Using hardware spot "A7"
  */
-@TeleOp(name = "Distance Sensor", group = "Sensor")
+@Autonomous(name = "Distance Sensor", group = "Sensor")
 public class DistanceSensor extends LinearOpMode
 {
 

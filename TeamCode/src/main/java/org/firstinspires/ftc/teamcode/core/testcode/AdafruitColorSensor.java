@@ -20,14 +20,15 @@ public class AdafruitColorSensor extends LinearOpMode
 {
 
     ColorSensor sensorRGB;
-    DeviceInterfaceModule cdim;
+    //DeviceInterfaceModule cdim;
 
     // we assume that the LED pin of the RGB sensor is connected to
     // digital port 5 (zero indexed).
     static final int LED_CHANNEL = 5;
 
     @Override
-    public void runOpMode() throws InterruptedException {
+    public void runOpMode() throws InterruptedException
+    {
 
         // hsvValues is an array that will hold the hue, saturation, and value information.
         float hsvValues[] = {0F,0F,0F};
@@ -47,18 +48,18 @@ public class AdafruitColorSensor extends LinearOpMode
         boolean bLedOn = true;
 
         // get a reference to our DeviceInterfaceModule object.
-        cdim = hardwareMap.deviceInterfaceModule.get("dim");
+        //cdim = hardwareMap.deviceInterfaceModule.get("dim");
 
         // set the digital channel to output mode.
         // remember, the Adafruit sensor is actually two devices.
         // It's an I2C sensor and it's also an LED that can be turned on or off.
-        cdim.setDigitalChannelMode(LED_CHANNEL, DigitalChannelController.Mode.OUTPUT);
+        //cdim.setDigitalChannelMode(LED_CHANNEL, DigitalChannelController.Mode.OUTPUT);
 
         // get a reference to our ColorSensor object.
         sensorRGB = hardwareMap.colorSensor.get("color_sensor");
 
         // turn the LED on in the beginning, just so user will know that the sensor is active.
-     //   cdim.setDigitalChannelState(LED_CHANNEL, bLedOn);
+        //cdim.setDigitalChannelState(LED_CHANNEL, bLedOn);
 
         // wait for the start button to be pressed.
         waitForStart();
@@ -75,7 +76,7 @@ public class AdafruitColorSensor extends LinearOpMode
 
                 // button is transitioning to a pressed state. Toggle the LED.
                 bLedOn = !bLedOn;
-                cdim.setDigitalChannelState(LED_CHANNEL, bLedOn);
+                //cdim.setDigitalChannelState(LED_CHANNEL, bLedOn);
             }
 
             // update previous state variable.
@@ -85,7 +86,7 @@ public class AdafruitColorSensor extends LinearOpMode
             Color.RGBToHSV((sensorRGB.red() * 255) / 800, (sensorRGB.green() * 255) / 800, (sensorRGB.blue() * 255) / 800, hsvValues);
 
             // send the info back to driver station using telemetry function.
-            telemetry.addData("LED", bLedOn ? "On" : "Off");
+            //telemetry.addData("LED", bLedOn ? "On" : "Off");
             telemetry.addData("Clear", sensorRGB.alpha());
             telemetry.addData("Red  ", sensorRGB.red());
             telemetry.addData("Green", sensorRGB.green());

@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.core.autonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
@@ -11,7 +12,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
  */
 // Build on robot phone
 
-@Autonomous(name="Drive Forward", group="Drive Forward")
+@TeleOp(name="Drive Forward", group="Drive Forward")
 public class DriveForward extends LinearOpMode
 {
     DcMotor leftMotor1;

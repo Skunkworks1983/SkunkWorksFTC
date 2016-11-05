@@ -48,8 +48,7 @@ import com.qualcomm.robotcore.hardware.GyroSensor;
  * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
 */
-@TeleOp(name = "Sensor: MR Gyro", group = "Sensor")
-@Disabled
+@TeleOp(name = "MR Gyro", group = "Sensor")
 public class SensorMRGyro extends LinearOpMode {
 
   @Override
@@ -65,14 +64,22 @@ public class SensorMRGyro extends LinearOpMode {
     // get a reference to a Modern Robotics GyroSensor object.
     gyro = (ModernRoboticsI2cGyro)hardwareMap.gyroSensor.get("gyro");
 
-    // start calibrating the gyro.
-    telemetry.addData(">", "Gyro Calibrating. Do Not move!");
-    telemetry.update();
+    int periods = 0;
     gyro.calibrate();
 
     // make sure the gyro is calibrated.
-    while (gyro.isCalibrating())  {
-      Thread.sleep(50);
+    while (gyro.isCalibrating())
+    {
+      String period = "";
+      for(int i = 0; i <= periods; i++)
+        period += ".";
+      telemetry.addData(">", "Gyro Calibrating" + period + " Don't start!");
+      telemetry.update();
+      if(periods >= 4)
+        periods = 0;
+      else
+        periods++;
+      Thread.sleep(200);
       idle();
     }
 
