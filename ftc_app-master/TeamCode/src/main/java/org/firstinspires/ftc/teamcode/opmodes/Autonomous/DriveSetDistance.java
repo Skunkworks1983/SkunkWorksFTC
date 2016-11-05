@@ -132,11 +132,21 @@ public class DriveSetDistance extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
+        int degreesToMove = 90;
+        double inchesToDegrees = 12 / 160;
+
+        double leftTurn = inchesToDegrees * degreesToMove;
+        double rightTurn = -inchesToDegrees * degreesToMove;
+
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
         //encoderDrive(DRIVE_SPEED,  10,  -10, 3.0);  // S1: Forward 47 Inches with 5 Sec timeout
+<<<<<<< HEAD
         //encoderDrive(TURN_SPEED,   12, 12, 2.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
         //encoderTick(TURN_SPEED, 100, -100, 20.0); // 4 ticks = 1 degree or 4 degrees is one tick??? Help???
+=======
+        encoderDrive(TURN_SPEED,   leftTurn, rightTurn, 2.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
+>>>>>>> origin/7818-dev
         //encoderDrive(DRIVE_SPEED, -24, -24, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
 
         //robot.leftClaw.setPosition(1.0);            // S4: Stop and close the claw.
