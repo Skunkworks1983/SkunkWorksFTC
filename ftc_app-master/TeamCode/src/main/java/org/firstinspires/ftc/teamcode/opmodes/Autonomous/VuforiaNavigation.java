@@ -33,6 +33,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package org.firstinspires.ftc.teamcode.opmodes.Autonomous;
 
 import com.qualcomm.ftcrobotcontroller.R;
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -105,6 +106,7 @@ public class VuforiaNavigation extends LinearOpMode {
     DcMotor MotorFR; //Front Right
     DcMotor MotorBL; //Back Left
     DcMotor MotorBR; //Back Right
+    ModernRoboticsI2cGyro gyro    = null;
 
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -115,6 +117,11 @@ public class VuforiaNavigation extends LinearOpMode {
     static final double     DRIVE_SPEED             = 0.25; //Maximum speed with no load is around 50 inches per second, between 4 and 5 feet per second
     static final double     TURN_SPEED              = 0.5;
 
+    static final double     HEADING_THRESHOLD       = 1 ;      // As tight as we can make it with an integer gyro
+    static final double     P_TURN_COEFF            = 0.1;     // Larger is more responsive, but also less stable
+    static final double     P_DRIVE_COEFF           = 0.15;     // Larger is more responsive, but also less stable
+
+
     float x;
     float y;
     float z;
@@ -122,6 +129,41 @@ public class VuforiaNavigation extends LinearOpMode {
 
     @Override public void runOpMode() {
 
+        gyro = (ModernRoboticsI2cGyro)hardwareMap.gyroSensor.get("gyro");
+
+        // Ensure the robot it stationary, then reset the encoders and calibrate the gyro.
+        MotorFL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        MotorBL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        MotorFR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        MotorBR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        // Send telemetry message to alert driver that we are calibrating;
+        telemetry.addData(">", "Calibrating Gyro");    //
+        telemetry.update();
+
+        gyro.calibrate();
+
+        // make sure the gyro is calibrated before continuing
+        while (!isStopRequested() && gyro.isCalibrating())  {
+            sleep(50);
+            idle();
+        }
+
+        telemetry.addData(">", "Robot Ready.");    //
+        telemetry.update();
+
+        MotorFL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        MotorBL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        MotorFR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        MotorBR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        // Wait for the game to start (Display Gyro value), and reset gyro before we move..
+        while (!isStarted()) {
+            telemetry.addData(">", "Robot Heading = %d", gyro.getIntegratedZValue());
+            telemetry.update();
+            idle();
+        }
+        gyro.resetZAxisIntegrator();
 
         /**
          * Start up Vuforia, telling it the id of the view that we wish to use as the parent for
@@ -427,6 +469,7 @@ public class VuforiaNavigation extends LinearOpMode {
         MotorBL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         MotorBR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+        /* no need dis
         // Send telemetry message to indicate successful Encoder reset
         telemetry.addData("Path0",  "Starting at %7d :%7d",
                 MotorFL.getCurrentPosition(),
@@ -451,6 +494,7 @@ public class VuforiaNavigation extends LinearOpMode {
         telemetry.addData("Path", "Complete");
         telemetry.update();
     }
+    
 
     /**
      * A simple utility that extracts positioning information from a transformation matrix
