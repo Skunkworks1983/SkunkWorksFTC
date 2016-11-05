@@ -107,6 +107,15 @@ public class PushbotAutoDriveByGyro_Linear extends LinearOpMode {
          * The init() method of the hardware class does most of the work here
          */
         //robot.init(hardwareMap);
+        MotorFL  = hardwareMap.dcMotor.get("leftFront");
+        MotorFR = hardwareMap.dcMotor.get("rightFront");
+        MotorBL = hardwareMap.dcMotor.get("leftBack");
+        MotorBR = hardwareMap.dcMotor.get("rightBack");
+
+        MotorFL.setDirection(DcMotor.Direction.REVERSE);
+        MotorBL.setDirection(DcMotor.Direction.REVERSE);
+        MotorFR.setDirection(DcMotor.Direction.FORWARD);
+        MotorBR.setDirection(DcMotor.Direction.FORWARD);
         gyro = (ModernRoboticsI2cGyro)hardwareMap.gyroSensor.get("gyro");
 
         // Ensure the robot it stationary, then reset the encoders and calibrate the gyro.
