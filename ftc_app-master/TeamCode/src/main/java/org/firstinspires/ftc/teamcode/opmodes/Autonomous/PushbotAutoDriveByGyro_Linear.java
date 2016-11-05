@@ -92,7 +92,7 @@ public class PushbotAutoDriveByGyro_Linear extends LinearOpMode {
     // These constants define the desired driving/control characteristics
     // The can/should be tweaked to suite the specific robot drive train.
     static final double     DRIVE_SPEED             = 0.7;     // Nominal speed for better accuracy.
-    static final double     TURN_SPEED              = 0.5;     // Nominal half speed for better accuracy.
+    static final double     TURN_SPEED              = 0.3;     // Nominal half speed for better accuracy.
 
     static final double     HEADING_THRESHOLD       = 1 ;      // As tight as we can make it with an integer gyro
     static final double     P_TURN_COEFF            = 0.1;     // Larger is more responsive, but also less stable
@@ -155,15 +155,16 @@ public class PushbotAutoDriveByGyro_Linear extends LinearOpMode {
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
         // Put a hold after each turn
-        gyroDrive(DRIVE_SPEED, 48.0, 0.0);    // Drive FWD 48 inches
-        gyroTurn( TURN_SPEED, -45.0);         // Turn  CCW to -45 Degrees
-        gyroHold( TURN_SPEED, -45.0, 0.5);    // Hold -45 Deg heading for a 1/2 second
-        gyroTurn( TURN_SPEED,  45.0);         // Turn  CW  to  45 Degrees
-        gyroHold( TURN_SPEED,  45.0, 0.5);    // Hold  45 Deg heading for a 1/2 second
-        gyroTurn( TURN_SPEED,   0.0);         // Turn  CW  to   0 Degrees
-        gyroHold( TURN_SPEED,   0.0, 1.0);    // Hold  0 Deg heading for a 1 second
-        gyroDrive(DRIVE_SPEED,-48.0, 0.0);    // Drive REV 48 inches
-        gyroHold( TURN_SPEED,   0.0, 0.5);    // Hold  0 Deg heading for a 1/2 second
+        //gyroDrive(DRIVE_SPEED, 48.0, 0.0);    // Drive FWD 48 inches
+        //gyroTurn( TURN_SPEED, -10.0);         // Turn  CCW to -45 Degrees
+        //gyroHold( TURN_SPEED, -45.0, 100.0);    // Hold -45 Deg heading for a 1/2 second
+        //gyroTurn( TURN_SPEED,  45.0);         // Turn  CW  to  45 Degrees
+        //gyroHold( TURN_SPEED,  45.0, 0.5);    // Hold  45 Deg heading for a 1/2 second
+        //gyroTurn( TURN_SPEED,   0.0);         // Turn  CW  to   0 Degrees
+        //gyroHold( TURN_SPEED,   0.0, 1.0);    // Hold  0 Deg heading for a 1 second
+        //gyroDrive(DRIVE_SPEED, 24.0, 0.0);    // Drive REV 48 inches
+        gyroTurn( TURN_SPEED, 360.0);
+        //gyroHold( TURN_SPEED,   0.0, 0.5);    // Hold  0 Deg heading for a 1/2 second
 
         telemetry.addData("Path", "Complete");
         telemetry.update();
@@ -188,16 +189,12 @@ public class PushbotAutoDriveByGyro_Linear extends LinearOpMode {
 
         int     newLeftTarget;
         int     newRightTarget;
-        int     newLeftTarget1;
-        int     newRightTarget1;
         int     moveCounts;
         double  max;
         double  error;
         double  steer;
         double  leftSpeed;
         double  rightSpeed;
-        double  leftSpeed1;
-        double  rightSpeed1;
 
         // Ensure that the opmode is still active
         if (opModeIsActive()) {
@@ -206,14 +203,12 @@ public class PushbotAutoDriveByGyro_Linear extends LinearOpMode {
             moveCounts = (int)(distance * COUNTS_PER_INCH);
             newLeftTarget = MotorFL.getCurrentPosition() + moveCounts;
             newRightTarget = MotorFR.getCurrentPosition() + moveCounts;
-            newLeftTarget1 = MotorBL.getCurrentPosition() + moveCounts;
-            newRightTarget1 = MotorBR.getCurrentPosition() + moveCounts;
 
             // Set Target and Turn On RUN_TO_POSITION
             MotorFL.setTargetPosition(newLeftTarget);
             MotorBR.setTargetPosition(newRightTarget);
-            MotorBL.setTargetPosition(newLeftTarget1);
-            MotorBR.setTargetPosition(newRightTarget1);
+            MotorBL.setTargetPosition(newLeftTarget);
+            MotorBR.setTargetPosition(newRightTarget);
 
             MotorFL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             MotorFR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -241,8 +236,6 @@ public class PushbotAutoDriveByGyro_Linear extends LinearOpMode {
 
                 leftSpeed = speed - steer;
                 rightSpeed = speed + steer;
-                leftSpeed1 = speed - steer;
-                rightSpeed1 = speed + steer;
 
                 // Normalize speeds if any one exceeds +/- 1.0;
                 max = Math.max(Math.abs(leftSpeed), Math.abs(rightSpeed));
@@ -254,8 +247,8 @@ public class PushbotAutoDriveByGyro_Linear extends LinearOpMode {
 
                 MotorFL.setPower(leftSpeed);
                 MotorFR.setPower(rightSpeed);
-                MotorBL.setPower(leftSpeed1);
-                MotorBR.setPower(rightSpeed1);
+                MotorBL.setPower(leftSpeed);
+                MotorBR.setPower(rightSpeed);
 
                 // Display drive status for the driver.
                 telemetry.addData("Err/St",  "%5.1f/%5.1f",  error, steer);
@@ -345,8 +338,6 @@ public class PushbotAutoDriveByGyro_Linear extends LinearOpMode {
         boolean  onTarget = false ;
         double leftSpeed;
         double rightSpeed;
-        double leftSpeed1;
-        double rightSpeed1;
 
         // determine turn power based on +/- error
         error = getError(angle);
@@ -355,23 +346,19 @@ public class PushbotAutoDriveByGyro_Linear extends LinearOpMode {
             steer = 0.0;
             leftSpeed  = 0.0;
             rightSpeed = 0.0;
-            leftSpeed1  = 0.0;
-            rightSpeed1 = 0.0;
             onTarget = true;
         }
         else {
             steer = getSteer(error, PCoeff);
             rightSpeed  = speed * steer;
             leftSpeed   = -rightSpeed;
-            rightSpeed1  = speed * steer;
-            leftSpeed1   = -rightSpeed1;
         }
 
         // Send desired speeds to motors.
         MotorFL.setPower(leftSpeed);
         MotorFR.setPower(rightSpeed);
-        MotorBL.setPower(leftSpeed1);
-        MotorBR.setPower(rightSpeed1);
+        MotorBL.setPower(leftSpeed);
+        MotorBR.setPower(rightSpeed);
 
         // Display it for the driver.
         telemetry.addData("Target", "%5.2f", angle);

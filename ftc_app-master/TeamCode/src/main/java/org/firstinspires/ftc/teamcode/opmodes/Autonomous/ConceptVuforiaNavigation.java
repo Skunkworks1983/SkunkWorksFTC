@@ -177,7 +177,7 @@ public class ConceptVuforiaNavigation extends LinearOpMode {
          * target configuration files *must* correspond for the math to work out correctly.
          */
         float mmPerInch        = 25.4f;
-        float mmBotWidth       = 16.5f * mmPerInch;            // ... or whatever is right for your robot
+        float mmBotWidth       = 17 * mmPerInch;            // ... or whatever is right for your robot
         float mmFTCFieldWidth  = (12*12 - 2) * mmPerInch;   // the FTC field is ~11'10" center-to-center of the glass panels
 
         /**
