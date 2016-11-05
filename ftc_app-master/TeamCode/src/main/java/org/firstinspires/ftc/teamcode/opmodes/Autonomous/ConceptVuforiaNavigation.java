@@ -90,7 +90,7 @@ import java.util.Vector;
  * is explained below.
  */
 
-@Autonomous(name="Please work")
+@Autonomous(name="XYZ + Rot Vuforia")
 
 public class ConceptVuforiaNavigation extends LinearOpMode {
 
