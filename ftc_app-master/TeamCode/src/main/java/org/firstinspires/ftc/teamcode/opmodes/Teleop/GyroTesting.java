@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmodes.Teleop;
 
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.GyroSensor;
 
 //import org.firstinspires.ftc.teamcode.LBHW;
 
-@Autonomous(name="Gyro", group="")
+@TeleOp(name="Gyro", group="")
 public class GyroTesting extends LinearOpMode {
     DcMotor mr1;
     DcMotor mr2;
