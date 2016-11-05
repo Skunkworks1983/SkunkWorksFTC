@@ -101,6 +101,8 @@ public class VuforiaNavigation extends LinearOpMode {
      */
     VuforiaLocalizer vuforia;
 
+    static double[] gearsp = {-180 , -30, 5};
+
     /* Declare OpMode members. */
     DcMotor MotorFL; //Front Left
     DcMotor MotorFR; //Front Right
@@ -128,7 +130,7 @@ public class VuforiaNavigation extends LinearOpMode {
     float d;
 
     @Override public void runOpMode() {
-
+/*
         gyro = (ModernRoboticsI2cGyro) hardwareMap.gyroSensor.get("gyro");
 
         // Ensure the robot it stationary, then reset the encoders and calibrate the gyro.
@@ -165,6 +167,7 @@ public class VuforiaNavigation extends LinearOpMode {
         }
         gyro.resetZAxisIntegrator();
 
+*/
         /**
          * Start up Vuforia, telling it the id of the view that we wish to use as the parent for
          * the camera monitor feedback; if no camera monitor feedback is desired, use the parameterless
@@ -423,12 +426,15 @@ public class VuforiaNavigation extends LinearOpMode {
                 z = robotLocationArray[14];
                 //d =
 
+                double[] distance = {gearsp[0] - x, gearsp[1] - y};
 
-                telemetry.addData("RealPos", format(lastLocation));
+                telemetry.addData("meow", distance[0] + " " + distance[1]);
+//
+//                telemetry.addData("RealPos", format(lastLocation));
 
                 telemetry.addData("FakePos:", "x:" + x + "y:" + y + "zee:" + z);
 
-                telemetry.addData("Robot:", "true");
+                telemetry.addData("Robot", true);
             } else {
                 telemetry.addData("Pos", "Unknown");
             }
