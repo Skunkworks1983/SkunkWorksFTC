@@ -492,7 +492,7 @@ public class VuforiaNavigation extends LinearOpMode {
         telemetry.addData("Path", "Complete");
         telemetry.update();
     }
-    
+
 
     /**
      * A simple utility that extracts positioning information from a transformation matrix
