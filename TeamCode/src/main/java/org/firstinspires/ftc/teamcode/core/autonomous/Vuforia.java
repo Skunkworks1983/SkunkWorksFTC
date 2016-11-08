@@ -261,22 +261,22 @@ public class Vuforia extends LinearOpMode
                 boolean visible = ((VuforiaTrackableDefaultListener)trackable.getListener()).isVisible();
                 telemetry.addData(trackable.getName(), visible ? "Visible" : "Not Visible");
 
-                if(visible)
-                {
-                    leftMotor1.setPower(0.25);
-                    rightMotor1.setPower(0.25);
-                    leftMotor2.setPower(0.25);
-                    rightMotor2.setPower(0.25);
-                    continue;
-                }
-
-                else
-                {
-                    leftMotor1.setPower(0);
-                    rightMotor1.setPower(0);
-                    leftMotor2.setPower(0);
-                    rightMotor2.setPower(0);
-                }
+//                if(visible)
+//                {
+//                    leftMotor1.setPower(0.25);
+//                    rightMotor1.setPower(0.25);
+//                    leftMotor2.setPower(0.25);
+//                    rightMotor2.setPower(0.25);
+//                    continue;
+//                }
+//
+//                else
+//                {
+//                    leftMotor1.setPower(0);
+//                    rightMotor1.setPower(0);
+//                    leftMotor2.setPower(0);
+//                    rightMotor2.setPower(0);
+//                }
 
                 OpenGLMatrix robotLocationTransform = ((VuforiaTrackableDefaultListener)trackable.getListener()).getUpdatedRobotLocation();
                 if (robotLocationTransform != null)
