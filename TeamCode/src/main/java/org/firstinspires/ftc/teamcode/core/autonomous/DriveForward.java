@@ -16,8 +16,8 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 public class DriveForward extends LinearOpMode
 {
     DcMotor leftMotor1;
-    DcMotor rightMotor1;
     DcMotor leftMotor2;
+    DcMotor rightMotor1;
     DcMotor rightMotor2;
 
     @Override

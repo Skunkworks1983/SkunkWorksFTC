@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.hardware.TouchSensor;
  */
 
 @Autonomous(name = "Touch Sensor", group = "Sensor")
+@Disabled
 public class PushSensor extends LinearOpMode
 {
 

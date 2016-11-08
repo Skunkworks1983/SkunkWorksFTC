@@ -15,6 +15,7 @@ import java.util.Date;
  */
 
 @Autonomous(name = "MR Range Sensor", group = "Sensor")
+@Disabled
 public class MRRangeSensor extends LinearOpMode
 {
 
