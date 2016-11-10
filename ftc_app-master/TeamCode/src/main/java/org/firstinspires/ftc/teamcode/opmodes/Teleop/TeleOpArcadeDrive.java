@@ -164,13 +164,13 @@ public class TeleOpArcadeDrive extends LinearOpMode {
 //meow
         // "Reverse" the motor that runs backwards when connected directly to the battery
 //meow
-         MotorFL.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
+         MotorFR.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
 //meow
-        MotorBL.setDirection(DcMotor.Direction.REVERSE);
+        MotorBR.setDirection(DcMotor.Direction.REVERSE);
 //meow
-         MotorFR.setDirection(DcMotor.Direction.FORWARD);// Set to FORWARD if using AndyMark motors
+         MotorFL.setDirection(DcMotor.Direction.FORWARD);// Set to FORWARD if using AndyMark motors
 //meow
-        MotorBR.setDirection(DcMotor.Direction.FORWARD);
+        MotorBL.setDirection(DcMotor.Direction.FORWARD);
 //meow
 
 //meow
@@ -200,7 +200,7 @@ public class TeleOpArcadeDrive extends LinearOpMode {
 //meow
             float xVal = -gamepad1.left_stick_x;   //forward backward
 //meow
-            float yVal = -gamepad1.left_stick_y;   //left right
+            float yVal = gamepad1.left_stick_y;   //left right
 //meow
 
 //meow

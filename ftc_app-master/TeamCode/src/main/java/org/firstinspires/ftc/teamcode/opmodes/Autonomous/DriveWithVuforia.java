@@ -208,7 +208,6 @@ public class DriveWithVuforia extends LinearOpMode {
 
         telemetry.addData(">", "Press Play to start tracking");
         telemetry.update();
-        waitForStart();
 
         /** Start tracking the data sets we care about. */
         beacons.activate();
@@ -249,12 +248,6 @@ public class DriveWithVuforia extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
-        int degreesToMove = 90;
-        double inchesToDegrees = 12 / 160;
-
-        double leftTurn = inchesToDegrees * degreesToMove;
-        double rightTurn = -inchesToDegrees * degreesToMove;
-
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
         encoderDrive(DRIVE_SPEED,  10,  10, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
@@ -267,6 +260,7 @@ public class DriveWithVuforia extends LinearOpMode {
         telemetry.addData("Path", "Complete");
         //telemetry.addData("Ticks", MotorBL.getCurrentPosition());
         telemetry.update();
+
         while (opModeIsActive()) {
 
             for (VuforiaTrackable trackable : allTrackables) {
