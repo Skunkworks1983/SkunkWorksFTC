@@ -20,7 +20,6 @@ import com.qualcomm.robotcore.hardware.Servo;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 @Autonomous(name = "Concept: Scan Servo", group = "Concept")
-@Disabled
 public class ConceptScanServo extends LinearOpMode {
 
     static final double INCREMENT   = 0.01;     // amount to slew servo each CYCLE_MS cycle
@@ -34,13 +33,14 @@ public class ConceptScanServo extends LinearOpMode {
     boolean rampUp = true;
 
 
+
     @Override
     public void runOpMode() {
 
         // Connect to servo (Assume PushBot Left Hand)
         // Change the text in quotes to match any servo name on your robot.
-        servo = hardwareMap.servo.get("left_hand");
-
+        servo = hardwareMap.servo.get("servo");
+        double realPosition = servo.getPosition();
         // Wait for the start button
         telemetry.addData(">", "Press Start to scan Servo." );
         telemetry.update();
@@ -71,6 +71,7 @@ public class ConceptScanServo extends LinearOpMode {
             // Display the current value
             telemetry.addData("Servo Position", "%5.2f", position);
             telemetry.addData(">", "Press Stop to end test." );
+            telemetry.addData("Real Position: ", realPosition);
             telemetry.update();
 
             // Set the servo to the new position and pause;
