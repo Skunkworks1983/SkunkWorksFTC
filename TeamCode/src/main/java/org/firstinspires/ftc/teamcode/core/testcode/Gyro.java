@@ -125,7 +125,7 @@ public class Gyro extends LinearOpMode
      *                   0 = fwd. +ve is CCW from fwd. -ve is CW from forward.
      *                   If a relative angle is required, add/subtract from current heading.
      */
-    public void gyroDrive ( double speed,
+    public void gyroDrive (double speed,
                             double distance,
                             double angle) throws InterruptedException {
 

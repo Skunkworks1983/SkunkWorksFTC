@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.teamcode.core.utils;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
@@ -35,8 +35,8 @@ public class MotorsHardware
         leftMotor2 = hwMap.dcMotor.get("left_drive2");
         rightMotor1  = hwMap.dcMotor.get("right_drive1");
         rightMotor2  = hwMap.dcMotor.get("right_drive2");
-        leftMotor1.setDirection(DcMotor.Direction.FORWARD);
-        leftMotor2.setDirection(DcMotor.Direction.FORWARD);
+        rightMotor1.setDirection(DcMotor.Direction.REVERSE);
+        rightMotor2.setDirection(DcMotor.Direction.REVERSE);
 
         // Set all motors to zero power
         setLeftPower(0);
@@ -50,6 +50,11 @@ public class MotorsHardware
         rightMotor2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
+    public boolean isInit()
+    {
+        return hwMap != null;
+    }
+
     public void setLeftPower(double power)
     {
         leftMotor1.setPower(power);
@@ -60,6 +65,22 @@ public class MotorsHardware
     {
         rightMotor1.setPower(power);
         rightMotor2.setPower(power);
+    }
+
+    public void resetLeftPower()
+    {
+        leftMotor1.setPower(0);
+        leftMotor2.setPower(0);
+        leftMotor1.setDirection(DcMotorSimple.Direction.FORWARD);
+        leftMotor2.setDirection(DcMotorSimple.Direction.FORWARD);
+    }
+
+    public void resetRightPower()
+    {
+        rightMotor1.setPower(0);
+        rightMotor2.setPower(0);
+        leftMotor1.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftMotor2.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
     public void setLeftMode(DcMotor.RunMode mode)
@@ -84,6 +105,18 @@ public class MotorsHardware
     {
         rightMotor1.setTargetPosition(potition);
         rightMotor2.setTargetPosition(potition);
+    }
+
+    public void setLeftDirection(DcMotorSimple.Direction direction)
+    {
+        leftMotor1.setDirection(direction);
+        leftMotor2.setDirection(direction);
+    }
+
+    public void setRightDirection(DcMotorSimple.Direction direction)
+    {
+        rightMotor1.setDirection(direction);
+        rightMotor2.setDirection(direction);
     }
 
     /***
