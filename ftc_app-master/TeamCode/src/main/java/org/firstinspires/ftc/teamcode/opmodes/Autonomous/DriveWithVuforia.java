@@ -206,9 +206,6 @@ public class DriveWithVuforia extends LinearOpMode {
         ((VuforiaTrackableDefaultListener)lego.getListener()).setPhoneInformation(phoneLocationOnRobot, parameters.cameraDirection);
         ((VuforiaTrackableDefaultListener)gears.getListener()).setPhoneInformation(phoneLocationOnRobot, parameters.cameraDirection);
 
-        telemetry.addData(">", "Press Play to start tracking");
-        telemetry.update();
-
         /** Start tracking the data sets we care about. */
         beacons.activate();
 
@@ -223,9 +220,6 @@ public class DriveWithVuforia extends LinearOpMode {
         MotorBR.setDirection(DcMotor.Direction.REVERSE);
 
         // Send telemetry message to signify robot waiting;
-        telemetry.addData("Status", "Resetting Encoders");    //
-        telemetry.update();
-
         MotorFL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         MotorFR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         MotorBL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -237,29 +231,7 @@ public class DriveWithVuforia extends LinearOpMode {
         MotorBL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         MotorBR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        // Send telemetry message to indicate successful Encoder reset
-        telemetry.addData("Path0",  "Starting at %7d :%7d",
-                          MotorFL.getCurrentPosition(),
-                MotorFR.getCurrentPosition(),
-                MotorBL.getCurrentPosition(),
-                          MotorBR.getCurrentPosition());
-        telemetry.update();
-
-        // Wait for the game to start (driver presses PLAY)
         waitForStart();
-
-        // Step through each leg of the path,
-        // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        encoderDrive(DRIVE_SPEED,  10,  10, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
-        //encoderDrive(DRIVE_SPEED, -24, -24, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
-
-        //robot.leftClaw.setPosition(1.0);            // S4: Stop and close the claw.
-        //robot.rightClaw.setPosition(0.0);
-        //sleep(1000);     // pause for servos to move
-
-        telemetry.addData("Path", "Complete");
-        //telemetry.addData("Ticks", MotorBL.getCurrentPosition());
-        telemetry.update();
 
         while (opModeIsActive()) {
 
@@ -280,11 +252,8 @@ public class DriveWithVuforia extends LinearOpMode {
              * Provide feedback as to where the robot was last located (if we know).
              */
 
-
-
             if (lastLocation != null) {
                 //  RobotLog.vv(TAG, "robot=%s", format(lastLocation));
-
 
                 float[] robotLocationArray = lastLocation.getData();
                 x = robotLocationArray[12];
@@ -325,74 +294,7 @@ public class DriveWithVuforia extends LinearOpMode {
      *  3) Driver stops the opmode running.
      */
 
-    public void encoderTick(double speed, int tickRight, int tickLeft, double timeoutS) {
-
-        int newFLTarget;
-        int newFRTarget;
-        int newBLTarget;
-        int newBRTarget;
-
-        // Ensure that the opmode is still active
-        if (opModeIsActive()) {
-
-            // Determine new target position, and pass to motor controller
-            newFLTarget = MotorFL.getCurrentPosition() + tickLeft;
-            newFRTarget = MotorFR.getCurrentPosition() + tickRight;
-            newBLTarget = MotorBL.getCurrentPosition() + tickLeft;
-            newBRTarget = MotorBR.getCurrentPosition() + tickRight;
-            MotorFL.setTargetPosition(newFLTarget);
-            MotorFR.setTargetPosition(newFRTarget);
-            MotorBL.setTargetPosition(newBLTarget);
-            MotorBR.setTargetPosition(newBRTarget);
-
-            // Turn On RUN_TO_POSITION
-            MotorFL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            MotorFR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            MotorBL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            MotorBR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-
-            // reset the timeout time and start motion.
-            runtime.reset();
-            MotorFL.setPower(Math.abs(speed));
-            MotorFR.setPower(Math.abs(speed));
-            MotorBL.setPower(Math.abs(speed));
-            MotorBR.setPower(Math.abs(speed));
-
-
-            // keep looping while we are still active, and there is time left, and both motors are running.
-            while (opModeIsActive() &&
-                    (runtime.seconds() < timeoutS) &&
-                    (MotorFL.isBusy() && MotorFR.isBusy() && MotorBL.isBusy() && MotorBR.isBusy())) {
-
-                // Display it for the driver.
-                telemetry.addData("Path1", "Running to %7d :%7d", newFLTarget, newFRTarget);
-                telemetry.addData("Path2", "Running at %7d :%7d",
-                        MotorFL.getCurrentPosition(),
-                        MotorFR.getCurrentPosition(),
-                        MotorBL.getCurrentPosition(),
-                        MotorBR.getCurrentPosition());
-                telemetry.update();
-            }
-
-            // Stop all motion;
-            MotorFL.setPower(0);
-            MotorFR.setPower(0);
-            MotorBL.setPower(0);
-            MotorBR.setPower(0);
-
-            // Turn off RUN_TO_POSITION
-            MotorFL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            MotorFR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            MotorBL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            MotorBR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-            //  sleep(250);   // optional pause after each move
-
-        }
-    }
-
-    public void encoderDrive(double speed,
+   /** public void encoderDrive(double speed,
                              double leftInches, double rightInches,
                              double timeoutS) {
         int newFLTarget;
@@ -458,5 +360,7 @@ public class DriveWithVuforia extends LinearOpMode {
 
             //  sleep(250);   // optional pause after each move
         }
+
     }
+    */
 }
