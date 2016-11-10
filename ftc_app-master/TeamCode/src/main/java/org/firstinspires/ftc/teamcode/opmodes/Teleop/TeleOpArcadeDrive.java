@@ -198,9 +198,9 @@ public class TeleOpArcadeDrive extends LinearOpMode {
 //meow
 
 //meow
-            float xVal = -gamepad1.left_stick_x;   //forward backward
+            float xVal = gamepad1.left_stick_x;   //forward backward
 //meow
-            float yVal = gamepad1.left_stick_y;   //left right
+            float yVal = -gamepad1.left_stick_y;   //left right
 //meow
 
 //meow
