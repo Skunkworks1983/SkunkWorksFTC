@@ -50,15 +50,15 @@ public class Vuforia extends LinearOpMode
         parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
         this.vuforia = ClassFactory.createVuforiaLocalizer(parameters);
 
-        if(currentlyDriving.equals(""))
-        {
-            if(!motors.isInit())
-                motors.init(hardwareMap);
-
-            motors.setRightDirection(DcMotorSimple.Direction.FORWARD);
-            motors.setLeftPower(.22);
-            motors.setRightPower(.22);
-        }
+//        if(currentlyDriving.equals(""))
+//        {
+//            if(!motors.isInit())
+//                motors.init(hardwareMap);
+//
+//            motors.setRightDirection(DcMotorSimple.Direction.FORWARD);
+//            motors.setLeftPower(.22);
+//            motors.setRightPower(.22);
+//        }
 
         // Pictures
         VuforiaTrackables pictures = this.vuforia.loadTrackablesFromAsset("FTC_2016-17");
@@ -198,7 +198,7 @@ public class Vuforia extends LinearOpMode
                  */
                 boolean visible = ((VuforiaTrackableDefaultListener)trackable.getListener()).isVisible();
                 telemetry.addData(trackable.getName(), visible ? "Visible" : "Not Visible");
-                drive(visible, trackable.getName());
+                //drive
 
                 OpenGLMatrix robotLocationTransform = ((VuforiaTrackableDefaultListener)trackable.getListener()).getUpdatedRobotLocation();
                 if (robotLocationTransform != null)
@@ -207,7 +207,7 @@ public class Vuforia extends LinearOpMode
             /**
              * Provide feedback as to where the robot was last located (if we know).
              */
-            telemetry.addData("Pos", lastLocation != null ? format(lastLocation) : "Unkown D:");
+            telemetry.addData("Position", lastLocation != null ? format(lastLocation) : "Unkown D:");
 
             telemetry.update();
             idle();
