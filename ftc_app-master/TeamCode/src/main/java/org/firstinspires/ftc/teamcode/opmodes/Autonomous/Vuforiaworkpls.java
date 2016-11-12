@@ -408,9 +408,11 @@ public class Vuforiaworkpls extends LinearOpMode {
 
             for (VuforiaTrackable trackable : allTrackables) {
                 turnSpeed = 0.17;
-                if (((VuforiaTrackableDefaultListener) trackable.getListener()).isVisible() || isSeen && robotBearing > -150 && robotBearing < 0) {
-                    //turn left
+                if (((VuforiaTrackableDefaultListener) trackable.getListener()).isVisible()){
                     isSeen = true;
+                }
+                if (isSeen && robotBearing > -150 && robotBearing < 0) {
+                    //turn left
 
                     MotorFL.setPower(-turnSpeed);
                     MotorFR.setPower(turnSpeed);
@@ -425,7 +427,6 @@ public class Vuforiaworkpls extends LinearOpMode {
                         MotorFR.setPower(-turnSpeed);
                         MotorBL.setPower(turnSpeed);
                         MotorBR.setPower(-turnSpeed);
-                        sleep(100);
 
                     }
                 }
@@ -436,6 +437,7 @@ public class Vuforiaworkpls extends LinearOpMode {
                     MotorBR.setPower(0);
                     break;
                 }
+                break;
             }
             telemetry.update();
         }
