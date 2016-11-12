@@ -119,7 +119,7 @@ public class Vuforiaworkpls extends LinearOpMode {
      */
     VuforiaLocalizer vuforia;
 
-    @Override public void runOpMode() {
+    @Override public void runOpMode() throws InterruptedException {
 
         MotorFL = hardwareMap.dcMotor.get("leftFront");
         MotorFR = hardwareMap.dcMotor.get("rightFront");
@@ -416,6 +416,7 @@ public class Vuforiaworkpls extends LinearOpMode {
                 turnSpeed = 0.17;
                 if (((VuforiaTrackableDefaultListener) trackable.getListener()).isVisible() || isSeen && robotBearing > -150 && robotBearing < 0) {
                     //turn left
+                    isSeen = true;
 
                     MotorFL.setPower(-turnSpeed);
                     MotorFR.setPower(turnSpeed);
@@ -426,12 +427,14 @@ public class Vuforiaworkpls extends LinearOpMode {
 
                     if (robotBearing < 150 && robotBearing > 0) {
                         //turn right
+                        isSeen = true;
                         MotorFL.setPower(turnSpeed);
                         MotorFR.setPower(-turnSpeed);
                         MotorBL.setPower(turnSpeed);
                         MotorBR.setPower(-turnSpeed);
 
                         if (robotBearing < 10 && robotBearing > -10) {
+                            isSeen = true;
                             MotorFL.setPower(0);
                             MotorFR.setPower(0);
                             MotorBL.setPower(0);
