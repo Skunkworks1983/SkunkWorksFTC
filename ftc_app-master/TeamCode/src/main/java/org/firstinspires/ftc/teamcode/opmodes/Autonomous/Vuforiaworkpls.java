@@ -408,39 +408,38 @@ public class Vuforiaworkpls extends LinearOpMode {
 
             for (VuforiaTrackable trackable : allTrackables) {
                 turnSpeed = 0.17;
-                if (((VuforiaTrackableDefaultListener) trackable.getListener()).isVisible()){
+                if (((VuforiaTrackableDefaultListener) trackable.getListener()).isVisible()) {
                     isSeen = true;
                 }
-                if (isSeen && robotBearing > -150 && robotBearing < 0) {
-                    //turn left
+                    if (isSeen && robotBearing > -150 && robotBearing < 0) {
+                        //turn left
 
-                    MotorFL.setPower(-turnSpeed);
-                    MotorFR.setPower(turnSpeed);
-                    MotorBL.setPower(-turnSpeed);
-                    MotorBR.setPower(turnSpeed);
+                        MotorFL.setPower(-turnSpeed);
+                        MotorFR.setPower(turnSpeed);
+                        MotorBL.setPower(-turnSpeed);
+                        MotorBR.setPower(turnSpeed);
 
-                } else {
+                    } else {
 
-                    if (robotBearing < 150 && robotBearing > 0) {
-                        //turn right
-                        MotorFL.setPower(turnSpeed);
-                        MotorFR.setPower(-turnSpeed);
-                        MotorBL.setPower(turnSpeed);
-                        MotorBR.setPower(-turnSpeed);
+                        if (robotBearing < 150 && robotBearing > 0) {
+                            //turn right
+                            MotorFL.setPower(turnSpeed);
+                            MotorFR.setPower(-turnSpeed);
+                            MotorBL.setPower(turnSpeed);
+                            MotorBR.setPower(-turnSpeed);
 
+                        }
                     }
-                }
-                if (robotBearing < 10 && robotBearing > -10) {
-                    MotorFL.setPower(0);
-                    MotorFR.setPower(0);
-                    MotorBL.setPower(0);
-                    MotorBR.setPower(0);
+                    if (robotBearing < 10 && robotBearing > -10) {
+                        MotorFL.setPower(0);
+                        MotorFR.setPower(0);
+                        MotorBL.setPower(0);
+                        MotorBR.setPower(0);
+                    }
                     break;
                 }
-                break;
             }
             telemetry.update();
-        }
     }
 
     /**
