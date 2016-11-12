@@ -56,13 +56,8 @@ public class Vuforia extends LinearOpMode
                 motors.init(hardwareMap);
 
             motors.setRightDirection(DcMotorSimple.Direction.FORWARD);
-            motors.setLeftPower(.2);
-            motors.setRightPower(.2);
-
-            sleep(500);
-
-            motors.setLeftPower(.1);
-            motors.setRightPower(.1);
+            motors.setLeftPower(.22);
+            motors.setRightPower(.22);
         }
 
         // Pictures
@@ -192,10 +187,9 @@ public class Vuforia extends LinearOpMode
         /** Start tracking the data sets we care about. */
         pictures.activate();
 
-        while (opModeIsActive())
+        while(opModeIsActive())
         {
-
-            for (VuforiaTrackable trackable : allTrackables)
+            for(VuforiaTrackable trackable : allTrackables)
             {
                 /**
                  * getUpdatedRobotLocation() will return null if no new information is available since
@@ -229,7 +223,7 @@ public class Vuforia extends LinearOpMode
         return transformationMatrix.formatAsTransform();
     }
 
-    private void drive(boolean visible, String name) throws InterruptedException
+    private void drive(boolean visible, String name)
     {
        if(!motors.isInit())
            motors.init(hardwareMap);

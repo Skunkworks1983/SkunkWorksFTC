@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 /**
  * Created by Adam.
  * November 07, 2016 at 7:07 PM
@@ -15,8 +17,8 @@ public class MotorsHardware
     /* Public OpMode members. */
     public DcMotor leftMotor1 = null;
     public DcMotor leftMotor2 = null;
-    public DcMotor  rightMotor1 = null;
-    public DcMotor  rightMotor2 = null;
+    public DcMotor rightMotor1 = null;
+    public DcMotor rightMotor2 = null;
 
     public static final double MID_SERVO =  0.5;
 
@@ -79,8 +81,8 @@ public class MotorsHardware
     {
         rightMotor1.setPower(0);
         rightMotor2.setPower(0);
-        leftMotor1.setDirection(DcMotorSimple.Direction.REVERSE);
-        leftMotor2.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightMotor1.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightMotor2.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
     public void setLeftMode(DcMotor.RunMode mode)
@@ -117,6 +119,14 @@ public class MotorsHardware
     {
         rightMotor1.setDirection(direction);
         rightMotor2.setDirection(direction);
+    }
+
+    public void debug(Telemetry telemetry)
+    {
+        telemetry.addData("Left Motor 1", "Power: " + leftMotor1.getPower() + " Direction: " + leftMotor1.getDirection().name());
+        telemetry.addData("Left Motor 2", "Power: " + leftMotor2.getPower() + " Direction: " + leftMotor2.getDirection().name());
+        telemetry.addData("Right Motor 1", "Power: " + rightMotor1.getPower() + " Direction: " + rightMotor1.getDirection().name());
+        telemetry.addData("Right Motor 2", "Power: " + rightMotor2.getPower() + " Direction: " + rightMotor2.getDirection().name());
     }
 
     /***
