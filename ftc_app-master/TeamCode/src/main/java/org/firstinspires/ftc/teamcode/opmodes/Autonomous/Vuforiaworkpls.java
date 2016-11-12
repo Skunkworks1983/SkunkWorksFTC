@@ -183,7 +183,7 @@ public class Vuforiaworkpls extends LinearOpMode {
         /** For convenience, gather together all the trackable objects in one easily-iterable collection */
         List<VuforiaTrackable> allTrackables = new ArrayList<VuforiaTrackable>();
         allTrackables.addAll(beacons);
-        
+
         /**
          * We use units of mm here because that's the recommended units of measurement for the
          * size values specified in the XML for the ImageTarget trackables in data sets. E.g.:
@@ -191,9 +191,9 @@ public class Vuforiaworkpls extends LinearOpMode {
          * You don't *have to* use mm here, but the units here and the units used in the XML
          * target configuration files *must* correspond for the math to work out correctly.
          */
-        float mmPerInch        = 25.4f;
-        float mmBotWidth       = 17 * mmPerInch;            // ... or whatever is right for your robot
-        float mmFTCFieldWidth  = (12*12 - 2) * mmPerInch;   // the FTC field is ~11'10" center-to-center of the glass panels
+        float mmPerInch = 25.4f;
+        float mmBotWidth = 17 * mmPerInch;            // ... or whatever is right for your robot
+        float mmFTCFieldWidth = (12 * 12 - 2) * mmPerInch;   // the FTC field is ~11'10" center-to-center of the glass panels
 
         /**
          * In order for localization to work, we need to tell the system where each target we
@@ -254,7 +254,7 @@ public class Vuforiaworkpls extends LinearOpMode {
         OpenGLMatrix wheelsTargetLocationOnField = OpenGLMatrix
                 /* Then we translate the target off to the RED WALL. Our translation here
                 is a negative translation in X.*/
-                .translation(mmFTCFieldWidth/300, mmFTCFieldWidth/1790, 0)
+                .translation(mmFTCFieldWidth / 300, mmFTCFieldWidth / 1790, 0)
                 .multiplied(Orientation.getRotationMatrix(
                         /* First, in the fixed (field) coordinate system, we rotate 90deg in X, then 90 in Z */
                         AxesReference.EXTRINSIC, AxesOrder.XZX,
@@ -270,7 +270,7 @@ public class Vuforiaworkpls extends LinearOpMode {
         OpenGLMatrix toolsTargetLocationOnField = OpenGLMatrix
                 /* Then we translate the target off to the Blue Audience wall.
                 Our translation here is a positive translation in Y.*/
-                .translation(-mmFTCFieldWidth/1790, mmFTCFieldWidth/900, 0)
+                .translation(-mmFTCFieldWidth / 1790, mmFTCFieldWidth / 900, 0)
                 .multiplied(Orientation.getRotationMatrix(
                         /* First, in the fixed (field) coordinate system, we rotate 90deg in X */
                         AxesReference.EXTRINSIC, AxesOrder.XZX,
@@ -281,7 +281,7 @@ public class Vuforiaworkpls extends LinearOpMode {
         OpenGLMatrix legoTargetLocationOnField = OpenGLMatrix
                 /* Then we translate the target off to the RED WALL. Our translation here
                 is a negative translation in X.*/
-                .translation(-mmFTCFieldWidth/900, mmFTCFieldWidth/1790, 0)
+                .translation(-mmFTCFieldWidth / 900, mmFTCFieldWidth / 1790, 0)
                 .multiplied(Orientation.getRotationMatrix(
                         /* First, in the fixed (field) coordinate system, we rotate 90deg in X, then 90 in Z */
                         AxesReference.EXTRINSIC, AxesOrder.XZX,
@@ -297,7 +297,7 @@ public class Vuforiaworkpls extends LinearOpMode {
         OpenGLMatrix gearsTargetLocationOnField = OpenGLMatrix
                 /* Then we translate the target off to the Blue Audience wall.
                 Our translation here is a positive translation in Y.*/
-                .translation(-mmFTCFieldWidth/1790, -mmFTCFieldWidth/300, 0)
+                .translation(-mmFTCFieldWidth / 1790, -mmFTCFieldWidth / 300, 0)
                 .multiplied(Orientation.getRotationMatrix(
                         /* First, in the fixed (field) coordinate system, we rotate 90deg in X */
                         AxesReference.EXTRINSIC, AxesOrder.XZX,
@@ -317,7 +317,7 @@ public class Vuforiaworkpls extends LinearOpMode {
          * plane) is then CCW, as one would normally expect from the usual classic 2D geometry.
          */
         OpenGLMatrix phoneLocationOnRobot = OpenGLMatrix
-                .translation(mmBotWidth/2,0,0)
+                .translation(mmBotWidth / 2, 0, 0)
                 .multiplied(Orientation.getRotationMatrix(
                         AxesReference.EXTRINSIC, AxesOrder.YZY,
                         AngleUnit.DEGREES, -90, 0, 0));
@@ -328,10 +328,10 @@ public class Vuforiaworkpls extends LinearOpMode {
          * listener is a {@link VuforiaTrackableDefaultListener} and can so safely cast because
          * we have not ourselves installed a listener of a different type.
          */
-        ((VuforiaTrackableDefaultListener)wheels.getListener()).setPhoneInformation(phoneLocationOnRobot, parameters.cameraDirection);
-        ((VuforiaTrackableDefaultListener)tools.getListener()).setPhoneInformation(phoneLocationOnRobot, parameters.cameraDirection);
-        ((VuforiaTrackableDefaultListener)lego.getListener()).setPhoneInformation(phoneLocationOnRobot, parameters.cameraDirection);
-        ((VuforiaTrackableDefaultListener)gears.getListener()).setPhoneInformation(phoneLocationOnRobot, parameters.cameraDirection);
+        ((VuforiaTrackableDefaultListener) wheels.getListener()).setPhoneInformation(phoneLocationOnRobot, parameters.cameraDirection);
+        ((VuforiaTrackableDefaultListener) tools.getListener()).setPhoneInformation(phoneLocationOnRobot, parameters.cameraDirection);
+        ((VuforiaTrackableDefaultListener) lego.getListener()).setPhoneInformation(phoneLocationOnRobot, parameters.cameraDirection);
+        ((VuforiaTrackableDefaultListener) gears.getListener()).setPhoneInformation(phoneLocationOnRobot, parameters.cameraDirection);
         /**
          * A brief tutorial: here's how all the math is going to work:
          *
@@ -368,6 +368,12 @@ public class Vuforiaworkpls extends LinearOpMode {
                  * the last time that call was made, or if the trackable is not currently visible.
                  * getRobotLocation() will return null if the trackable is not currently visible.
                  */
+
+                /**if (((VuforiaTrackableDefaultListener) trackable.getListener()).isVisible()) {
+                 isSeen = true;
+                 }
+                 */
+
                 telemetry.addData(trackable.getName(), ((VuforiaTrackableDefaultListener) trackable.getListener()).isVisible() ? "Visible" : "Not Visible");    //
 
                 OpenGLMatrix robotLocationTransform = ((VuforiaTrackableDefaultListener) trackable.getListener()).getUpdatedRobotLocation();
@@ -408,40 +414,37 @@ public class Vuforiaworkpls extends LinearOpMode {
 
             for (VuforiaTrackable trackable : allTrackables) {
                 turnSpeed = 0.17;
-                if (((VuforiaTrackableDefaultListener) trackable.getListener()).isVisible()) {
-                    isSeen = true;
-                }
-                    if (isSeen && robotBearing > -150 && robotBearing < 0) {
-                        //turn left
+                if (((VuforiaTrackableDefaultListener) trackable.getListener()).isVisible() || isSeen && robotBearing > -150 && robotBearing < 0) {
+                    //turn left
 
-                        MotorFL.setPower(-turnSpeed);
-                        MotorFR.setPower(turnSpeed);
-                        MotorBL.setPower(-turnSpeed);
-                        MotorBR.setPower(turnSpeed);
+                    MotorFL.setPower(-turnSpeed);
+                    MotorFR.setPower(turnSpeed);
+                    MotorBL.setPower(-turnSpeed);
+                    MotorBR.setPower(turnSpeed);
 
-                    } else {
+                } else {
 
-                        if (robotBearing < 150 && robotBearing > 0) {
-                            //turn right
-                            MotorFL.setPower(turnSpeed);
-                            MotorFR.setPower(-turnSpeed);
-                            MotorBL.setPower(turnSpeed);
-                            MotorBR.setPower(-turnSpeed);
+                    if (robotBearing < 150 && robotBearing > 0) {
+                        //turn right
+                        MotorFL.setPower(turnSpeed);
+                        MotorFR.setPower(-turnSpeed);
+                        MotorBL.setPower(turnSpeed);
+                        MotorBR.setPower(-turnSpeed);
 
+                        if (robotBearing < 10 && robotBearing > -10) {
+                            MotorFL.setPower(0);
+                            MotorFR.setPower(0);
+                            MotorBL.setPower(0);
+                            MotorBR.setPower(0);
+                            break;
                         }
                     }
-                    if (robotBearing < 10 && robotBearing > -10) {
-                        MotorFL.setPower(0);
-                        MotorFR.setPower(0);
-                        MotorBL.setPower(0);
-                        MotorBR.setPower(0);
-                    }
-                    break;
                 }
+                break;
             }
-            telemetry.update();
+        }
+        telemetry.update();
     }
-
     /**
      * A simple utility that extracts positioning information from a transformation matrix
      * and formats it in a form palatable to a human being.
