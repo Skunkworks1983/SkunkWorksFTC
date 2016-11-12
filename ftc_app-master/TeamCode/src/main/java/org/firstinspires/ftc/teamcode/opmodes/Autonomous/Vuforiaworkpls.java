@@ -368,9 +368,9 @@ public class Vuforiaworkpls extends LinearOpMode {
                  * the last time that call was made, or if the trackable is not currently visible.
                  * getRobotLocation() will return null if the trackable is not currently visible.
                  */
-                telemetry.addData(trackable.getName(), ((VuforiaTrackableDefaultListener)trackable.getListener()).isVisible() ? "Visible" : "Not Visible");    //
+                telemetry.addData(trackable.getName(), ((VuforiaTrackableDefaultListener) trackable.getListener()).isVisible() ? "Visible" : "Not Visible");    //
 
-                OpenGLMatrix robotLocationTransform = ((VuforiaTrackableDefaultListener)trackable.getListener()).getUpdatedRobotLocation();
+                OpenGLMatrix robotLocationTransform = ((VuforiaTrackableDefaultListener) trackable.getListener()).getUpdatedRobotLocation();
                 if (robotLocationTransform != null) {
                     lastLocation = robotLocationTransform;
                 }
@@ -378,7 +378,6 @@ public class Vuforiaworkpls extends LinearOpMode {
             /**
              * Provide feedback as to where the robot was last located (if we know).
              */
-
 
 
             if (lastLocation != null) {
@@ -408,28 +407,38 @@ public class Vuforiaworkpls extends LinearOpMode {
             }
 
             for (VuforiaTrackable trackable : allTrackables) {
-                turnSpeed = 0.2;
-                    if (((VuforiaTrackableDefaultListener) trackable.getListener()).isVisible() || isSeen && robotBearing > -150 && robotBearing < 0) {
-                        //turn left
-                        isSeen = true;
+                turnSpeed = 0.17;
+                if (((VuforiaTrackableDefaultListener) trackable.getListener()).isVisible() || isSeen && robotBearing > -150 && robotBearing < 0) {
+                    //turn left
+                    isSeen = true;
 
-                        MotorFL.setPower(-turnSpeed);
-                        MotorFR.setPower(turnSpeed);
-                        MotorBL.setPower(-turnSpeed);
-                        MotorBR.setPower(turnSpeed);
+                    MotorFL.setPower(-turnSpeed);
+                    MotorFR.setPower(turnSpeed);
+                    MotorBL.setPower(-turnSpeed);
+                    MotorBR.setPower(turnSpeed);
 
-                    } else if (robotBearing < 150 && robotBearing > 0) {
+                } else {
+
+                    if (robotBearing < 150 && robotBearing > 0) {
                         //turn right
                         MotorFL.setPower(turnSpeed);
                         MotorFR.setPower(-turnSpeed);
                         MotorBL.setPower(turnSpeed);
                         MotorBR.setPower(-turnSpeed);
                         sleep(100);
+
                     }
                 }
+                if (robotBearing < 10 && robotBearing > -10) {
+                    MotorFL.setPower(0);
+                    MotorFR.setPower(0);
+                    MotorBL.setPower(0);
+                    MotorBR.setPower(0);
+                    break;
+                }
             }
-
             telemetry.update();
+        }
     }
 
     /**
