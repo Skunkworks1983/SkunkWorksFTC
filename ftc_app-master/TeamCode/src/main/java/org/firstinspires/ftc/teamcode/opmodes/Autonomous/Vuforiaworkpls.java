@@ -119,7 +119,7 @@ public class Vuforiaworkpls extends LinearOpMode {
      */
     VuforiaLocalizer vuforia;
 
-    @Override public void runOpMode() throws InterruptedException {
+    @Override public void runOpMode() {
 
         MotorFL = hardwareMap.dcMotor.get("leftFront");
         MotorFR = hardwareMap.dcMotor.get("rightFront");
@@ -378,6 +378,8 @@ public class Vuforiaworkpls extends LinearOpMode {
                     isSeen = true;
                 }
 
+
+
                 telemetry.addData(trackable.getName(), ((VuforiaTrackableDefaultListener) trackable.getListener()).isVisible() ? "Visible" : "Not Visible");    //
 
                 OpenGLMatrix robotLocationTransform = ((VuforiaTrackableDefaultListener) trackable.getListener()).getUpdatedRobotLocation();
@@ -416,33 +418,36 @@ public class Vuforiaworkpls extends LinearOpMode {
                 telemetry.addData("Pos", "Unknown");
             }
 
-            for (VuforiaTrackable trackable : allTrackables) {
+            telemetry.update();
+
+            if (isSeen){
                 turnSpeed = 0.17;
-                if (isSeen && robotBearing > -150 && robotBearing < 0) {
+                if (robotBearing > -150 && robotBearing < 15) {
                     //turn left
                     MotorFL.setPower(-turnSpeed);
                     MotorFR.setPower(turnSpeed);
                     MotorBL.setPower(-turnSpeed);
                     MotorBR.setPower(turnSpeed);
                 }
-                if (isSeen && robotBearing < 150 && robotBearing > 0) {
+                if (robotBearing < 150 && robotBearing > 15) {
                     //turn right
                     MotorFL.setPower(turnSpeed);
                     MotorFR.setPower(-turnSpeed);
                     MotorBL.setPower(turnSpeed);
                     MotorBR.setPower(-turnSpeed);
                 }
-                if (isSeen && robotBearing < 10 && robotBearing > -10) {
+                if (robotBearing < 15 && robotBearing > -15) {
                     //STOP ROBOT AND BREAK LOOP
                     MotorFL.setPower(0);
                     MotorFR.setPower(0);
                     MotorBL.setPower(0);
                     MotorBR.setPower(0);
+                    telemetry.addData("done", "True");
                     break;
                 }
+
             }
         }
-        telemetry.update();
     }
     /**
      * A simple utility that extracts positioning information from a transformation matrix

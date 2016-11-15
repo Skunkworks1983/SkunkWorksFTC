@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmodes;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -32,10 +33,10 @@ public class Base {
         MotorBL = hwMap.dcMotor.get("leftBack");
         MotorBR = hwMap.dcMotor.get("rightBack");
 
-        MotorFL.setDirection(DcMotor.Direction.REVERSE);
-        MotorBL.setDirection(DcMotor.Direction.REVERSE);
-        MotorFR.setDirection(DcMotor.Direction.FORWARD);
-        MotorBR.setDirection(DcMotor.Direction.FORWARD);
+        MotorFL.setDirection(DcMotor.Direction.FORWARD);
+        MotorBL.setDirection(DcMotor.Direction.FORWARD);
+        MotorFR.setDirection(DcMotor.Direction.REVERSE);
+        MotorBR.setDirection(DcMotor.Direction.REVERSE);
 
 
         // Set all motors to zero power
