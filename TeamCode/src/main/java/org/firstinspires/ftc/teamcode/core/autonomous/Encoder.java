@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.core.testcode;
+package org.firstinspires.ftc.teamcode.core.autonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -15,25 +15,22 @@ import org.firstinspires.ftc.teamcode.core.utils.MotorsHardware;
 @Autonomous(name="Encoder", group="Pushbot")
 public class Encoder extends LinearOpMode
 {
-
-    /* Declare OpMode members. */
-    MotorsHardware robot   = new MotorsHardware();   // Use a Pushbot's hardware
+    MotorsHardware robot = new MotorsHardware();
     private ElapsedTime runtime = new ElapsedTime();
 
-    static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
-    static final double     DRIVE_GEAR_REDUCTION    = 2.0 ;     // This is < 1.0 if geared UP
-    static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
-    static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
-            (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double     DRIVE_SPEED             = 0.2;
-    static final double     TURN_SPEED              = 0.5;
+    static final double COUNTS_PER_MOTOR_REV = 1120;    // eg: TETRIX Motor Encoder
+    static final double DRIVE_GEAR_REDUCTION = 0.7777778;     // This is < 1.0 if geared UP
+    static final double WHEEL_DIAMETER_INCHES = 4.0;     // For figuring circumference 3.875 4.0
+    static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * 3.1415);
+    static final double DRIVE_SPEED = 0.2;
+    static final double TURN_SPEED = 0.25;
 
     @Override
     public void runOpMode() throws InterruptedException
     {
         robot.init(hardwareMap);
 
-        telemetry.addData("Status", "Resetting Encoders...");    //
+        telemetry.addData("Status", "Resetting Encoders...");
         telemetry.update();
 
         robot.setLeftMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -51,7 +48,6 @@ public class Encoder extends LinearOpMode
                 robot.rightMotor2.getCurrentPosition());
         telemetry.update();
 
-        // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
         // Step through each leg of the path,
@@ -60,35 +56,22 @@ public class Encoder extends LinearOpMode
 //        encoderDrive(TURN_SPEED,   12, -12, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
 //        encoderDrive(DRIVE_SPEED, -24, -24, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
        /** These might be location on the field but I'm not sure */
-        encoderDrive(DRIVE_SPEED,  4,  -4, 5.0);
-        encoderDrive(TURN_SPEED,   2, -2, 4.0);
-        encoderDrive(DRIVE_SPEED, -8, -8, 4.0);
+        encoderDrive(DRIVE_SPEED, 1,  1, 1);
+//        encoderDrive(TURN_SPEED, 2, -2, 4.0);
 
-//        robot.leftClaw.setPosition(1.0);            // S4: Stop and close the claw.
-//        robot.rightClaw.setPosition(0.0);
-        sleep(1000);     // pause for servos to move
+        //sleep(1000);     // pause for servos to move
 
         telemetry.addData("Path", "Complete");
         telemetry.update();
     }
 
-    /*
-     *  Method to perfmorm a relative move, based on encoder counts.
-     *  Encoders are not reset as the move is based on the current position.
-     *  Move will stop if any of three conditions occur:
-     *  1) Move gets to the desired position
-     *  2) Move runs out of time
-     *  3) Driver stops the opmode running.
-     */
     public void encoderDrive(double speed, double leftInches, double rightInches, double timeoutS) throws InterruptedException
     {
         int newLeftTarget;
         int newRightTarget;
 
-        // Ensure that the opmode is still active
-        if (opModeIsActive())
+        if(opModeIsActive())
         {
-
             // Determine new target position, and pass to motor controller
             newLeftTarget = robot.leftMotor1.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
             newRightTarget = robot.rightMotor1.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
@@ -130,7 +113,7 @@ public class Encoder extends LinearOpMode
             robot.setLeftMode(DcMotor.RunMode.RUN_USING_ENCODER);
             robot.setRightMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-            sleep(250);   // optional pause after each move
+           // sleep(250);   // optional pause after each move
         }
     }
 }

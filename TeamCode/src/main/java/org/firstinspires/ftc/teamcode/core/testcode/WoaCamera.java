@@ -30,6 +30,7 @@ import java.util.List;
 // password: 1983bestTeam
 
 @Autonomous(name="Vuforia Navigation", group ="Concept")
+@Disabled
 public class WoaCamera extends LinearOpMode
 {
     public static final String TAG = "Vuforia Sample";

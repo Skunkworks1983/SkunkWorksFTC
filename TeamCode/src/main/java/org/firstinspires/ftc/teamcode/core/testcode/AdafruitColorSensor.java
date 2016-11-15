@@ -5,10 +5,9 @@ import android.graphics.Color;
 import android.view.View;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
-import com.qualcomm.robotcore.hardware.DeviceInterfaceModule;
-import com.qualcomm.robotcore.hardware.DigitalChannelController;
 
 /**
  * Created by Adam.
@@ -16,6 +15,7 @@ import com.qualcomm.robotcore.hardware.DigitalChannelController;
  */
 
 @Autonomous(name = "Adafruit Color Sensor", group = "Sensor")
+@Disabled
 public class AdafruitColorSensor extends LinearOpMode
 {
 

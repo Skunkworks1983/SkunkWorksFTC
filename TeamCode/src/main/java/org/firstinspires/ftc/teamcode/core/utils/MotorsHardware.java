@@ -20,8 +20,6 @@ public class MotorsHardware
     public DcMotor rightMotor1 = null;
     public DcMotor rightMotor2 = null;
 
-    public static final double MID_SERVO =  0.5;
-
     /* local OpMode members. */
     HardwareMap hwMap =  null;
     private ElapsedTime period  = new ElapsedTime();
@@ -43,13 +41,6 @@ public class MotorsHardware
         // Set all motors to zero power
         setLeftPower(0);
         setRightPower(0);
-
-        // Set all motors to run without encoders.
-        // May want to use RUN_USING_ENCODERS if encoders are installed.
-        leftMotor1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        leftMotor2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rightMotor1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rightMotor2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     public boolean isInit()

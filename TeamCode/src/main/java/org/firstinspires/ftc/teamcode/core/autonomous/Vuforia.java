@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.util.RobotLog;
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.matrices.MatrixF;
 import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
+import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
@@ -196,8 +197,20 @@ public class Vuforia extends LinearOpMode
                  * the last time that call was made, or if the trackable is not currently visible.
                  * getRobotLocation() will return null if the trackable is not currently visible.
                  */
+                OpenGLMatrix pose = ((VuforiaTrackableDefaultListener) trackable.getListener()).getPose();
                 boolean visible = ((VuforiaTrackableDefaultListener)trackable.getListener()).isVisible();
                 telemetry.addData(trackable.getName(), visible ? "Visible" : "Not Visible");
+
+                if(pose != null)
+                {
+                    VectorF translation = pose.getTranslation();
+
+                    telemetry.addData(" - Translation", translation);
+
+                    telemetry.addData(" - Degrees", Math.toDegrees(Math.atan2(translation.get(1), translation.get(2))));
+                    //degrees to turn
+                }
+
                 //drive
 
                 OpenGLMatrix robotLocationTransform = ((VuforiaTrackableDefaultListener)trackable.getListener()).getUpdatedRobotLocation();

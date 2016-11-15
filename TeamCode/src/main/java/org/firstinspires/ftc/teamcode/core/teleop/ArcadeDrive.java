@@ -13,11 +13,6 @@ import org.firstinspires.ftc.teamcode.core.CustomOpMode;
 @TeleOp(name="Arcade Drive", group="Drive")
 public class ArcadeDrive extends CustomOpMode
 {
-//    final double LEFT_OPEN_POSITION = 0.0;
-//    final double LEFT_CLOSED_POSITION = 0.5;
-//    final double RIGHT_OPEN_POSITION = 1.0;
-//    final double RIGHT_CLOSED_POSITION = 0.5;
-
     DcMotor leftMotor1;
     DcMotor rightMotor1;
     DcMotor leftMotor2;
