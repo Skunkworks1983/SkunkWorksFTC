@@ -374,6 +374,10 @@ public class Vuforiaworkpls extends LinearOpMode {
                  }
                  */
 
+                if (((VuforiaTrackableDefaultListener) trackable.getListener()).isVisible()) {
+                    isSeen = true;
+                }
+
                 telemetry.addData(trackable.getName(), ((VuforiaTrackableDefaultListener) trackable.getListener()).isVisible() ? "Visible" : "Not Visible");    //
 
                 OpenGLMatrix robotLocationTransform = ((VuforiaTrackableDefaultListener) trackable.getListener()).getUpdatedRobotLocation();
@@ -414,26 +418,22 @@ public class Vuforiaworkpls extends LinearOpMode {
 
             for (VuforiaTrackable trackable : allTrackables) {
                 turnSpeed = 0.17;
-                if (((VuforiaTrackableDefaultListener) trackable.getListener()).isVisible() || isSeen && robotBearing > -150 && robotBearing < 0) {
+                if (isSeen && robotBearing > -150 && robotBearing < 0) {
                     //turn left
-                    isSeen = true;
-
                     MotorFL.setPower(-turnSpeed);
                     MotorFR.setPower(turnSpeed);
                     MotorBL.setPower(-turnSpeed);
                     MotorBR.setPower(turnSpeed);
                 }
-                if (((VuforiaTrackableDefaultListener) trackable.getListener()).isVisible() || isSeen && robotBearing < 150 && robotBearing > 0) {
+                if (isSeen && robotBearing < 150 && robotBearing > 0) {
                     //turn right
-                    isSeen = true;
                     MotorFL.setPower(turnSpeed);
                     MotorFR.setPower(-turnSpeed);
                     MotorBL.setPower(turnSpeed);
                     MotorBR.setPower(-turnSpeed);
                 }
-                if (((VuforiaTrackableDefaultListener) trackable.getListener()).isVisible() || isSeen && robotBearing < 10 && robotBearing > -10) {
+                if (isSeen && robotBearing < 10 && robotBearing > -10) {
                     //STOP ROBOT AND BREAK LOOP
-                    isSeen = true;
                     MotorFL.setPower(0);
                     MotorFR.setPower(0);
                     MotorBL.setPower(0);
