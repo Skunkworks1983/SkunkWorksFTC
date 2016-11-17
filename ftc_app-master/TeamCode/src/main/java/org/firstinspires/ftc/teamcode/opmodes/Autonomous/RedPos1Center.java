@@ -130,7 +130,7 @@ public class RedPos1Center extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        encoderDrive(DRIVE_SPEED,  10,  10, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
+        encoderDrive(DRIVE_SPEED,  50,  50, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
         //encoderDrive(DRIVE_SPEED, -24, -24, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
 
         //robot.leftClaw.setPosition(1.0);            // S4: Stop and close the claw.
