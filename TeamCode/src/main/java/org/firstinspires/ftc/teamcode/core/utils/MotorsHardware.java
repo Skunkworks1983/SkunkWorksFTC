@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 /**
@@ -14,7 +13,6 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class MotorsHardware
 {
-    /* Public OpMode members. */
     public DcMotor leftMotor1 = null;
     public DcMotor leftMotor2 = null;
     public DcMotor rightMotor1 = null;
@@ -120,21 +118,12 @@ public class MotorsHardware
         telemetry.addData("Right Motor 2", "Power: " + rightMotor2.getPower() + " Direction: " + rightMotor2.getDirection().name());
     }
 
-    /***
-     *
-     * waitForTick implements a periodic delay. However, this acts like a metronome with a regular
-     * periodic tick.  This is used to compensate for varying processing times for each cycle.
-     * The function looks at the elapsed cycle time, and sleeps for the remaining time interval.
-     *
-     * @param periodMs  Length of wait cycle in mSec.
-     * @throws InterruptedException
-     */
-    public void waitForTick(long periodMs) throws InterruptedException {
-
+    public void waitForTick(long periodMs) throws InterruptedException
+    {
         long  remaining = periodMs - (long)period.milliseconds();
 
         // sleep for the remaining portion of the regular cycle period.
-        if (remaining > 0)
+        if(remaining > 0)
             Thread.sleep(remaining);
 
         // Reset the cycle clock for the next pass.

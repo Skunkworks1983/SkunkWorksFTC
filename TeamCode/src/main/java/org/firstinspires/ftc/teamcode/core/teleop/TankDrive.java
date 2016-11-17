@@ -15,6 +15,7 @@ import org.firstinspires.ftc.teamcode.core.utils.MotorsHardware;
 public class TankDrive extends CustomOpMode
 {
     MotorsHardware motors;
+    boolean toggled;
 
     @Override
     public void init()
@@ -23,6 +24,7 @@ public class TankDrive extends CustomOpMode
         motors.init(hardwareMap);
 
         buttonUp = false;
+        toggled = false;
     }
 
     @Override
