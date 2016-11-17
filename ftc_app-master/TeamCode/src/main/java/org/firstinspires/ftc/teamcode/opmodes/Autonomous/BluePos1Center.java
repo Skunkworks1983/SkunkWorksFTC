@@ -63,8 +63,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
+//pos 1 is the corner
 
-@Autonomous(name="DriveSetDistance")
+@Autonomous(name="BluePos1Center")
 public class BluePos1Center extends LinearOpMode {
 
     /* Declare OpMode members. */
