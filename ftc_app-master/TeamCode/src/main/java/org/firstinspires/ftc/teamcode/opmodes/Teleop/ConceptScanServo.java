@@ -1,8 +1,8 @@
-package org.firstinspires.ftc.teamcode.opmodes.Autonomous;
+package org.firstinspires.ftc.teamcode.opmodes.Teleop;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 //up 98, down 0 (facing motor controllers, on the right)
 //up 158, down 251 (facing motor controllers, on the left)
@@ -20,7 +20,7 @@ import com.qualcomm.robotcore.hardware.Servo;
  * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
-@Autonomous(name = "Concept: Scan Servo", group = "Concept")
+@TeleOp(name = "Concept: Scan Servo", group = "Concept")
 public class ConceptScanServo extends LinearOpMode {
 
     static final double INCREMENT   = 0.01;     // amount to slew servo each CYCLE_MS cycle sort of the speed/duration
@@ -36,9 +36,6 @@ public class ConceptScanServo extends LinearOpMode {
     Servo   servoLeft;
     double  positionRight = (Right_Max - Right_Min) / 2; // Start at halfway position
     double  positionLeft  = (Left_Max - Left_Min)   / 2;
-    boolean rampUpRight = true;
-    boolean rampUpLeft = true;
-
 
 
     @Override
@@ -47,7 +44,6 @@ public class ConceptScanServo extends LinearOpMode {
         // Connect to servo (Assume PushBot Left Hand)
         // Change the text in quotes to match any servo name on your robot.
         servoRight = hardwareMap.servo.get("servoRight");
-
         servoLeft = hardwareMap.servo.get("servoLeft");
 
         // Wait for the start button
@@ -59,40 +55,31 @@ public class ConceptScanServo extends LinearOpMode {
         // Scan servo till stop pressed.
         while(opModeIsActive()){
 
-            // slew the servo, according to the rampUp (direction) variable.
-            if (rampUpRight) {
+            if (gamepad2.dpad_up){
                 // Keep stepping up until we hit the max value.
                 positionRight += INCREMENT ;
                 if (positionRight >= Right_Max ) {
                     positionRight = Right_Max;
-                    rampUpRight = !rampUpRight;   // Switch ramp direction
                 }
-            }
-            else {
-                // Keep stepping down until we hit the min value.
-                positionRight -= INCREMENT ;
-                if (positionRight <= Right_Min ) {
-                    positionRight = Right_Min;
-                    rampUpRight = !rampUpRight;  // Switch ramp direction
-                }
-            }
-
-            if (rampUpLeft) {
-                // Keep stepping up until we hit the max value.
                 positionLeft -= INCREMENT ;
                 if (positionLeft >= Left_Max ) {
                     positionRight = Left_Max;
-                    rampUpLeft = !rampUpLeft;   // Switch ramp direction
                 }
             }
-            else {
+
+            if (gamepad2.dpad_down) {
                 // Keep stepping down until we hit the min value.
-                positionLeft += INCREMENT ;
-                if (positionLeft <= Left_Min ) {
+                positionLeft += INCREMENT;
+                if (positionLeft <= Left_Min) {
                     positionLeft = Left_Min;
-                    rampUpLeft = !rampUpLeft;  // Switch ramp direction
+                }
+                // Keep stepping down until we hit the min value.
+                positionRight -= INCREMENT;
+                if (positionRight <= Right_Min) {
+                    positionRight = Right_Min;
                 }
             }
+
 
             // Display the current value
             telemetry.addData("Right Servo Position", "%5.2f", positionRight);
