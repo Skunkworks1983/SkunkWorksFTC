@@ -25,13 +25,19 @@ public class ConceptScanServo extends LinearOpMode {
 
     static final double INCREMENT   = 0.01;     // amount to slew servo each CYCLE_MS cycle sort of the speed/duration
     static final int    CYCLE_MS    =   100;     // period of each cycle
-    static final double MAX_POS     =  1.0;     // Maximum rotational position
-    static final double MIN_POS     =  0.0;     // Minimum rotational position
+    static final double Right_Max     =  98/255;     // Maximum rotational position
+    static final double Right_Min     =  0.0;     // Minimum rotational position
+
+    static final double Left_Max     =  158/255;     // Maximum rotational position
+    static final double Left_Min     =  251/255;     // Minimum rotational position
 
     // Define class members
-    Servo   servo;
-    double  position = (MAX_POS - MIN_POS) / 2; // Start at halfway position
-    boolean rampUp = true;
+    Servo   servoRight;
+    Servo   servoLeft;
+    double  positionRight = (Right_Max - Right_Min) / 2; // Start at halfway position
+    double  positionLeft  = (Left_Max - Left_Min)   / 2;
+    boolean rampUpRight = true;
+    boolean rampUpLeft = true;
 
 
 
@@ -40,8 +46,10 @@ public class ConceptScanServo extends LinearOpMode {
 
         // Connect to servo (Assume PushBot Left Hand)
         // Change the text in quotes to match any servo name on your robot.
-        servo = hardwareMap.servo.get("servo");
-        double realPosition = servo.getPosition();
+        servoRight = hardwareMap.servo.get("servoRight");
+
+        servoLeft = hardwareMap.servo.get("servoLeft");
+
         // Wait for the start button
         telemetry.addData(">", "Press Start to scan Servo." );
         telemetry.update();
@@ -52,31 +60,49 @@ public class ConceptScanServo extends LinearOpMode {
         while(opModeIsActive()){
 
             // slew the servo, according to the rampUp (direction) variable.
-            if (rampUp) {
+            if (rampUpRight) {
                 // Keep stepping up until we hit the max value.
-                position += INCREMENT ;
-                if (position >= MAX_POS ) {
-                    position = MAX_POS;
-                    rampUp = !rampUp;   // Switch ramp direction
+                positionRight += INCREMENT ;
+                if (positionRight >= Right_Max ) {
+                    positionRight = Right_Max;
+                    rampUpRight = !rampUpRight;   // Switch ramp direction
                 }
             }
             else {
                 // Keep stepping down until we hit the min value.
-                position -= INCREMENT ;
-                if (position <= MIN_POS ) {
-                    position = MIN_POS;
-                    rampUp = !rampUp;  // Switch ramp direction
+                positionRight -= INCREMENT ;
+                if (positionRight <= Right_Min ) {
+                    positionRight = Right_Min;
+                    rampUpRight = !rampUpRight;  // Switch ramp direction
+                }
+            }
+
+            if (rampUpLeft) {
+                // Keep stepping up until we hit the max value.
+                positionLeft -= INCREMENT ;
+                if (positionLeft >= Left_Max ) {
+                    positionRight = Left_Max;
+                    rampUpLeft = !rampUpLeft;   // Switch ramp direction
+                }
+            }
+            else {
+                // Keep stepping down until we hit the min value.
+                positionLeft += INCREMENT ;
+                if (positionLeft <= Left_Min ) {
+                    positionLeft = Left_Min;
+                    rampUpLeft = !rampUpLeft;  // Switch ramp direction
                 }
             }
 
             // Display the current value
-            telemetry.addData("Servo Position", "%5.2f", position);
+            telemetry.addData("Right Servo Position", "%5.2f", positionRight);
+            telemetry.addData("Left Servo Position", "%5.2f", positionLeft);
             telemetry.addData(">", "Press Stop to end test." );
-            telemetry.addData("Real Position: ", realPosition);
             telemetry.update();
 
             // Set the servo to the new position and pause;
-            servo.setPosition(position);
+            servoRight.setPosition(positionRight);
+            servoLeft.setPosition(positionLeft);
             sleep(CYCLE_MS);
             idle();
         }
