@@ -75,9 +75,9 @@ public class BluePos2Center extends LinearOpMode {
 
     private ElapsedTime     runtime = new ElapsedTime();
 
-    static final double     COUNTS_PER_MOTOR_REV    = 1120 ;    // eg: TETRIX Motor Encoder
-    static final double     DRIVE_GEAR_REDUCTION    = 0.7777778 ;     // This is < 1.0 if geared UP, driven gear diameter / driving gear diameter
-    static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
+    static final double     COUNTS_PER_MOTOR_REV    = 1120;    // eg: TETRIX Motor Encoder
+    static final double     DRIVE_GEAR_REDUCTION    = 1.28;     // This is < 1.0 if geared UP, driven gear diameter / driving gear diameter
+    static final double     WHEEL_DIAMETER_INCHES   = 3.875;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
                                                       (WHEEL_DIAMETER_INCHES * 3.1415);
     static final double     DRIVE_SPEED             = 0.75; //Maximum speed with no load is around 50 inches per second, between 4 and 5 feet per second
@@ -123,6 +123,7 @@ public class BluePos2Center extends LinearOpMode {
                 MotorFR.getCurrentPosition(),
                 MotorBL.getCurrentPosition(),
                           MotorBR.getCurrentPosition());
+        telemetry.addData("Info", "Furthest pillar from corner vortex, first hole to the left");
         telemetry.update();
 
         // Wait for the game to start (driver presses PLAY)
@@ -130,7 +131,7 @@ public class BluePos2Center extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        encoderDrive(DRIVE_SPEED,  41,  41, 10.0);  // S1: Forward 47 Inches with 5 Sec timeout
+        encoderDrive(DRIVE_SPEED,  15,  15, 10.0);  // S1: Forward 47 Inches with 5 Sec timeout
         //encoderDrive(DRIVE_SPEED, -24, -24, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
 
         //robot.leftClaw.setPosition(1.0);            // S4: Stop and close the claw.

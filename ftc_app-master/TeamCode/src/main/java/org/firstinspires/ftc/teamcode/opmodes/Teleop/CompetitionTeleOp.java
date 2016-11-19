@@ -32,14 +32,14 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.firstinspires.ftc.teamcode.opmodes.Teleop;
 
-import android.os.SystemClock;
-
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
+import org.firstinspires.ftc.teamcode.opmodes.CustomOpMode;
+import org.firstinspires.ftc.teamcode.opmodes.Button;
+
 
 /**
  * This file contains an minimal example of a Linear "OpMode". An OpMode is a 'program' that runs in either
@@ -54,8 +54,8 @@ import com.qualcomm.robotcore.util.Range;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="Doneusethis", group="Linear Opmode")  // @Autonomous(...) is the other common choice
-public class TeleOpArcadeDrive extends LinearOpMode {
+@TeleOp(name="Arcade Drive", group="Linear Opmode")  // @Autonomous(...) is the other common choice
+public class CompetitionTeleOp extends CustomOpMode {
 
     /* Declare OpMode members. */
     private ElapsedTime runtime = new ElapsedTime();
@@ -64,6 +64,11 @@ public class TeleOpArcadeDrive extends LinearOpMode {
     DcMotor MotorFR;
     DcMotor MotorBL;
     DcMotor MotorBR;
+
+    boolean buttonUp;
+    boolean toggled;
+
+    float CurrentPower;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -74,7 +79,7 @@ public class TeleOpArcadeDrive extends LinearOpMode {
          * to 'get' must correspond to the names assigned during the robot configuration
          * step (using the FTC Robot Controller app on the phone).
          */
-        MotorFL  = hardwareMap.dcMotor.get("leftFront");
+        MotorFL = hardwareMap.dcMotor.get("leftFront");
         MotorFR = hardwareMap.dcMotor.get("rightFront");
         MotorBL = hardwareMap.dcMotor.get("leftBack");
         MotorBR = hardwareMap.dcMotor.get("rightBack");
@@ -86,20 +91,22 @@ public class TeleOpArcadeDrive extends LinearOpMode {
         MotorFL.setDirection(DcMotor.Direction.FORWARD);// Set to FORWARD if using AndyMark motors
         MotorBL.setDirection(DcMotor.Direction.FORWARD);
 
+        buttonUp = false;
+        toggled = false;
+
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
         runtime.reset();
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-            telemetry.addData("Status", "Run Time: " + runtime.toString());
-            telemetry.addData("xstick", gamepad1.left_stick_x);
-            telemetry.addData("ystick", gamepad1.left_stick_y);
-            telemetry.addData("Buttons", "a:" + gamepad1.a + " b:" + gamepad1.b + " x:" + gamepad1.x + " y:" + gamepad1.y);
-            telemetry.update();
 
-            float xVal = gamepad1.left_stick_x;   //forward backward
-            float yVal = -gamepad1.left_stick_y;   //left right
+            telemetry.addData("Status", "Run Time: " + runtime.toString());
+            powerUpDown();
+
+            float xVal = gamepad1.left_stick_x * getPower();   //forward backward
+            float yVal = -gamepad1.left_stick_y * getPower();   //left right
+
 
             float lPow = yVal + xVal; //calc power per motor
             float rPow = yVal - xVal;
