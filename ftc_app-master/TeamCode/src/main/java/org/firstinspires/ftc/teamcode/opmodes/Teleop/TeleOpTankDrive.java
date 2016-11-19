@@ -38,6 +38,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import org.firstinspires.ftc.teamcode.opmodes.CustomOpMode;
 
 /**
  * This file contains an minimal example of a Linear "OpMode". An OpMode is a 'program' that runs in either
@@ -53,7 +54,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  */
 
 @TeleOp(name="Tank Drive", group="Linear Opmode")  // @Autonomous(...) is the other common choice
-public class TeleOpTankDrive extends LinearOpMode {
+public class TeleOpTankDrive extends CustomOpMode {
 
     /* Declare OpMode members. */
     private ElapsedTime runtime = new ElapsedTime();
@@ -91,6 +92,11 @@ public class TeleOpTankDrive extends LinearOpMode {
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
+            powerUpDown();
+
+            float leftPower = -gamepad1.left_stick_y * getPower();
+            float rightPower = -gamepad1.right_stick_y * getPower();
+
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("Lstick", gamepad1.left_stick_y);
             telemetry.addData("Rstick", gamepad1.right_stick_y);
@@ -103,10 +109,10 @@ public class TeleOpTankDrive extends LinearOpMode {
             telemetry.update();
 
             // eg: Run wheels in tank mode (note: The joystick goes negative when pushed forwards)
-             leftFrontMotor.setPower(-gamepad1.left_stick_y);
-             leftBackMotor.setPower(-gamepad1.left_stick_y);
-             rightFrontMotor.setPower(-gamepad1.right_stick_y);
-             rightBackMotor.setPower(-gamepad1.right_stick_y);
+             leftFrontMotor.setPower(leftPower);
+             leftBackMotor.setPower(leftPower);
+             rightFrontMotor.setPower(rightPower);
+             rightBackMotor.setPower(rightPower);
 
             idle(); // Always call idle() at the bottom of your while(opModeIsActive()) loop
         }

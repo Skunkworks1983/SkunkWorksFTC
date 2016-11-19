@@ -54,7 +54,7 @@ import com.qualcomm.robotcore.util.Range;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="Arcade Drive", group="Linear Opmode")  // @Autonomous(...) is the other common choice
+@TeleOp(name="Doneusethis", group="Linear Opmode")  // @Autonomous(...) is the other common choice
 public class TeleOpArcadeDrive extends LinearOpMode {
 
     /* Declare OpMode members. */

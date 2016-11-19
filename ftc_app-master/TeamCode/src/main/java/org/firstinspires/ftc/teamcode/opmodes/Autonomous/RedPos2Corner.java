@@ -64,7 +64,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="DriveSetDistance")
+@Autonomous(name="RedPos2Corner")
 public class RedPos2Corner extends LinearOpMode {
 
     /* Declare OpMode members. */

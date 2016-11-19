@@ -37,6 +37,9 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
+import org.firstinspires.ftc.teamcode.opmodes.CustomOpMode;
+import org.firstinspires.ftc.teamcode.opmodes.Button;
+
 
 /**
  * This file contains an minimal example of a Linear "OpMode". An OpMode is a 'program' that runs in either
@@ -52,7 +55,7 @@ import com.qualcomm.robotcore.util.Range;
  */
 
 @TeleOp(name="Arcade Drive", group="Linear Opmode")  // @Autonomous(...) is the other common choice
-public class CompetitionTeleOp extends LinearOpMode {
+public class CompetitionTeleOp extends CustomOpMode {
 
     /* Declare OpMode members. */
     private ElapsedTime runtime = new ElapsedTime();
@@ -61,6 +64,11 @@ public class CompetitionTeleOp extends LinearOpMode {
     DcMotor MotorFR;
     DcMotor MotorBL;
     DcMotor MotorBR;
+
+    boolean buttonUp;
+    boolean toggled;
+
+    float CurrentPower;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -83,20 +91,26 @@ public class CompetitionTeleOp extends LinearOpMode {
         MotorFL.setDirection(DcMotor.Direction.FORWARD);// Set to FORWARD if using AndyMark motors
         MotorBL.setDirection(DcMotor.Direction.FORWARD);
 
+        buttonUp = false;
+        toggled = false;
+
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
         runtime.reset();
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
+
+            powerUpDown();
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("xstick", gamepad1.left_stick_x);
             telemetry.addData("ystick", gamepad1.left_stick_y);
             telemetry.addData("Buttons", "a:" + gamepad1.a + " b:" + gamepad1.b + " x:" + gamepad1.x + " y:" + gamepad1.y);
             telemetry.update();
 
-            float xVal = gamepad1.left_stick_x;   //forward backward
-            float yVal = -gamepad1.left_stick_y;   //left right
+            float xVal = gamepad1.left_stick_x * getPower();   //forward backward
+            float yVal = -gamepad1.left_stick_y * getPower();   //left right
+
 
             float lPow = yVal + xVal; //calc power per motor
             float rPow = yVal - xVal;
