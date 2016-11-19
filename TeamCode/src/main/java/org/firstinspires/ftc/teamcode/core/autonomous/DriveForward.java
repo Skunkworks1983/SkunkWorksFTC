@@ -43,15 +43,8 @@ public class DriveForward extends LinearOpMode
 
         waitForStart();
 
-        motors.setLeftPower(0.25);
-        motors.setRightPower(0.25);
-
-        sleep(1800);
-        motors.resetRightPower();
-        motors.resetLeftPower();
-        motors.setRightDirection(DcMotorSimple.Direction.FORWARD);
-        motors.setLeftPower(0.25);
-        motors.setRightPower(0.25);
+        motors.setLeftPower(0.50);
+        motors.setRightPower(0.50);
         sleep(2000);
     }
 }
