@@ -79,7 +79,7 @@ public class CompetitionTeleOp extends CustomOpMode {
          * to 'get' must correspond to the names assigned during the robot configuration
          * step (using the FTC Robot Controller app on the phone).
          */
-        MotorFL  = hardwareMap.dcMotor.get("leftFront");
+        MotorFL = hardwareMap.dcMotor.get("leftFront");
         MotorFR = hardwareMap.dcMotor.get("rightFront");
         MotorBL = hardwareMap.dcMotor.get("leftBack");
         MotorBR = hardwareMap.dcMotor.get("rightBack");
@@ -101,12 +101,8 @@ public class CompetitionTeleOp extends CustomOpMode {
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
 
-            powerUpDown();
             telemetry.addData("Status", "Run Time: " + runtime.toString());
-            telemetry.addData("xstick", gamepad1.left_stick_x);
-            telemetry.addData("ystick", gamepad1.left_stick_y);
-            telemetry.addData("Buttons", "a:" + gamepad1.a + " b:" + gamepad1.b + " x:" + gamepad1.x + " y:" + gamepad1.y);
-            telemetry.update();
+            powerUpDown();
 
             float xVal = gamepad1.left_stick_x * getPower();   //forward backward
             float yVal = -gamepad1.left_stick_y * getPower();   //left right

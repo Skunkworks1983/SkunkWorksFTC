@@ -92,21 +92,11 @@ public class TeleOpTankDrive extends CustomOpMode {
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
+            telemetry.addData("Status", "Run Time: " + runtime.toString());
             powerUpDown();
 
             float leftPower = -gamepad1.left_stick_y * getPower();
             float rightPower = -gamepad1.right_stick_y * getPower();
-
-            telemetry.addData("Status", "Run Time: " + runtime.toString());
-            telemetry.addData("Lstick", gamepad1.left_stick_y);
-            telemetry.addData("Rstick", gamepad1.right_stick_y);
-            if(gamepad1.a){
-                telemetry.addData("Button A", "true");
-            }
-            else{
-                telemetry.addData("Button A", "false");
-            }
-            telemetry.update();
 
             // eg: Run wheels in tank mode (note: The joystick goes negative when pushed forwards)
              leftFrontMotor.setPower(leftPower);

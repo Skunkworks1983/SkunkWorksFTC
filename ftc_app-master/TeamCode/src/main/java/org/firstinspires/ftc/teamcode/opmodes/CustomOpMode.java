@@ -30,9 +30,9 @@ public abstract class CustomOpMode extends LinearOpMode
         buttons = new ArrayList<>();
         //telemetry.addData("Welcome to the robot controller!", "");
         //telemetry.addData("", "");
-        telemetry.addData("DPad Down", "Decrease max speed by 10%");
-        telemetry.addData("Dpad Up", "Increase max speed by 10%");
-        telemetry.update();
+        //telemetry.addData("DPad Down", "Decrease max speed by 10%");
+        //telemetry.addData("Dpad Up", "Increase max speed by 10%");
+        //telemetry.update();
     }
 
     public float getPower() {
@@ -47,7 +47,7 @@ public abstract class CustomOpMode extends LinearOpMode
 
     public void powerUpDown()
     {
-        if(gamepad1.dpad_up)
+        if(gamepad1.right_bumper)
         {
             if(buttonUp && power < 10)
                 power++;
@@ -55,7 +55,7 @@ public abstract class CustomOpMode extends LinearOpMode
         }
 
 
-        else if(gamepad1.dpad_down)
+        else if(gamepad1.left_bumper)
         {
             if(buttonUp && power > 3)
                 power--;
