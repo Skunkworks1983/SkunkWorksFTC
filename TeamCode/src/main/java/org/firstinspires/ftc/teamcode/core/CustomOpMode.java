@@ -27,22 +27,11 @@ public abstract class CustomOpMode extends OpMode
         displayPower = true;
         buttonUp = true;
         buttons = new ArrayList<>();
-        telemetry.addData("Welcome to the robot controller!", "");
-        telemetry.addData("", "");
-        telemetry.addData(" Right Bumper", "Decrease max speed by 10%");
-        telemetry.addData(" Left Bumper", "Increase max speed by 10%");
-        telemetry.update();
     }
 
     public float getPower()
     {
        return (float) power / 10;
-    }
-
-    public void buttons()
-    {
-       // Probally want to do something other than a loop every millisecond
-//       for(buttons button : Gamepad.)
     }
 
     public void powerUpDown()

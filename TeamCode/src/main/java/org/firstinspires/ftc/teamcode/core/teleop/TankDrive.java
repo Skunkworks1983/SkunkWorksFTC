@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.core.utils.MotorsHardware;
  * October 26, 2016 at 7:03 PM
  */
 
-@TeleOp(name="Tank Drive)", group="Drive")
+@TeleOp(name="Tank Drive", group="Drive")
 public class TankDrive extends CustomOpMode
 {
     MotorsHardware motors;
