@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.core.autonomous;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -34,6 +35,7 @@ import java.util.List;
 // password: 1983bestTeam
 
 @TeleOp(name="Vuforia Navigation to Picture", group ="Concept")
+@Disabled
 public class Vuforia extends LinearOpMode
 {
     public static final String TAG = "Vuforia Sample";

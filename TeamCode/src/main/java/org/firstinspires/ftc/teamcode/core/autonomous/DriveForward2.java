@@ -2,8 +2,6 @@ package org.firstinspires.ftc.teamcode.core.autonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.teamcode.core.utils.MotorsHardware;
 
@@ -13,8 +11,8 @@ import org.firstinspires.ftc.teamcode.core.utils.MotorsHardware;
  */
 // Build on robot phone
 
-@Autonomous(name="Drive Forward (Short Distance)", group="Drive Forward")
-public class DriveForward extends LinearOpMode
+@Autonomous(name="Drive Forward (Medium Distance)", group="Drive Forward")
+public class DriveForward2 extends LinearOpMode
 {
     MotorsHardware motors;
 
@@ -28,6 +26,6 @@ public class DriveForward extends LinearOpMode
 
         motors.setLeftPower(0.5);
         motors.setRightPower(0.5);
-        sleep(1000);
+        sleep(1350);
     }
 }

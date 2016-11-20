@@ -1,9 +1,6 @@
 package org.firstinspires.ftc.teamcode.core;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.Gamepad;
-
-import org.firstinspires.ftc.teamcode.core.utils.Button;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,16 +14,16 @@ import java.util.List;
 public abstract class CustomOpMode extends OpMode
 {
     private int power;
+    private int savedPower;
     public boolean displayPower;
     public boolean buttonUp;
-    public List<Button> buttons;
 
     public CustomOpMode()
     {
         power = 10;
+        savedPower = 10;
         displayPower = true;
         buttonUp = true;
-        buttons = new ArrayList<>();
     }
 
     public float getPower()
@@ -36,7 +33,21 @@ public abstract class CustomOpMode extends OpMode
 
     public void powerUpDown()
     {
-        if(gamepad1.right_bumper || gamepad2.right_bumper)
+        if(gamepad1.left_stick_button || gamepad2.left_stick_button)
+        {
+            if(power != 3) // If so, they probally pressed it twice not allowing it to switch back later
+                savedPower = power;
+            power = 3;
+            buttonUp = false;
+        }
+
+        else if(gamepad1.right_stick_button || gamepad2.right_stick_button)
+        {
+            power = savedPower;
+            buttonUp = false;
+        }
+
+        else if(gamepad1.right_bumper || gamepad2.right_bumper)
         {
             if(buttonUp && power < 10)
                 power++;

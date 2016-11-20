@@ -51,6 +51,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  */
 
 @TeleOp(name="Hi there fam", group="Linear Opmode")  // @Autonomous(...) is the other common choice
+@Disabled
 public class TemplateOpMode_Linear extends LinearOpMode {
 
     /* Declare OpMode members. */

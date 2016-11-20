@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.core.utils.MotorsHardware;
  * October 26, 2016 at 7:03 PM
  */
 
-@TeleOp(name="Tank Drive", group="Drive")
+@TeleOp(name="Tank Drive (Easier, less control)", group="Drive")
 public class TankDrive extends CustomOpMode
 {
     MotorsHardware motors;
@@ -37,11 +37,11 @@ public class TankDrive extends CustomOpMode
         float leftPower = -gamepad1.left_stick_y * getPower();
         float rightPower = -gamepad1.right_stick_y * getPower();
 
-        if(leftPower == 0)
+        if(leftPower == 0 && rightPower == 0)
+        {
             leftPower = -gamepad2.left_stick_y * getPower();
-
-        if(rightPower == 0)
             rightPower = -gamepad2.right_stick_y * getPower();
+        }
 
         //Set the power of the motors with the gamepad values
         motors.setLeftPower(leftPower);

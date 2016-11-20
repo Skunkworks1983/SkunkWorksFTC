@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.core.testcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.core.utils.MotorsHardware;
@@ -11,6 +12,7 @@ import org.firstinspires.ftc.teamcode.core.utils.MotorsHardware;
  */
 
 @Autonomous(name="Drive by Time", group="idk")
+@Disabled
 public class DriveByTime extends LinearOpMode
 {
     MotorsHardware robot = new MotorsHardware();
