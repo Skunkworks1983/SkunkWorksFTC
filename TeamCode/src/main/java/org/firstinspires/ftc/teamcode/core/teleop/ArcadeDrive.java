@@ -26,6 +26,8 @@ public class ArcadeDrive extends CustomOpMode
     public void loop()
     {
         powerUpDown();
+        flyWheel();
+        finish();
 
         float x = gamepad1.left_stick_x;
         float y = -gamepad1.left_stick_y;

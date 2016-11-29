@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.core.teleop;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.core.CustomOpMode;
 import org.firstinspires.ftc.teamcode.core.utils.MotorsHardware;
@@ -23,15 +22,16 @@ public class TankDrive extends CustomOpMode
         motors = new MotorsHardware();
         motors.init(hardwareMap);
 
-        buttonUp = false;
+        buttonUp1 = false;
         toggled = false;
     }
 
     @Override
     public void loop()
     {
-        // Check for powering up or down
         powerUpDown();
+        flyWheel();
+        finish();
 
         // Left stick is power for left side, etc
         float leftPower = -gamepad1.left_stick_y * getPower();

@@ -2,8 +2,7 @@ package org.firstinspires.ftc.teamcode.core;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.firstinspires.ftc.teamcode.core.utils.FlyWheelMotors;
 
 /**
  * Created by Adam.
@@ -13,17 +12,22 @@ import java.util.List;
 // Only use for TeleOp
 public abstract class CustomOpMode extends OpMode
 {
+    private FlyWheelMotors flyWheelMotors;
     private int power;
     private int savedPower;
-    public boolean displayPower;
-    public boolean buttonUp;
+    public boolean buttonUp1;
+    public boolean buttonUp2;
+    private boolean flyWheel;
 
     public CustomOpMode()
     {
+        flyWheelMotors = new FlyWheelMotors();
+        flyWheelMotors.init(hardwareMap);
         power = 10;
         savedPower = 10;
-        displayPower = true;
-        buttonUp = true;
+        buttonUp1 = true;
+        buttonUp2 = true;
+        flyWheel = false;
     }
 
     public float getPower()
@@ -35,39 +39,63 @@ public abstract class CustomOpMode extends OpMode
     {
         if(gamepad1.left_stick_button || gamepad2.left_stick_button)
         {
-            if(power != 3) // If so, they probally pressed it twice not allowing it to switch back later
+            if(power != 3) // If so, they probably pressed it twice not allowing it to switch back later
                 savedPower = power;
             power = 3;
-            buttonUp = false;
+            buttonUp1 = false;
         }
 
         else if(gamepad1.right_stick_button || gamepad2.right_stick_button)
         {
             power = savedPower;
-            buttonUp = false;
+            buttonUp1 = false;
         }
 
         else if(gamepad1.right_bumper || gamepad2.right_bumper)
         {
-            if(buttonUp && power < 10)
+            if(buttonUp1 && power < 10)
                 power++;
-            buttonUp = false;
+            buttonUp1 = false;
         }
 
 
         else if(gamepad1.left_bumper || gamepad2.left_bumper)
         {
-            if(buttonUp && power > 3)
+            if(buttonUp1 && power > 3)
                 power--;
-            buttonUp = false;
+            buttonUp1 = false;
         }
 
         else
-            buttonUp = true;
-
-        if(!displayPower) return;
+            buttonUp1 = true;
 
         telemetry.addData("Power", (power * 10) + "%");
+    }
+
+    public void flyWheel()
+    {
+        if(gamepad1.a || gamepad2.a)
+        {
+            if(buttonUp2)
+            {
+                if(flyWheel)
+                    flyWheelMotors.setPower(1);
+                else
+                    flyWheelMotors.setPower(0);
+
+                flyWheel = !flyWheel;
+            }
+            buttonUp2 = false;
+        }
+
+        else
+            buttonUp2 = true;
+
+        telemetry.addData("Fly wheel activated?", flyWheel);
+    }
+
+    public void finish()
+    {
         telemetry.update();
     }
 }

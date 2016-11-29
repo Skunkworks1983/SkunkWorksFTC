@@ -1,13 +1,11 @@
+package org.firstinspires.ftc.teamcode.core.autonomous;
 
-        package org.firstinspires.ftc.teamcode.core.autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
-        import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-        import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-        import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-        import com.qualcomm.robotcore.hardware.DcMotor;
-        import com.qualcomm.robotcore.util.ElapsedTime;
-
-        import org.firstinspires.ftc.teamcode.core.utils.MotorsHardware;
+import org.firstinspires.ftc.teamcode.core.utils.MotorsHardware;
 
 /**
  * Created by Adam.
@@ -15,7 +13,6 @@
  */
 
 @Autonomous(name="Encoder", group="Pushbot")
-@Disabled
 public class Encoder extends LinearOpMode
 {
     MotorsHardware robot = new MotorsHardware();
@@ -23,7 +20,7 @@ public class Encoder extends LinearOpMode
 
     static final double COUNTS_PER_MOTOR_REV = 1120;    // eg: TETRIX Motor Encoder
     static final double DRIVE_GEAR_REDUCTION = 0.7777778;     // This is < 1.0 if geared UP
-    static final double WHEEL_DIAMETER_INCHES = 4.0;//<< 4     // For figuring circumference 3.875 4.0
+    static final double WHEEL_DIAMETER_INCHES = 4.0;    // For figuring circumference 3.875 4.0
     static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * 3.1415);
     static final double DRIVE_SPEED = 0.2;
     static final double TURN_SPEED = 0.25;
