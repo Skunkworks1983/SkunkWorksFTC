@@ -34,8 +34,8 @@ public class ConceptScanServo extends LinearOpMode {
     // Define class members
     Servo   servoRight;
     Servo   servoLeft;
-    double  positionRight = (Right_Max - Right_Min) / 2; // Start at halfway position
-    double  positionLeft  = (Left_Max - Left_Min)   / 2;
+    double  positionRight = Right_Min; // Start at minimum position
+    double  positionLeft  = Left_Min;
 
 
     @Override
@@ -61,7 +61,7 @@ public class ConceptScanServo extends LinearOpMode {
                 if (positionRight >= Right_Max ) {
                     positionRight = Right_Max;
                 }
-                positionLeft -= INCREMENT ;
+                positionLeft += INCREMENT ;
                 if (positionLeft >= Left_Max ) {
                     positionRight = Left_Max;
                 }
@@ -69,7 +69,7 @@ public class ConceptScanServo extends LinearOpMode {
 
             if (gamepad2.dpad_down) {
                 // Keep stepping down until we hit the min value.
-                positionLeft += INCREMENT;
+                positionLeft -= INCREMENT;
                 if (positionLeft <= Left_Min) {
                     positionLeft = Left_Min;
                 }
