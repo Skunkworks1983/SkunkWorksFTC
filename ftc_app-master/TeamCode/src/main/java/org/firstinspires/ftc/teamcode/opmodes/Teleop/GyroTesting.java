@@ -59,7 +59,6 @@ public class GyroTesting extends LinearOpMode {
 
                 turnAbsolute(target);
 
-
             }
         }
     }
@@ -72,6 +71,7 @@ public class GyroTesting extends LinearOpMode {
     public void turnAbsolute(int target) throws InterruptedException {
         int zAccumulated = mrGyro.getIntegratedZValue();  //Set variables to gyro readings
         double turnSpeed = 0.5;
+        double slowdownSpeed = 0;
 
         while (Math.abs(zAccumulated - target) > 3) {  //Continue while the robot direction is further than three degrees from the target
             if (zAccumulated > target) {  //if gyro is positive, we will turn right
@@ -89,14 +89,17 @@ public class GyroTesting extends LinearOpMode {
             }
 
             if (Math.abs(zAccumulated - target) < 50){ //how close are you to the target?
-                turnSpeed = Math.abs(zAccumulated - target) *2; //set the speed based on distance (Note: distance value of 50 will give 100% speed, Distance value of 25 gives 50%, ext.)
+                slowdownSpeed = Math.abs(zAccumulated - target) *2; //set the speed based on distance (Note: distance value of 50 will give 100% speed, Distance value of 25 gives 50%, ext.)
+                turnSpeed = slowdownSpeed / 100;
             }
             else {
                 turnSpeed = 1;
             }
 
             zAccumulated = mrGyro.getIntegratedZValue();  //Set variables to gyro readings
+            telemetry.addData("Turn Speed", turnSpeed);
             telemetry.addData("1. accu", String.format("%03d", zAccumulated));
+            telemetry.update();
         }
 
         ml1.setPower(0);
