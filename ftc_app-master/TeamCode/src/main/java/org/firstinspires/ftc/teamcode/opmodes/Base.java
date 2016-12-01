@@ -11,12 +11,12 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  */
 
 public class Base {
-    public DcMotor MotorFL   = null;
+    public DcMotor MotorFL  = null;
     public DcMotor MotorFR  = null;
-    public DcMotor MotorBL    = null;
-    public DcMotor MotorBR = null;
+    public DcMotor MotorBL  = null;
+    public DcMotor MotorBR  = null;
 
-    HardwareMap hwMap           =  null;
+    HardwareMap hwMap           = null;
     private ElapsedTime period  = new ElapsedTime();
 
     public Base(){
