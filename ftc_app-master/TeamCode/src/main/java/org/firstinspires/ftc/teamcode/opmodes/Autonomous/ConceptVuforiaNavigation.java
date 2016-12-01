@@ -54,6 +54,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
+import org.firstinspires.ftc.teamcode.opmodes.Teleop.GyroTesting;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,7 +93,7 @@ import java.util.Vector;
 
 @Autonomous(name="XYZ + Rot Vuforia")
 
-public class ConceptVuforiaNavigation extends LinearOpMode {
+public class ConceptVuforiaNavigation extends GyroTesting {
 
     public static final String TAG = "Vuforia Sample";
 
