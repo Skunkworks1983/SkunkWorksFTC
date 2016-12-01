@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.GyroSensor;
 
 //import org.firstinspires.ftc.teamcode.LBHW;
@@ -27,8 +28,10 @@ public class GyroTesting extends LinearOpMode {
         mr2 = hardwareMap.dcMotor.get("rightBack");
         ml1 = hardwareMap.dcMotor.get("leftFront");
         ml2 = hardwareMap.dcMotor.get("leftBack");
-        ml1.setDirection(DcMotor.Direction.REVERSE);
-        ml2.setDirection(DcMotor.Direction.REVERSE);
+        ml1.setDirection(DcMotor.Direction.FORWARD);
+        ml2.setDirection(DcMotor.Direction.FORWARD);
+        mr1.setDirection(DcMotor.Direction.REVERSE);
+        mr2.setDirection(DcMotor.Direction.REVERSE);
 
         ml1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         ml2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -48,8 +51,8 @@ public class GyroTesting extends LinearOpMode {
 
             telemetry.addData(">", "Gyro Calibrated.  Press Start.");
             telemetry.update();
-            waitForStart();  //Wait for play button to be pressed
 
+            waitForStart();  //Wait for play button to be pressed
 
             while (opModeIsActive()) {
                 if (gamepad1.a)
@@ -58,7 +61,6 @@ public class GyroTesting extends LinearOpMode {
                     target = target - 45;
 
                 turnAbsolute(target);
-
             }
         }
     }
@@ -71,7 +73,7 @@ public class GyroTesting extends LinearOpMode {
     public void turnAbsolute(int target) throws InterruptedException {
         int zAccumulated = mrGyro.getIntegratedZValue();  //Set variables to gyro readings
         double turnSpeed = 0.5;
-        double slowdownSpeed = 0;
+        //double slowdownSpeed = 0;
 
         while (Math.abs(zAccumulated - target) > 3) {  //Continue while the robot direction is further than three degrees from the target
             if (zAccumulated > target) {  //if gyro is positive, we will turn right
@@ -88,18 +90,25 @@ public class GyroTesting extends LinearOpMode {
                 mr2.setPower(turnSpeed);
             }
 
-            if (Math.abs(zAccumulated - target) < 50){ //how close are you to the target?
+            if (Math.abs(zAccumulated - target) > 30) {
+                turnSpeed = 0.5;
+            } else {
+                turnSpeed = 0.2;
+            }
+            /**if (Math.abs(zAccumulated - target) < 50){ //how close are you to the target?
                 slowdownSpeed = Math.abs(zAccumulated - target) *2; //set the speed based on distance (Note: distance value of 50 will give 100% speed, Distance value of 25 gives 50%, ext.)
                 turnSpeed = slowdownSpeed / 100;
             }
             else {
                 turnSpeed = 1;
             }
+            */
 
             zAccumulated = mrGyro.getIntegratedZValue();  //Set variables to gyro readings
             telemetry.addData("Turn Speed", turnSpeed);
             telemetry.addData("1. accu", String.format("%03d", zAccumulated));
             telemetry.update();
+            idle();
         }
 
         ml1.setPower(0);
