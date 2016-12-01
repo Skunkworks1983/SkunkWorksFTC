@@ -74,16 +74,20 @@ public abstract class CustomOpMode extends OpMode
 
     public void flyWheel()
     {
+        if(!flyWheelMotors.isInit())
+            flyWheelMotors.init(hardwareMap);
+
         if(gamepad1.a || gamepad2.a)
         {
             if(buttonUp2)
             {
+                flyWheel = !flyWheel;
+
                 if(flyWheel)
                     flyWheelMotors.setPower(1);
                 else
                     flyWheelMotors.setPower(0);
 
-                flyWheel = !flyWheel;
             }
             buttonUp2 = false;
         }
@@ -91,7 +95,8 @@ public abstract class CustomOpMode extends OpMode
         else
             buttonUp2 = true;
 
-        telemetry.addData("Fly wheel activated?", flyWheel);
+        telemetry.addData("Fly wheel activated?", flyWheel
+        );
     }
 
     public void finish()

@@ -79,7 +79,7 @@ public class Encoder extends LinearOpMode
             robot.leftMotor2.setTargetPosition(newLeftTarget2);
             robot.rightMotor1.setTargetPosition(newRightTarget1);
             robot.rightMotor2.setTargetPosition(newRightTarget2);
-
+            
             // Turn On RUN_TO_POSITION
             robot.setLeftMode(DcMotor.RunMode.RUN_TO_POSITION);
             robot.setRightMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -88,7 +88,6 @@ public class Encoder extends LinearOpMode
             runtime.reset();
             robot.setLeftPower(Math.abs(speed));
             robot.setRightPower(Math.abs(speed));
-
 
             // keep looping while we are still active, and there is time left, and both motors are running.
             while (opModeIsActive() &&

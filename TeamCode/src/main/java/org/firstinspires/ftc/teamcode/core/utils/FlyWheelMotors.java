@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.core.utils;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
  * Created by Adam.
@@ -16,8 +15,7 @@ public class FlyWheelMotors
     public DcMotor motor2 = null;
 
     /* local OpMode members. */
-    HardwareMap hwMap =  null;
-    private ElapsedTime period  = new ElapsedTime();
+    HardwareMap hwMap = null;
 
     /* Initialize standard Hardware interfaces */
     public void init(HardwareMap ahwMap)
@@ -25,7 +23,10 @@ public class FlyWheelMotors
         // Save reference to Hardware map
         hwMap = ahwMap;
 
-        // Define and Initialize Motors
+        // This shouldn't happen
+        if(hwMap == null)
+            return;
+
         motor1 = hwMap.dcMotor.get("flyWheel1");
         motor2 = hwMap.dcMotor.get("flyWheel2");
 
