@@ -33,11 +33,8 @@ public class FlywheelProbably extends LinearOpMode {
         backFlyWheel.setPower(1);
         frontFlyWheel.setPower(1);
 
-        boolean backWheelPwr = backFlyWheel.getPowerFloat();
-        boolean frontWheelPwr = frontFlyWheel.getPowerFloat();
-
-        telemetry.addData("Front Wheel Max Power: ", frontWheelPwr);
-        telemetry.addData("Back Wheel Max Power: ", backWheelPwr);
+        telemetry.addData("Front Wheel Max Power: ", frontFlyWheel.getPowerFloat());
+        telemetry.addData("Back Wheel Max Power: ", backFlyWheel.getPowerFloat());
 
         telemetry.update();
     }
