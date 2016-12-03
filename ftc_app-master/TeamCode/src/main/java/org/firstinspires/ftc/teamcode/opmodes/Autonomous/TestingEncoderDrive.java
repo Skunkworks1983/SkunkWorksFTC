@@ -15,7 +15,7 @@ public class TestingEncoderDrive extends Base{
 
     double DRIVE_SPEED = 0.75;
     private ElapsedTime runtime = new ElapsedTime(); //put this in every thing which you want a runtime
-    int target = 45;
+    int target = -45;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -23,13 +23,18 @@ public class TestingEncoderDrive extends Base{
 
         waitForStart();
 
+        resetEncoders();
+        runUsingEncoders();
         encoderDrive(DRIVE_SPEED, 10, 10, 5.0);
+
+        sleep(1000); //wait before turning
+
+        runWithoutEncoders();
+        turnAbsolute(target);
 
         while (opModeIsActive()){
             telemetry.addData("title", "it works");
             telemetry.update();
-
-            turnAbsolute(target);
             }
     }
 }

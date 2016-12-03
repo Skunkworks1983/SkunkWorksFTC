@@ -55,23 +55,35 @@ public abstract class Base extends LinearOpMode {
 
         sensorGyro = hardwareMap.gyroSensor.get("gyro");  //Point to the gyro in the configuration file
         mrGyro = (ModernRoboticsI2cGyro) sensorGyro;
+        mrGyro.calibrate();
 
         // Set all motors to zero power
         MotorFL.setPower(0);
         MotorBL.setPower(0);
         MotorFR.setPower(0);
         MotorBR.setPower(0);
+    }
 
+    public void resetEncoders(){
         MotorFL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         MotorFR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         MotorBL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         MotorBR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         idle();
+    }
 
+    public void runUsingEncoders(){
         MotorFL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         MotorFR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         MotorBL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         MotorBR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
+
+    public void runWithoutEncoders(){
+        MotorFL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        MotorBL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        MotorFR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        MotorBR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     public void encoderDrive(double speed,
@@ -152,10 +164,6 @@ public abstract class Base extends LinearOpMode {
         int zAccumulated = mrGyro.getIntegratedZValue();  //Set variables to gyro readings
         double turnSpeed = 0.5;
         //double slowdownSpeed = 0;
-        MotorFL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        MotorBL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        MotorFR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        MotorBR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         while (Math.abs(zAccumulated - target) > 3) {  //Continue while the robot direction is further than three degrees from the target
             if (zAccumulated > target) {  //if gyro is positive, we will turn right
