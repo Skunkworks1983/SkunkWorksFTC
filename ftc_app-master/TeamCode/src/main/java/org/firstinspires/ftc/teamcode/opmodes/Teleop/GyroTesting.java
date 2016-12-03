@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.GyroSensor;
 
+import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 import org.firstinspires.ftc.teamcode.opmodes.Base;
 
 //import org.firstinspires.ftc.teamcode.LBHW;
@@ -18,13 +19,8 @@ public class GyroTesting extends Base {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        MotorFL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        MotorBL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        MotorFR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        MotorBR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        init(hardwareMap);
 
-        sensorGyro = hardwareMap.gyroSensor.get("gyro");  //Point to the gyro in the configuration file
-        mrGyro = (ModernRoboticsI2cGyro) sensorGyro;
         int target = 0;  //Desired angle to turn to
 
         telemetry.addData(">", "Gyro Calibrating. Do Not move!");

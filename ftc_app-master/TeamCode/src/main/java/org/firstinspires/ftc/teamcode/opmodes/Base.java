@@ -14,16 +14,20 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  */
 
 public abstract class Base extends LinearOpMode {
-    public DcMotor MotorFL  = null;
-    public DcMotor MotorFR  = null;
-    public DcMotor MotorBL  = null;
-    public DcMotor MotorBR  = null;
+    public DcMotor MotorFL = null;
+    public DcMotor MotorFR = null;
+    public DcMotor MotorBL = null;
+    public DcMotor MotorBR = null;
 
     HardwareMap hwMap           = null;
     private ElapsedTime period  = new ElapsedTime();
 
     public GyroSensor sensorGyro;  //General Gyro Sensor allows us to point to the sensor in the configuration file.
     public ModernRoboticsI2cGyro mrGyro;  //ModernRoboticsI2cGyro allows us to .getIntegratedZValue()
+
+    public Base(){
+
+    }
 
     public void init(HardwareMap ahwMap) {
         // Save reference to Hardware map
@@ -40,6 +44,8 @@ public abstract class Base extends LinearOpMode {
         MotorFR.setDirection(DcMotor.Direction.REVERSE);
         MotorBR.setDirection(DcMotor.Direction.REVERSE);
 
+        sensorGyro = hardwareMap.gyroSensor.get("gyro");  //Point to the gyro in the configuration file
+        mrGyro = (ModernRoboticsI2cGyro) sensorGyro;
 
         // Set all motors to zero power
         MotorFL.setPower(0);
@@ -58,6 +64,10 @@ public abstract class Base extends LinearOpMode {
         int zAccumulated = mrGyro.getIntegratedZValue();  //Set variables to gyro readings
         double turnSpeed = 0.5;
         //double slowdownSpeed = 0;
+        MotorFL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        MotorBL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        MotorFR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        MotorBR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         while (Math.abs(zAccumulated - target) > 3) {  //Continue while the robot direction is further than three degrees from the target
             if (zAccumulated > target) {  //if gyro is positive, we will turn right
