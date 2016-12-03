@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.core.teleop;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.teamcode.core.BaseOpMode;
 import org.firstinspires.ftc.teamcode.core.ButtonsOpMode;
 import org.firstinspires.ftc.teamcode.core.buttons.FlyWheelButton;
 import org.firstinspires.ftc.teamcode.core.buttons.PowerButton;
@@ -18,7 +19,6 @@ public class ArcadeDrive extends ButtonsOpMode
     MotorsHardware motor = new MotorsHardware();
     private PowerButton power;
 
-
     @Override
     public void init()
     {
@@ -31,7 +31,6 @@ public class ArcadeDrive extends ButtonsOpMode
     @Override
     public void loop()
     {
-
         float x = gamepad1.left_stick_x;
         float y = -gamepad1.left_stick_y;
 

@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.core.ButtonsOpMode;
+import org.firstinspires.ftc.teamcode.core.buttons.FlyWheelButton;
 import org.firstinspires.ftc.teamcode.core.buttons.PowerButton;
 import org.firstinspires.ftc.teamcode.core.utils.MotorsHardware;
 import org.firstinspires.ftc.teamcode.core.utils.Sound;
@@ -31,7 +32,7 @@ public class TankDrive extends ButtonsOpMode
 
         power = new PowerButton();
         manager.add(power);
-        //manager.add(new FlyWheelButton(hardwareMap));
+        manager.add(new FlyWheelButton(hardwareMap));
     }
 
     @Override
