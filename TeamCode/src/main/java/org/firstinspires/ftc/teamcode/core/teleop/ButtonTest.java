@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.core.teleop;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.teamcode.core.CustomOpMode;
+import org.firstinspires.ftc.teamcode.core.ButtonsOpMode;
 import org.firstinspires.ftc.teamcode.core.buttons.PowerButton;
 import org.firstinspires.ftc.teamcode.core.utils.MotorsHardware;
 import org.firstinspires.ftc.teamcode.core.utils.Sound;
@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.core.utils.Sound;
  */
 
 @TeleOp(name="Hail Mary", group="Test")
-public class ButtonTest extends CustomOpMode
+public class ButtonTest extends ButtonsOpMode
 {
     MotorsHardware motors;
     private Sound sound;

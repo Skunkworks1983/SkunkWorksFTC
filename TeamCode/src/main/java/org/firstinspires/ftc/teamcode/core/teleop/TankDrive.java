@@ -3,8 +3,7 @@ package org.firstinspires.ftc.teamcode.core.teleop;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.teamcode.core.CustomOpMode;
-import org.firstinspires.ftc.teamcode.core.buttons.FlyWheelButton;
+import org.firstinspires.ftc.teamcode.core.ButtonsOpMode;
 import org.firstinspires.ftc.teamcode.core.buttons.PowerButton;
 import org.firstinspires.ftc.teamcode.core.utils.MotorsHardware;
 import org.firstinspires.ftc.teamcode.core.utils.Sound;
@@ -15,7 +14,7 @@ import org.firstinspires.ftc.teamcode.core.utils.Sound;
  */
 
 @TeleOp(name="Tank Drive (Easier, less control)", group="Drive")
-public class TankDrive extends CustomOpMode
+public class TankDrive extends ButtonsOpMode
 {
     MotorsHardware motors;
     boolean toggled;
@@ -32,7 +31,7 @@ public class TankDrive extends CustomOpMode
 
         power = new PowerButton();
         manager.add(power);
-        manager.add(new FlyWheelButton(hardwareMap));
+        //manager.add(new FlyWheelButton(hardwareMap));
     }
 
     @Override
@@ -40,12 +39,14 @@ public class TankDrive extends CustomOpMode
     {
         buttons();
 
-        if(gamepad1.a)
-            sound.playAidan();
-        else if(gamepad1.b)
-            sound.playJohn();
-        else if(gamepad1.x)
+        if(gamepad1.dpad_down)
+            sound.playRickRoll();
+        else if(gamepad1.dpad_right)
             sound.playNicole();
+        else if(gamepad1.dpad_up)
+            sound.playJohn();
+        else if(gamepad1.dpad_left)
+            sound.playAidan();
 
         // Left stick is power for left side, etc
         float leftPower = gamepad1.left_stick_y;

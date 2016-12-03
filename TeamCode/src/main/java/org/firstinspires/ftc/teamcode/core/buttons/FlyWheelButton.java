@@ -25,6 +25,7 @@ public class FlyWheelButton extends Button
     public boolean run(boolean execute, Gamepad gamepad1, Gamepad gamepad2, Telemetry telemetry)
     {
         telemetry.addData("Fly wheel activated?", flyWheel.isActive());
+        telemetry.addData("Fly", flyWheel.getInfo());
 
         if(gamepad1.a || gamepad2.a)
         {

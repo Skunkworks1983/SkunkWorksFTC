@@ -89,7 +89,7 @@ public class Vuforia extends LinearOpMode
          * target configuration files *must* correspond for the math to work out correctly.
          */
         float mmPerInch        = 25.4f;
-        float mmBotWidth       = 18 * mmPerInch;            // ... or whatever is right for your robot
+        float mmBotWidth       = 18 * mmPerInch;            // ... or whatever is right for your motors
         float mmFTCFieldWidth  = (12*12 - 2) * mmPerInch;   // the FTC field is ~11'10" center-to-center of the glass panels
 
 
@@ -135,10 +135,10 @@ public class Vuforia extends LinearOpMode
         RobotLog.ii(TAG, "Gears=%s", format(gearsLocationOnField));
 
         /**
-         * Create a transformation matrix describing where the phone is on the robot. Here, we
-         * put the phone on the right hand side of the robot with the screen facing in (see our
+         * Create a transformation matrix describing where the phone is on the motors. Here, we
+         * put the phone on the right hand side of the motors with the screen facing in (see our
          * choice of BACK camera above) and in landscape mode. Starting from alignment between the
-         * robot's and phone's axes, this is a rotation of -90deg along the Y axis.
+         * motors's and phone's axes, this is a rotation of -90deg along the Y axis.
          *
          * When determining whether a rotation is positive or negative, consider yourself as looking
          * down the (positive) axis of rotation from the positive towards the origin. Positive rotations
@@ -166,18 +166,18 @@ public class Vuforia extends LinearOpMode
         /**
          * A brief tutorial: here's how all the math is going to work:
          *
-         * C = phoneLocationOnRobot  maps   phone coords -> robot coords
+         * C = phoneLocationOnRobot  maps   phone coords -> motors coords
          * P = tracker.getPose()     maps   image target coords -> phone coords
          * L = redTargetLocationOnField maps   image target coords -> field coords
          *
          * So
          *
-         * C.inverted()              maps   robot coords -> phone coords
+         * C.inverted()              maps   motors coords -> phone coords
          * P.inverted()              maps   phone coords -> imageTarget coords
          *
          * Putting that all together,
          *
-         * L x P.inverted() x C.inverted() maps robot coords to field coords.
+         * L x P.inverted() x C.inverted() maps motors coords to field coords.
          *
          * @see VuforiaTrackableDefaultListener#getRobotLocation()
          */
@@ -220,7 +220,7 @@ public class Vuforia extends LinearOpMode
                     lastLocation = robotLocationTransform;
             }
             /**
-             * Provide feedback as to where the robot was last located (if we know).
+             * Provide feedback as to where the motors was last located (if we know).
              */
             telemetry.addData("Position", lastLocation != null ? format(lastLocation) : "Unkown D:");
 

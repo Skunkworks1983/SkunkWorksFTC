@@ -1,10 +1,9 @@
 package org.firstinspires.ftc.teamcode.core.teleop;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.teamcode.core.CustomOpMode;
+import org.firstinspires.ftc.teamcode.core.ButtonsOpMode;
 import org.firstinspires.ftc.teamcode.core.buttons.FlyWheelButton;
 import org.firstinspires.ftc.teamcode.core.buttons.PowerButton;
 import org.firstinspires.ftc.teamcode.core.utils.MotorsHardware;
@@ -14,7 +13,7 @@ import org.firstinspires.ftc.teamcode.core.utils.MotorsHardware;
  * October 17, 2016 at 7:56 PM
  */
 @TeleOp(name="Arcade Drive (Harder, more control)", group="Drive")
-public class ArcadeDrive extends CustomOpMode
+public class ArcadeDrive extends ButtonsOpMode
 {
     MotorsHardware motor = new MotorsHardware();
     private PowerButton power;
