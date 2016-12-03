@@ -1,14 +1,7 @@
 package org.firstinspires.ftc.teamcode.core.teleop;
 
-import android.media.AudioManager;
-import android.media.MediaPlayer;
-import android.media.SoundPool;
-
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-
-import org.firstinspires.ftc.teamcode.R;
 import org.firstinspires.ftc.teamcode.core.CustomOpMode;
-import org.firstinspires.ftc.teamcode.core.utils.MotorsHardware;
 import org.firstinspires.ftc.teamcode.core.utils.Sound;
 
 /**
@@ -17,7 +10,7 @@ import org.firstinspires.ftc.teamcode.core.utils.Sound;
  */
 
 @TeleOp(name="Fly Wheel", group="Testing")
-public class FlyWheel extends CustomOpMode
+public class FlyWheelAlone extends CustomOpMode
 {
     private Sound sound;
 
@@ -36,4 +29,5 @@ public class FlyWheel extends CustomOpMode
         flyWheel();
         finish();
     }
+
 }

@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.core.CustomOpMode;
 import org.firstinspires.ftc.teamcode.core.utils.MotorsHardware;
+import org.firstinspires.ftc.teamcode.core.utils.Sound;
 
 /**
  * Created by Adam.
@@ -16,14 +17,14 @@ public class TankDrive extends CustomOpMode
 {
     MotorsHardware motors;
     boolean toggled;
+    private Sound sound;
 
     @Override
     public void init()
     {
         motors = new MotorsHardware();
         motors.init(hardwareMap);
-
-        buttonUp1 = false;
+        sound = new Sound(hardwareMap);
         toggled = false;
     }
 
@@ -31,8 +32,15 @@ public class TankDrive extends CustomOpMode
     public void loop()
     {
         powerUpDown();
-        flyWheel();
+//        flyWheel();
         finish();
+
+        if(gamepad1.a)
+            sound.playAidan();
+        else if(gamepad1.b)
+            sound.playJohn();
+        else if(gamepad1.x)
+            sound.playNicole();
 
         // Left stick is power for left side, etc
         float leftPower = -gamepad1.left_stick_y;

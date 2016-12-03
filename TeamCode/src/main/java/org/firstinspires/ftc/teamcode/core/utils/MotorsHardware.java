@@ -29,10 +29,10 @@ public class MotorsHardware
         hwMap = ahwMap;
 
         // Define and Initialize Motors
-        leftMotor1 = hwMap.dcMotor.get("left_drive1");
-        leftMotor2 = hwMap.dcMotor.get("left_drive2");
-        rightMotor1  = hwMap.dcMotor.get("right_drive1");
-        rightMotor2  = hwMap.dcMotor.get("right_drive2");
+        leftMotor1 = hwMap.dcMotor.get("leftDrive1");
+        leftMotor2 = hwMap.dcMotor.get("leftDrive2");
+        rightMotor1  = hwMap.dcMotor.get("rightDrive1");
+        rightMotor2  = hwMap.dcMotor.get("rightDrive2");
         rightMotor1.setDirection(DcMotor.Direction.REVERSE);
         rightMotor2.setDirection(DcMotor.Direction.REVERSE);
 

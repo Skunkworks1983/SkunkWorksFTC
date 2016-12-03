@@ -17,12 +17,18 @@ public class Sound
     private SoundPool mySound;
     private int beepID;
     private int explosionID;
+    private int johnID;
+    private int aidanID;
+    private int nicoleID;
 
     public Sound(HardwareMap hardwareMap)
     {
         mySound = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
         beepID = mySound.load(hardwareMap.appContext, R.raw.beep, 1);
         explosionID = mySound.load(hardwareMap.appContext, R.raw.explosion, 1);
+        johnID = mySound.load(hardwareMap.appContext, R.raw.john, 1);
+        aidanID = mySound.load(hardwareMap.appContext, R.raw.aidan, 1);
+        nicoleID = mySound.load(hardwareMap.appContext, R.raw.nicole, 1);
     }
 
     public void playBeep()
@@ -33,5 +39,18 @@ public class Sound
     public void playExplosion()
     {
         mySound.play(explosionID, 1, 1, 1, 0, 1);
+    }
+
+    public void playJohn()
+    {
+        mySound.play(johnID, 1, 1, 1, 0, 1);
+    }
+    public void playNicole()
+    {
+        mySound.play(nicoleID, 1, 1, 1, 0, 1);
+    }
+    public void playAidan()
+    {
+        mySound.play(aidanID, 1, 1, 1, 0, 1);
     }
 }

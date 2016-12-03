@@ -2,7 +2,9 @@ package org.firstinspires.ftc.teamcode.core;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
-import org.firstinspires.ftc.teamcode.core.utils.FlyWheelMotors;
+import org.firstinspires.ftc.teamcode.core.utils.Button;
+import org.firstinspires.ftc.teamcode.core.utils.ButtonTask;
+import org.firstinspires.ftc.teamcode.core.utils.FlyWheel;
 
 /**
  * Created by Adam.
@@ -12,22 +14,19 @@ import org.firstinspires.ftc.teamcode.core.utils.FlyWheelMotors;
 // Only use for TeleOp
 public abstract class CustomOpMode extends OpMode
 {
-    private FlyWheelMotors flyWheelMotors;
+    private FlyWheel flyWheel;
     private int power;
     private int savedPower;
     public boolean buttonUp1;
     public boolean buttonUp2;
-    private boolean flyWheel;
 
     public CustomOpMode()
     {
-        flyWheelMotors = new FlyWheelMotors();
-        flyWheelMotors.init(hardwareMap);
+        flyWheel = new FlyWheel();
         power = 10;
         savedPower = 10;
         buttonUp1 = true;
         buttonUp2 = true;
-        flyWheel = false;
     }
 
     public float getPower()
@@ -74,29 +73,20 @@ public abstract class CustomOpMode extends OpMode
 
     public void flyWheel()
     {
-        if(!flyWheelMotors.isInit())
-            flyWheelMotors.init(hardwareMap);
+        if(!flyWheel.isInit())
+            flyWheel.init(hardwareMap);
 
         if(gamepad1.a || gamepad2.a)
         {
             if(buttonUp2)
-            {
-                flyWheel = !flyWheel;
-
-                if(flyWheel)
-                    flyWheelMotors.setPower(1);
-                else
-                    flyWheelMotors.setPower(0);
-
-            }
+                flyWheel.toggleActive();
             buttonUp2 = false;
         }
 
         else
             buttonUp2 = true;
 
-        telemetry.addData("Fly wheel activated?", flyWheel
-        );
+        telemetry.addData("Fly wheel activated?", flyWheel);
     }
 
     public void finish()
