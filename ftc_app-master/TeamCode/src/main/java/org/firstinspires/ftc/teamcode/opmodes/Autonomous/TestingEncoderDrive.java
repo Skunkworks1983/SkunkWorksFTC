@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmodes.Autonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.opmodes.Base;
 
@@ -13,14 +14,24 @@ public class TestingEncoderDrive extends Base{
 
     double DRIVE_SPEED = 0.75;
 
+
     @Override
     public void runOpMode() throws InterruptedException {
         init(hardwareMap);
 
-        waitForStart();
+        MotorFL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        MotorFR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        MotorBL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        MotorBR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        idle();
 
-        while (opModeIsActive()) {
-            encoderDrive(DRIVE_SPEED, 10, 10, 5.0);
-        }
+        MotorFL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        MotorFR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        MotorBL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        MotorBR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        waitForStart();
+        encoderDrive(DRIVE_SPEED, 10, 10, 5.0);
+
     }
 }
