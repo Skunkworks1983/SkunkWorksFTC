@@ -197,8 +197,8 @@ public abstract class Base extends LinearOpMode {
              */
 
             zAccumulated = mrGyro.getIntegratedZValue();  //Set variables to gyro readings
-            telemetry.addData("Turn Speed", turnSpeed);
-            telemetry.addData("1. accu", String.format("%03d", zAccumulated));
+            //telemetry.addData("Turn Speed", turnSpeed);
+            //telemetry.addData("1. accu", String.format("%03d", zAccumulated));
             idle();
         }
 

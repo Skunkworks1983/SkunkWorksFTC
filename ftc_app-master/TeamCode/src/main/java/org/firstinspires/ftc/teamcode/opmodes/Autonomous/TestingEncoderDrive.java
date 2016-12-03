@@ -37,6 +37,9 @@ public class TestingEncoderDrive extends ConceptVuforiaNavigation{
 
         while (opModeIsActive()){
 
+            runWithoutEncoders();
+            turnAbsolute(target);
+            
             for (VuforiaTrackable trackable : allTrackables) {
 
                 telemetry.addData(trackable.getName(), ((VuforiaTrackableDefaultListener)trackable.getListener()).isVisible() ? "Visible" : "Not Visible");
@@ -58,17 +61,12 @@ public class TestingEncoderDrive extends ConceptVuforiaNavigation{
                 rot = Orientation.getOrientation(lastLocation, AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
 
                 robotBearing = rot.thirdAngle;
+
+                telemetry.addData("Turning", "");
+                telemetry.addData("X", x + " " + "Y", y);
+                telemetry.addData("Rotation", robotBearing);
             }
-
-            telemetry.addData("Turning", "");
-            telemetry.addData("X", x + "Y", y);
-            telemetry.addData("Rotation", robotBearing);
-
-
-            runWithoutEncoders();
-            turnAbsolute(target);
             telemetry.update();
-
         }
     }
 }
