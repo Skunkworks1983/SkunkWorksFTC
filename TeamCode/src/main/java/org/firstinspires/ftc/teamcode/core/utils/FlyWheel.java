@@ -50,4 +50,9 @@ public class FlyWheel
         setPower(active ? 0 : 1);
         active = !active;
     }
+
+    public boolean isActive()
+    {
+        return active;
+    }
 }

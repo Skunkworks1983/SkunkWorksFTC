@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.core.CustomOpMode;
+import org.firstinspires.ftc.teamcode.core.buttons.FlyWheelButton;
+import org.firstinspires.ftc.teamcode.core.buttons.PowerButton;
 import org.firstinspires.ftc.teamcode.core.utils.MotorsHardware;
 
 /**
@@ -15,19 +17,21 @@ import org.firstinspires.ftc.teamcode.core.utils.MotorsHardware;
 public class ArcadeDrive extends CustomOpMode
 {
     MotorsHardware motor = new MotorsHardware();
+    private PowerButton power;
+
 
     @Override
     public void init()
     {
         motor.init(hardwareMap);
+        power = new PowerButton();
+        manager.add(power);
+        manager.add(new FlyWheelButton(hardwareMap));
     }
 
     @Override
     public void loop()
     {
-        powerUpDown();
-        flyWheel();
-        finish();
 
         float x = gamepad1.left_stick_x;
         float y = -gamepad1.left_stick_y;
@@ -42,8 +46,8 @@ public class ArcadeDrive extends CustomOpMode
         float leftPower = y + x;
         float rightPower = y - x;
 
-        motor.setLeftPower(Range.clip(leftPower * getPower(), -1, 1));
-        motor.setRightPower(Range.clip(-rightPower * getPower(), -1, 1));
+        motor.setLeftPower(Range.clip(leftPower * power.getPower(), -1, 1));
+        motor.setRightPower(Range.clip(-rightPower * power.getPower(), -1, 1));
     }
 
 }

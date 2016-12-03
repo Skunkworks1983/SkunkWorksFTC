@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.core.CustomOpMode;
-import org.firstinspires.ftc.teamcode.core.buttons.FlyWheelButton;
 import org.firstinspires.ftc.teamcode.core.buttons.PowerButton;
 import org.firstinspires.ftc.teamcode.core.utils.MotorsHardware;
 import org.firstinspires.ftc.teamcode.core.utils.Sound;
@@ -14,11 +13,10 @@ import org.firstinspires.ftc.teamcode.core.utils.Sound;
  * October 26, 2016 at 7:03 PM
  */
 
-@TeleOp(name="Tank Drive (Easier, less control)", group="Drive")
-public class TankDrive extends CustomOpMode
+@TeleOp(name="Hail Mary", group="Test")
+public class ButtonTest extends CustomOpMode
 {
     MotorsHardware motors;
-    boolean toggled;
     private Sound sound;
     private PowerButton power;
 
@@ -28,36 +26,29 @@ public class TankDrive extends CustomOpMode
         motors = new MotorsHardware();
         motors.init(hardwareMap);
         sound = new Sound(hardwareMap);
-        toggled = false;
 
         power = new PowerButton();
         manager.add(power);
-        manager.add(new FlyWheelButton(hardwareMap));
     }
 
     @Override
     public void loop()
     {
         buttons();
+        ///telemetry.update();
 
-        if(gamepad1.a)
-            sound.playAidan();
-        else if(gamepad1.b)
-            sound.playJohn();
-        else if(gamepad1.x)
-            sound.playNicole();
+        telemetry.addData("Power", power.getPower());
+        telemetry.update();
 
-        // Left stick is power for left side, etc
-        float leftPower = gamepad1.left_stick_y;
-        float rightPower = gamepad1.right_stick_y;
+        float leftPower = -gamepad1.left_stick_y;
+        float rightPower = -gamepad1.right_stick_y;
 
         if(leftPower == 0 && rightPower == 0)
         {
-            leftPower = gamepad2.left_stick_y;
-            rightPower = gamepad2.right_stick_y;
+            leftPower = -gamepad2.left_stick_y;
+            rightPower = -gamepad2.right_stick_y;
         }
 
-        //Set the power of the motors with the gamepad values
         motors.setLeftPower(Range.clip(leftPower * power.getPower(), -1, 1));
         motors.setRightPower(Range.clip(rightPower * power.getPower(), -1, 1));
     }
