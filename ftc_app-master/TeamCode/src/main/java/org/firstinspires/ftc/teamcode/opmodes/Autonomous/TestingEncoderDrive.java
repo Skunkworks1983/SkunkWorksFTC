@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.opmodes.Autonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.opmodes.Base;
 
@@ -13,7 +14,8 @@ import org.firstinspires.ftc.teamcode.opmodes.Base;
 public class TestingEncoderDrive extends Base{
 
     double DRIVE_SPEED = 0.75;
-
+    private ElapsedTime runtime = new ElapsedTime(); //put this in every thing which you want a runtime
+    double timeoutS = 5.0;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -33,5 +35,18 @@ public class TestingEncoderDrive extends Base{
         waitForStart();
         encoderDrive(DRIVE_SPEED, 10, 10, 5.0);
 
+        while (opModeIsActive()){
+
+            while ((runtime.seconds() < timeoutS) &&
+                    (MotorFL.isBusy() && MotorFR.isBusy() && MotorBL.isBusy() && MotorBR.isBusy())){
+            //telemetry.addData("Path1",  "Running to %7d :%7d", newFLTarget,  newFRTarget);
+            telemetry.addData("Path2",  "Running at %7d :%7d",
+                    MotorFL.getCurrentPosition(),
+                    MotorFR.getCurrentPosition(),
+                    MotorBL.getCurrentPosition(),
+                    MotorBR.getCurrentPosition());
+            telemetry.update();
+            }
+        }
     }
 }

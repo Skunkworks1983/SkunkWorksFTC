@@ -14,20 +14,20 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  */
 
 public abstract class Base extends LinearOpMode {
-    public DcMotor MotorFL = null;
-    public DcMotor MotorFR = null;
-    public DcMotor MotorBL = null;
-    public DcMotor MotorBR = null;
+    public DcMotor MotorFL;
+    public DcMotor MotorFR;
+    public DcMotor MotorBL;
+    public DcMotor MotorBR;
 
     HardwareMap hwMap           = null;
     private ElapsedTime period  = new ElapsedTime();
     private ElapsedTime runtime = new ElapsedTime(); //put this in every thing which you want a runtime
 
-    public static final double     COUNTS_PER_MOTOR_REV    = 1120;    // eg: TETRIX Motor Encoder
-    public static final double     DRIVE_GEAR_REDUCTION    = 6/7;     // This is < 1.0 if geared UP, driven gear diameter / driving gear diameter
+    public static final double     COUNTS_PER_MOTOR_REV    = 560;    // eg: TETRIX Motor Encoder
+    public static final double     DRIVE_GEAR_REDUCTION    = 1.28;     // This is < 1.0 if geared UP, driven gear diameter / driving gear diameter
     public static final double     WHEEL_DIAMETER_INCHES   = 3.875;     // For figuring circumference
     public static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
-            (WHEEL_DIAMETER_INCHES * 3.1415);
+                                                             (WHEEL_DIAMETER_INCHES * 3.1415);
     //public static final double     DRIVE_SPEED             = 0.75; //Maximum speed with no load is around 50 inches per second, between 4 and 5 feet per second
     //public static final double     TURN_SPEED              = 0.6; //put speeds in everything with encoder drive
 
@@ -101,7 +101,7 @@ public abstract class Base extends LinearOpMode {
 
 
             // keep looping while we are still active, and there is time left, and both motors are running.
-            while (opModeIsActive() &&
+            /**while (opModeIsActive() &&
              (runtime.seconds() < timeoutS) &&
              (MotorFL.isBusy() && MotorFR.isBusy() && MotorBL.isBusy() && MotorBR.isBusy())) {
 
@@ -113,7 +113,7 @@ public abstract class Base extends LinearOpMode {
              MotorBL.getCurrentPosition(),
              MotorBR.getCurrentPosition());
              telemetry.update();
-             }
+             }*/
 
             // Stop all motion;
             MotorFL.setPower(0);
