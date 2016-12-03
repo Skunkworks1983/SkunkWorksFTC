@@ -190,7 +190,7 @@ public class BluePos1Center extends LinearOpMode {
 
 
             // keep looping while we are still active, and there is time left, and both motors are running.
-            while (opModeIsActive() &&
+            /**while (opModeIsActive() &&
                    (runtime.seconds() < timeoutS) &&
                    (MotorFL.isBusy() && MotorFR.isBusy() && MotorBL.isBusy() && MotorBR.isBusy())) {
 
@@ -202,7 +202,7 @@ public class BluePos1Center extends LinearOpMode {
                         MotorBL.getCurrentPosition(),
                                             MotorBR.getCurrentPosition());
                 telemetry.update();
-            }
+            }*/
 
             // Stop all motion;
             MotorFL.setPower(0);

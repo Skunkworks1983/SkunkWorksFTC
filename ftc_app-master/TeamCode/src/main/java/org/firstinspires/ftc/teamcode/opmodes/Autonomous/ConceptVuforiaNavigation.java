@@ -54,6 +54,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
+import org.firstinspires.ftc.teamcode.opmodes.Base;
 import org.firstinspires.ftc.teamcode.opmodes.Teleop.GyroTesting;
 
 import java.util.ArrayList;
@@ -62,13 +63,17 @@ import java.util.Vector;
 
 @Autonomous(name="XYZ + Rot Vuforia")
 
-public class ConceptVuforiaNavigation extends GyroTesting {
+public class ConceptVuforiaNavigation extends Base {
 
     public static final String TAG = "Vuforia Sample";
 
     float x;
     float y;
     float z;
+
+    double TURN_SPEED;
+    double DRIVE_SPEED = 0.75;
+    int target = 0;
 
     //float robotX;
     //float robotY;
@@ -81,7 +86,10 @@ public class ConceptVuforiaNavigation extends GyroTesting {
 
     VuforiaLocalizer vuforia;
 
-    @Override public void runOpMode() {
+    @Override public void runOpMode() throws InterruptedException {
+
+        init(hardwareMap);
+        mrGyro.calibrate();
 
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(R.id.cameraMonitorViewId);
         parameters.vuforiaLicenseKey = "AZkqQkH/////AAAAGdiGT5c3sUI4rBa3mJU4jt18f+jlyz2znmOo2EiHBSTv77Q5ujdYwemMmLblk51L+dDswjbz3BwJtlNdupU7ee5LMwuE+pRmJhJSTfzmHsL5+z9enLQv88uQj7yGuy1WCfKDQS7lNh6FMlRoswyIfH3aPc9ncQFgk4Hk22gOosnpA6ugrbrqKzg802X4INkGq/ozNtt/RdR/xW0KfMFNRpiNX5VwvjV6mgx2i6XuRfAemjeCmcansRUsdpy54RmrwdH57krn48/L9xAouVvNK+6Boq8PXo+OB0jTngIo0JCWmr58T7qwW2b27EL6FSdoOFbd94hjzfnRvZilROP9IwQULyYgbqKZWyAvym/dzwYT";
@@ -181,6 +189,18 @@ public class ConceptVuforiaNavigation extends GyroTesting {
 
 
         while (opModeIsActive()) {
+
+
+            encoderDrive(DRIVE_SPEED, 10, 10, 5.0);
+
+            /**
+            if (gamepad1.a)
+                target = target + 45;
+            if (gamepad1.b)
+                target = target - 45;
+
+            turnAbsolute(target);
+            */
 
             for (VuforiaTrackable trackable : allTrackables) {
 
