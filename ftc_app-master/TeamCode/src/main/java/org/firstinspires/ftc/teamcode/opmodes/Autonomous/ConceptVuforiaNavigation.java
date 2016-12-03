@@ -64,35 +64,21 @@ import java.util.Vector;
 
 @Autonomous(name="XYZ + Rot Vuforia")
 
-public class ConceptVuforiaNavigation extends Base {
+public abstract class ConceptVuforiaNavigation extends Base {
 
     public static final String TAG = "Vuforia Sample";
 
-    float x;
-    float y;
-    float z;
+    public float x;
+    public float y;
+    public float z;
+    public float robotBearing;
+    public Orientation rot;
+    public OpenGLMatrix lastLocation = null;
+    public VuforiaLocalizer vuforia;
+    public List<VuforiaTrackable> allTrackables = new ArrayList<VuforiaTrackable>();
 
-    double TURN_SPEED;
-    double DRIVE_SPEED = 0.75;
-    int target = 0;
 
-    //float robotX;
-    //float robotY;
-    float robotBearing;
-
-    //VectorF trans;
-    Orientation rot;
-
-    OpenGLMatrix lastLocation = null;
-
-    VuforiaLocalizer vuforia;
-
-    private ElapsedTime runtime = new ElapsedTime();
-
-    @Override public void runOpMode() throws InterruptedException {
-
-        init(hardwareMap);
-        mrGyro.calibrate();
+    public void vuforiaInit() {
 
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(R.id.cameraMonitorViewId);
         parameters.vuforiaLicenseKey = "AZkqQkH/////AAAAGdiGT5c3sUI4rBa3mJU4jt18f+jlyz2znmOo2EiHBSTv77Q5ujdYwemMmLblk51L+dDswjbz3BwJtlNdupU7ee5LMwuE+pRmJhJSTfzmHsL5+z9enLQv88uQj7yGuy1WCfKDQS7lNh6FMlRoswyIfH3aPc9ncQFgk4Hk22gOosnpA6ugrbrqKzg802X4INkGq/ozNtt/RdR/xW0KfMFNRpiNX5VwvjV6mgx2i6XuRfAemjeCmcansRUsdpy54RmrwdH57krn48/L9xAouVvNK+6Boq8PXo+OB0jTngIo0JCWmr58T7qwW2b27EL6FSdoOFbd94hjzfnRvZilROP9IwQULyYgbqKZWyAvym/dzwYT";
@@ -189,60 +175,6 @@ public class ConceptVuforiaNavigation extends Base {
         waitForStart();
 
         beacons.activate();
-
-        while (opModeIsActive()) {
-
-
-            encoderDrive(DRIVE_SPEED, 10, 10, 5.0);
-
-            /**
-            if (gamepad1.a)
-                target = target + 45;
-            if (gamepad1.b)
-                target = target - 45;
-
-            turnAbsolute(target);
-            */
-
-            for (VuforiaTrackable trackable : allTrackables) {
-
-                telemetry.addData(trackable.getName(), ((VuforiaTrackableDefaultListener)trackable.getListener()).isVisible() ? "Visible" : "Not Visible");    //
-
-                OpenGLMatrix robotLocationTransform = ((VuforiaTrackableDefaultListener)trackable.getListener()).getUpdatedRobotLocation();
-                if (robotLocationTransform != null) {
-                    lastLocation = robotLocationTransform;
-                }
-            }
-
-            if (lastLocation != null) {
-                //  RobotLog.vv(TAG, "robot=%s", format(lastLocation));
-
-
-                float[] robotLocationArray = lastLocation.getData();
-                x = robotLocationArray[12];
-                y = robotLocationArray[13];
-                z = robotLocationArray[14];
-
-
-                //trans = lastLocation.getTranslation();
-                rot = Orientation.getOrientation(lastLocation, AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
-
-                //robotX = trans.get(0);
-                //robotY = trans.get(1);
-
-                robotBearing = rot.thirdAngle;
-
-                //telemetry.addData("RealPos", format(lastLocation));
-                telemetry.addData("FakePos:", "x:" + x + "y:" + y, "zee:" + z);
-                telemetry.addData("Rotation:", robotBearing);
-                //telemetry.addData("Robot", "true");
-            } else {
-                telemetry.addData("Pos", "Unknown");
-            }
-
-
-            telemetry.update();
-        }
     }
 
     /**
@@ -252,4 +184,5 @@ public class ConceptVuforiaNavigation extends Base {
     String format(OpenGLMatrix transformationMatrix) {
         return transformationMatrix.formatAsTransform();
     }
+
 }

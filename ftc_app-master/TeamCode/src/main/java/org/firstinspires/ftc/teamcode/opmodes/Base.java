@@ -23,6 +23,7 @@ public abstract class Base extends LinearOpMode {
     private ElapsedTime period  = new ElapsedTime();
     private ElapsedTime runtime = new ElapsedTime(); //put this in every thing which you want a runtime
 
+    //encoderdrive
     public static final double     COUNTS_PER_MOTOR_REV    = 560;    // eg: TETRIX Motor Encoder
     public static final double     DRIVE_GEAR_REDUCTION    = 1.28;     // This is < 1.0 if geared UP, driven gear diameter / driving gear diameter
     public static final double     WHEEL_DIAMETER_INCHES   = 3.875;     // For figuring circumference
@@ -31,6 +32,7 @@ public abstract class Base extends LinearOpMode {
     //public static final double     DRIVE_SPEED             = 0.75; //Maximum speed with no load is around 50 inches per second, between 4 and 5 feet per second
     //public static final double     TURN_SPEED              = 0.6; //put speeds in everything with encoder drive
 
+    //gyro
     public GyroSensor sensorGyro;  //General Gyro Sensor allows us to point to the sensor in the configuration file.
     public ModernRoboticsI2cGyro mrGyro;  //ModernRoboticsI2cGyro allows us to .getIntegratedZValue()
 
@@ -129,13 +131,13 @@ public abstract class Base extends LinearOpMode {
              (MotorFL.isBusy() && MotorFR.isBusy() && MotorBL.isBusy() && MotorBR.isBusy())) {
 
              // Display it for the driver.
-             telemetry.addData("Path1",  "Running to %7d :%7d", newFLTarget,  newFRTarget);
+             /**telemetry.addData("Path1",  "Running to %7d :%7d", newFLTarget,  newFRTarget);
              telemetry.addData("Path2",  "Running at %7d :%7d",
              MotorFL.getCurrentPosition(),
              MotorFR.getCurrentPosition(),
              MotorBL.getCurrentPosition(),
              MotorBR.getCurrentPosition());
-             telemetry.update();
+             telemetry.update();*/
              }
 
             // Stop all motion;
@@ -162,7 +164,7 @@ public abstract class Base extends LinearOpMode {
     //This function turns a number of degrees compared to where the robot was when the program started. Positive numbers trn left.
     public void turnAbsolute(int target) throws InterruptedException {
         int zAccumulated = mrGyro.getIntegratedZValue();  //Set variables to gyro readings
-        double turnSpeed = 0.5;
+        double turnSpeed = 0.3;
         //double slowdownSpeed = 0;
 
         while (Math.abs(zAccumulated - target) > 3) {  //Continue while the robot direction is further than three degrees from the target
@@ -181,9 +183,9 @@ public abstract class Base extends LinearOpMode {
             }
 
             if (Math.abs(zAccumulated - target) > 30) {
-                turnSpeed = 0.5;
+                turnSpeed = 0.3;
             } else {
-                turnSpeed = 0.2;
+                turnSpeed = 0.15;
             }
             /**if (Math.abs(zAccumulated - target) < 50){ //how close are you to the target?
              slowdownSpeed = Math.abs(zAccumulated - target) *2; //set the speed based on distance (Note: distance value of 50 will give 100% speed, Distance value of 25 gives 50%, ext.)
@@ -197,7 +199,6 @@ public abstract class Base extends LinearOpMode {
             zAccumulated = mrGyro.getIntegratedZValue();  //Set variables to gyro readings
             telemetry.addData("Turn Speed", turnSpeed);
             telemetry.addData("1. accu", String.format("%03d", zAccumulated));
-            telemetry.update();
             idle();
         }
 
