@@ -39,6 +39,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.RobotLog;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
@@ -85,6 +86,8 @@ public class ConceptVuforiaNavigation extends Base {
     OpenGLMatrix lastLocation = null;
 
     VuforiaLocalizer vuforia;
+
+    private ElapsedTime runtime = new ElapsedTime();
 
     @Override public void runOpMode() throws InterruptedException {
 
@@ -186,7 +189,6 @@ public class ConceptVuforiaNavigation extends Base {
         waitForStart();
 
         beacons.activate();
-
 
         while (opModeIsActive()) {
 
