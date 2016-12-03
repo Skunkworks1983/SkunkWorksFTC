@@ -61,6 +61,17 @@ public abstract class Base extends LinearOpMode {
         MotorBL.setPower(0);
         MotorFR.setPower(0);
         MotorBR.setPower(0);
+
+        MotorFL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        MotorFR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        MotorBL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        MotorBR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        idle();
+
+        MotorFL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        MotorFR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        MotorBL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        MotorBR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     public void encoderDrive(double speed,
@@ -101,7 +112,7 @@ public abstract class Base extends LinearOpMode {
 
 
             // keep looping while we are still active, and there is time left, and both motors are running.
-            /**while (opModeIsActive() &&
+            while (opModeIsActive() &&
              (runtime.seconds() < timeoutS) &&
              (MotorFL.isBusy() && MotorFR.isBusy() && MotorBL.isBusy() && MotorBR.isBusy())) {
 
@@ -113,7 +124,7 @@ public abstract class Base extends LinearOpMode {
              MotorBL.getCurrentPosition(),
              MotorBR.getCurrentPosition());
              telemetry.update();
-             }*/
+             }
 
             // Stop all motion;
             MotorFL.setPower(0);
