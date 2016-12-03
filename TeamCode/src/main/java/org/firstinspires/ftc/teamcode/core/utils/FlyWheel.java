@@ -56,8 +56,4 @@ public class FlyWheel
         return active;
     }
 
-    public String getInfo()
-    {
-        return motor1.getMaxSpeed() + " " + motor2.getMaxSpeed();
-    }
 }

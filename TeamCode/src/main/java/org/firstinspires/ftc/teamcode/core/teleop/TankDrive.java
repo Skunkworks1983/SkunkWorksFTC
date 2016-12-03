@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.util.Range;
 import org.firstinspires.ftc.teamcode.core.ButtonsOpMode;
 import org.firstinspires.ftc.teamcode.core.buttons.FlyWheelButton;
 import org.firstinspires.ftc.teamcode.core.buttons.PowerButton;
+import org.firstinspires.ftc.teamcode.core.buttons.SoundBoardButton;
 import org.firstinspires.ftc.teamcode.core.utils.MotorsHardware;
 import org.firstinspires.ftc.teamcode.core.utils.Sound;
 
@@ -19,7 +20,6 @@ public class TankDrive extends ButtonsOpMode
 {
     MotorsHardware motors;
     boolean toggled;
-    private Sound sound;
     private PowerButton power;
 
     @Override
@@ -27,27 +27,18 @@ public class TankDrive extends ButtonsOpMode
     {
         motors = new MotorsHardware();
         motors.init(hardwareMap);
-        sound = new Sound(hardwareMap);
         toggled = false;
 
         power = new PowerButton();
         manager.add(power);
         manager.add(new FlyWheelButton(hardwareMap));
+        manager.add(new SoundBoardButton(new Sound(hardwareMap)));
     }
 
     @Override
     public void loop()
     {
         buttons();
-
-        if(gamepad1.dpad_down)
-            sound.playRickRoll();
-        else if(gamepad1.dpad_right)
-            sound.playNicole();
-        else if(gamepad1.dpad_up)
-            sound.playJohn();
-        else if(gamepad1.dpad_left)
-            sound.playAidan();
 
         // Left stick is power for left side, etc
         float leftPower = gamepad1.left_stick_y;

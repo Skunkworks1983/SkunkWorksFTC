@@ -21,6 +21,8 @@ public class Sound
     private int aidanID;
     private int nicoleID;
     private int rickrollID;
+    private int awesomeID;
+    private int bobID;
 
     public Sound(HardwareMap hardwareMap)
     {
@@ -31,6 +33,9 @@ public class Sound
         aidanID = mySound.load(hardwareMap.appContext, R.raw.aidan, 1);
         nicoleID = mySound.load(hardwareMap.appContext, R.raw.nicole, 1);
         rickrollID = mySound.load(hardwareMap.appContext, R.raw.rickroll, 1);
+        awesomeID = mySound.load(hardwareMap.appContext, R.raw.awesome, 1);
+        rickrollID = mySound.load(hardwareMap.appContext, R.raw.awesome, 1);
+        bobID = mySound.load(hardwareMap.appContext, R.raw.bob, 1);
     }
 
     public void playBeep()
@@ -59,5 +64,15 @@ public class Sound
     public void playRickRoll()
     {
         mySound.play(rickrollID, 1, 1, 1, 0, 1);
+    }
+
+    public void playAwesome()
+    {
+        mySound.play(awesomeID, 1, 1, 1, 0, 1);
+    }
+
+    public void playBob()
+    {
+        mySound.play(bobID, 1, 1, 1, 0, 1);
     }
 }
