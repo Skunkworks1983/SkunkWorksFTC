@@ -15,7 +15,7 @@ import java.util.List;
  */
 
 // Only use for TeleOp
-public abstract class CustomOpMode extends LinearOpMode
+public abstract class CustomOpMode extends Base
 {
     private int power;
     public boolean displayPower;
