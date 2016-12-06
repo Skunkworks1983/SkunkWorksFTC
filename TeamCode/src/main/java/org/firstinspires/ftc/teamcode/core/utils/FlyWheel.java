@@ -26,7 +26,7 @@ public class FlyWheel
 
         // This shouldn't happen
         if(hwMap == null)
-            return;
+            throw new NullPointerException("Hardware Map null on initialization of FlyWheel");
 
         motor1 = hwMap.dcMotor.get("flyWheel1");
         motor2 = hwMap.dcMotor.get("flyWheel2");
