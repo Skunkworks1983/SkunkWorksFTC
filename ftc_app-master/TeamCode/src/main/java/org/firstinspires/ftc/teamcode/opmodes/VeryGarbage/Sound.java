@@ -16,15 +16,22 @@ public class Sound
 {
     private SoundPool mySound;
     private int beepID;
+    private int desiinerID;
 
     public Sound(HardwareMap hardwareMap)
     {
         mySound = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
         beepID = mySound.load(hardwareMap.appContext, R.raw.bleepbloop, 1);
+        desiinerID = mySound.load(hardwareMap.appContext, R.raw.desiiner, 1);
     }
 
     public void playBeep()
     {
         mySound.play(beepID, 1, 1, 1, 0, 1);
+    }
+
+    public void playDesiiner()
+    {
+        mySound.play(desiinerID, 1, 1, 1, 0, 1);
     }
 }

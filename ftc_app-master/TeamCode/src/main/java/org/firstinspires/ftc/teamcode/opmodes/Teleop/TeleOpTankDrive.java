@@ -39,6 +39,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.opmodes.CustomOpMode;
+import org.firstinspires.ftc.teamcode.opmodes.VeryGarbage.Sound;
 
 /**
  * This file contains an minimal example of a Linear "OpMode". An OpMode is a 'program' that runs in either
@@ -63,11 +64,15 @@ public class TeleOpTankDrive extends CustomOpMode {
     DcMotor leftBackMotor;
     DcMotor rightFrontMotor;
     DcMotor rightBackMotor;
+    Sound sound;
 
     @Override
     public void runOpMode() throws InterruptedException {
+        
         telemetry.addData("Status", "Initialized");
         telemetry.update();
+
+        sound.playDesiiner();
 
         /* eg: Initialize the hardware variables. Note that the strings used here as parameters
          * to 'get' must correspond to the names assigned during the robot configuration
