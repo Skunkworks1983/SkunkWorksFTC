@@ -26,7 +26,7 @@ public class GyroTesting extends Base {
         telemetry.addData(">", "Gyro Calibrating. Do Not move!");
         telemetry.update();
         sleep(1000);  //wait for gyro to come to rest
-        mrGyro.calibrate();  //Calibrate the sensor so it knows where 0 is and what still is. DO NOT MOVE SENSOR WHILE BLUE LIGHT IS SOLID
+        //mrGyro.calibrate();  //Calibrate the sensor so it knows where 0 is and what still is. DO NOT MOVE SENSOR WHILE BLUE LIGHT IS SOLID
 
         while (mrGyro.isCalibrating()) { //Ensure calibration is complete (usually 2 seconds)
 

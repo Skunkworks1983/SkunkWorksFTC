@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.util.RobotLog;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
+import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
@@ -26,23 +27,25 @@ import java.util.List;
 public class TestingEncoderDrive extends ConceptVuforiaNavigation {
 
     //gyro and drive
-    double DRIVE_SPEED = 0.75;
+    double DRIVE_SPEED = 0.25;
     private ElapsedTime runtime = new ElapsedTime(); //put this in every thing which you want a runtime
     int target = 60;
+    OpenGLMatrix location;
 
     @Override
     public void runOpMode() throws InterruptedException {
 
         init(hardwareMap);
 
-        vuforiaInit();
-
         resetEncoders();
         runUsingEncoders();
+
+        vuforiaInit();
+
         encoderDrive(DRIVE_SPEED, 10, 10, 5.0);
 
-        runWithoutEncoders();
-        turnAbsolute(target);
+        //runWithoutEncoders();
+        //turnAbsolute(target);
 
         while (opModeIsActive()){
 
@@ -53,6 +56,8 @@ public class TestingEncoderDrive extends ConceptVuforiaNavigation {
                  * getRobotLocation() will return null if the trackable is not currently visible.
                  * */
                 telemetry.addData(trackable.getName(), ((VuforiaTrackableDefaultListener)trackable.getListener()).isVisible() ? "Visible" : "Not Visible");    //
+
+                //OpenGLMatrix location = ((VuforiaTrackableDefaultListener)trackable.getListener()).getUpdatedRobotLocation();
 
                 OpenGLMatrix robotLocationTransform = ((VuforiaTrackableDefaultListener)trackable.getListener()).getUpdatedRobotLocation();
                 if (robotLocationTransform != null) {
@@ -68,6 +73,10 @@ public class TestingEncoderDrive extends ConceptVuforiaNavigation {
                 x = robotLocationArray[12];
                 y = robotLocationArray[13];
                 z = robotLocationArray[14];
+
+                /**VectorF trans = location.getTranslation();
+                robotX = trans.get(0);
+                robotY = trans.get(1);*/
 
                 rot = Orientation.getOrientation(lastLocation, AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
 

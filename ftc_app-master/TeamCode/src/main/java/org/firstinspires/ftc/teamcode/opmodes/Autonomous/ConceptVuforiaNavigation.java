@@ -72,6 +72,8 @@ public abstract class ConceptVuforiaNavigation extends Base {
     public OpenGLMatrix lastLocation = null;
     public VuforiaLocalizer vuforia;
     public List<VuforiaTrackable> allTrackables = new ArrayList<VuforiaTrackable>();
+    //public float robotX;
+    //public float robotY;
 
     public void vuforiaInit() {
 

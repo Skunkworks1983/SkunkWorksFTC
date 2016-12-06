@@ -24,8 +24,8 @@ public abstract class Base extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime(); //put this in every thing which you want a runtime
 
     //encoderdrive
-    public static final double     COUNTS_PER_MOTOR_REV    = 560;    // eg: TETRIX Motor Encoder
-    public static final double     DRIVE_GEAR_REDUCTION    = 1.28;     // This is < 1.0 if geared UP, driven gear diameter / driving gear diameter
+    public static final double     COUNTS_PER_MOTOR_REV    = 1120;    // eg: TETRIX Motor Encoder
+    public static final double     DRIVE_GEAR_REDUCTION    = 0.5;     // This is < 1.0 if geared UP, driven gear diameter / driving gear diameter
     public static final double     WHEEL_DIAMETER_INCHES   = 3.875;     // For figuring circumference
     public static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
                                                              (WHEEL_DIAMETER_INCHES * 3.1415);
@@ -55,9 +55,9 @@ public abstract class Base extends LinearOpMode {
         MotorFR.setDirection(DcMotor.Direction.REVERSE);
         MotorBR.setDirection(DcMotor.Direction.REVERSE);
 
-        sensorGyro = hardwareMap.gyroSensor.get("gyro");  //Point to the gyro in the configuration file
-        mrGyro = (ModernRoboticsI2cGyro) sensorGyro;
-        mrGyro.calibrate();
+        //sensorGyro = hardwareMap.gyroSensor.get("gyro");  //Point to the gyro in the configuration file
+        //mrGyro = (ModernRoboticsI2cGyro) sensorGyro;
+        //mrGyro.calibrate();
 
         // Set all motors to zero power
         MotorFL.setPower(0);
@@ -114,8 +114,6 @@ public abstract class Base extends LinearOpMode {
             MotorFR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             MotorBL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             MotorBR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-
 
             // reset the timeout time and start motion.
             runtime.reset();
@@ -193,8 +191,7 @@ public abstract class Base extends LinearOpMode {
              }
              else {
              turnSpeed = 1;
-             }
-             */
+             }*/
 
             zAccumulated = mrGyro.getIntegratedZValue();  //Set variables to gyro readings
             //telemetry.addData("Turn Speed", turnSpeed);
