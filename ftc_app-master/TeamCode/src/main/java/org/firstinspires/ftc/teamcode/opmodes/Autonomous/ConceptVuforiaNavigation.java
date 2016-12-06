@@ -71,6 +71,7 @@ public abstract class ConceptVuforiaNavigation extends Base {
     public Orientation rot;
     public OpenGLMatrix lastLocation = null;
     public VuforiaLocalizer vuforia;
+    public List<VuforiaTrackable> allTrackables = new ArrayList<VuforiaTrackable>();
 
     public void vuforiaInit() {
 
@@ -91,7 +92,7 @@ public abstract class ConceptVuforiaNavigation extends Base {
         lego.setName("Lego");
         gears.setName("Gears");
 
-        List<VuforiaTrackable> allTrackables = new ArrayList<VuforiaTrackable>();
+        //List<VuforiaTrackable> allTrackables = new ArrayList<VuforiaTrackable>();
         allTrackables.addAll(beacons);
 
         float mmPerInch        = 25.4f;
@@ -170,42 +171,6 @@ public abstract class ConceptVuforiaNavigation extends Base {
 
         beacons.activate();
 
-        while (opModeIsActive()){
-            for (VuforiaTrackable trackable : allTrackables) {
-                /**
-                 * getUpdatedRobotLocation() will return null if no new information is available since
-                 * the last time that call was made, or if the trackable is not currently visible.
-                 * getRobotLocation() will return null if the trackable is not currently visible.
-                 */
-                telemetry.addData(trackable.getName(), ((VuforiaTrackableDefaultListener)trackable.getListener()).isVisible() ? "Visible" : "Not Visible");    //
-
-                OpenGLMatrix robotLocationTransform = ((VuforiaTrackableDefaultListener)trackable.getListener()).getUpdatedRobotLocation();
-                if (robotLocationTransform != null) {
-                    lastLocation = robotLocationTransform;
-                }
-            }
-            /**
-             * Provide feedback as to where the robot was last located (if we know).
-             */
-            if (lastLocation != null) {
-                //  RobotLog.vv(TAG, "robot=%s", format(lastLocation));
-                float[] robotLocationArray = lastLocation.getData();
-                x = robotLocationArray[12];
-                y = robotLocationArray[13];
-                z = robotLocationArray[14];
-
-                rot = Orientation.getOrientation(lastLocation, AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
-
-                robotBearing = rot.thirdAngle;
-
-                telemetry.addData("Location", "X" + x + " " + "Y" + y);
-                telemetry.addData("Rotation", robotBearing);
-
-            } else {
-                telemetry.addData("Pos", "Unknown");
-            }
-            telemetry.update();
-        }
     }
 
     /**
