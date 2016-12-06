@@ -15,7 +15,6 @@ import org.firstinspires.ftc.teamcode.R;
 public class Sound
 {
     private SoundPool mySound;
-    private int beepID;
     private int explosionID;
     private int johnID;
     private int aidanID;
@@ -27,7 +26,6 @@ public class Sound
     public Sound(HardwareMap hardwareMap)
     {
         mySound = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
-        beepID = mySound.load(hardwareMap.appContext, R.raw.beep, 1);
         explosionID = mySound.load(hardwareMap.appContext, R.raw.explosion, 1);
         johnID = mySound.load(hardwareMap.appContext, R.raw.john, 1);
         aidanID = mySound.load(hardwareMap.appContext, R.raw.aidan, 1);
@@ -36,11 +34,6 @@ public class Sound
         awesomeID = mySound.load(hardwareMap.appContext, R.raw.awesome, 1);
         rickrollID = mySound.load(hardwareMap.appContext, R.raw.awesome, 1);
         bobID = mySound.load(hardwareMap.appContext, R.raw.bob, 1);
-    }
-
-    public void playBeep()
-    {
-        mySound.play(beepID, 1, 1, 1, 0, 1);
     }
 
     public void playExplosion()
