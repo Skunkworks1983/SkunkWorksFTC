@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.util.RobotLog;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
+import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
@@ -26,51 +27,63 @@ import java.util.List;
 public class TestingEncoderDrive extends ConceptVuforiaNavigation {
 
     //gyro and drive
-    double DRIVE_SPEED = 0.75;
+    double DRIVE_SPEED = 0.25;
     private ElapsedTime runtime = new ElapsedTime(); //put this in every thing which you want a runtime
-    int target = -45;
+    int target = 60;
+    OpenGLMatrix location;
 
     @Override
     public void runOpMode() throws InterruptedException {
 
         init(hardwareMap);
 
-        vuforiaInit();
-
         resetEncoders();
         runUsingEncoders();
+
+        vuforiaInit();
+
         encoderDrive(DRIVE_SPEED, 10, 10, 5.0);
 
+        //runWithoutEncoders();
+        //turnAbsolute(target);
+
         while (opModeIsActive()){
-           for (VuforiaTrackable trackable : allTrackables) {
-                    /**
-                     * getUpdatedRobotLocation() will return null if no new information is available since
-                     * the last time that call was made, or if the trackable is not currently visible.
-                     * getRobotLocation() will return null if the trackable is not currently visible.
-                     */
-                    telemetry.addData(trackable.getName(), ((VuforiaTrackableDefaultListener)trackable.getListener()).isVisible() ? "Visible" : "Not Visible");    //
 
-                    OpenGLMatrix robotLocationTransform = ((VuforiaTrackableDefaultListener)trackable.getListener()).getUpdatedRobotLocation();
-                    if (robotLocationTransform != null) {
-                        lastLocation = robotLocationTransform;
-                    }
-                }
+            for (VuforiaTrackable trackable : allTrackables) {
                 /**
-                 * Provide feedback as to where the robot was last located (if we know).
-                 */
-                if (lastLocation != null) {
-                    //  RobotLog.vv(TAG, "robot=%s", format(lastLocation));
-                    float[] robotLocationArray = lastLocation.getData();
-                    x = robotLocationArray[12];
-                    y = robotLocationArray[13];
-                    z = robotLocationArray[14];
+                 * getUpdatedRobotLocation() will return null if no new information is available since
+                 * the last time that call was made, or if the trackable is not currently visible.
+                 * getRobotLocation() will return null if the trackable is not currently visible.
+                 * */
+                telemetry.addData(trackable.getName(), ((VuforiaTrackableDefaultListener)trackable.getListener()).isVisible() ? "Visible" : "Not Visible");    //
 
-                    rot = Orientation.getOrientation(lastLocation, AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
+                //OpenGLMatrix location = ((VuforiaTrackableDefaultListener)trackable.getListener()).getUpdatedRobotLocation();
 
-                    robotBearing = rot.thirdAngle;
+                OpenGLMatrix robotLocationTransform = ((VuforiaTrackableDefaultListener)trackable.getListener()).getUpdatedRobotLocation();
+                if (robotLocationTransform != null) {
+                    lastLocation = robotLocationTransform;
+                }
+            }
+            /**
+             * Provide feedback as to where the robot was last located (if we know).
+             */
+            if (lastLocation != null) {
+                //  RobotLog.vv(TAG, "robot=%s", format(lastLocation));
+                float[] robotLocationArray = lastLocation.getData();
+                x = robotLocationArray[12];
+                y = robotLocationArray[13];
+                z = robotLocationArray[14];
 
-                    telemetry.addData("Location", "X: " + x + " " + "Y: " + y);
-                    telemetry.addData("Rotation", robotBearing);
+                /**VectorF trans = location.getTranslation();
+                robotX = trans.get(0);
+                robotY = trans.get(1);*/
+
+                rot = Orientation.getOrientation(lastLocation, AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
+
+                robotBearing = rot.thirdAngle;
+
+                telemetry.addData("Location", "X: " + x + " " + "Y: " + y);
+                telemetry.addData("Rotation", robotBearing);
 
                 } else {
                     telemetry.addData("Pos", "Unknown");
@@ -78,8 +91,6 @@ public class TestingEncoderDrive extends ConceptVuforiaNavigation {
 
             telemetry.update();
 
-            runWithoutEncoders();
-            turnAbsolute(target);
         }
     }
 }
