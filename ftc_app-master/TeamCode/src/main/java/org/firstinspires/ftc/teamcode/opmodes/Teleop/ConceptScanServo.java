@@ -3,8 +3,6 @@ package org.firstinspires.ftc.teamcode.opmodes.Teleop;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
-//up 98, down 0 (facing motor controllers, on the right)
-//up 158, down 251 (facing motor controllers, on the left)
 /**
  * This OpMode scans a single servo back and forwards until Stop is pressed.
  * The code is structured as a LinearOpMode
@@ -19,7 +17,7 @@ import com.qualcomm.robotcore.hardware.Servo;
  * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
-@TeleOp(name = "Concept: Scan Servo", group = "Concept")
+@TeleOp(name = "Servo", group = "")
 public class ConceptScanServo extends LinearOpMode {
 
     static final double INCREMENT   = 0.01;     // amount to slew servo each CYCLE_MS cycle sort of the speed/duration

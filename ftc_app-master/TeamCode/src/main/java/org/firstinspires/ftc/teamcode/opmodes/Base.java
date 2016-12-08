@@ -55,9 +55,9 @@ public abstract class Base extends LinearOpMode {
         MotorFR.setDirection(DcMotor.Direction.REVERSE);
         MotorBR.setDirection(DcMotor.Direction.REVERSE);
 
-        //sensorGyro = hardwareMap.gyroSensor.get("gyro");  //Point to the gyro in the configuration file
-        //mrGyro = (ModernRoboticsI2cGyro) sensorGyro;
-        //mrGyro.calibrate();
+        sensorGyro = hardwareMap.gyroSensor.get("gyro");  //Point to the gyro in the configuration file
+        mrGyro = (ModernRoboticsI2cGyro) sensorGyro;
+        mrGyro.calibrate();
 
         // Set all motors to zero power
         MotorFL.setPower(0);
