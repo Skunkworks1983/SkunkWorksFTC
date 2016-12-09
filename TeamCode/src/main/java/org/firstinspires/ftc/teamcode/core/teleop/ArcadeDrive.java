@@ -25,14 +25,14 @@ public class ArcadeDrive extends ButtonsOpMode
         motor.init(hardwareMap);
         power = new PowerButton();
         manager.add(power);
-        manager.add(new FlyWheelButton(hardwareMap));
+        //manager.add(new FlyWheelButton(hardwareMap));
     }
 
     @Override
     public void loop()
     {
         float x = gamepad1.left_stick_x;
-        float y = -gamepad1.left_stick_y;
+        float y = gamepad1.left_stick_y;
 
         if(x == 0 && y == 0)
         {
@@ -45,7 +45,7 @@ public class ArcadeDrive extends ButtonsOpMode
         float rightPower = y - x;
 
         motor.setLeftPower(Range.clip(leftPower * power.getPower(), -1, 1));
-        motor.setRightPower(Range.clip(-rightPower * power.getPower(), -1, 1));
+        motor.setRightPower(Range.clip(rightPower * power.getPower(), -1, 1));
     }
 
 }
