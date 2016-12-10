@@ -72,6 +72,7 @@ import com.qualcomm.robotcore.util.Range;
  */
 
 @Autonomous(name="Gyro Testing")
+@Disabled
 public class PushbotAutoDriveByGyro_Linear extends LinearOpMode {
 
     /* Declare OpMode members. */

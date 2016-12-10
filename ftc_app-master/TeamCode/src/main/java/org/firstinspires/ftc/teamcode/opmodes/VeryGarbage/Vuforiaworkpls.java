@@ -34,6 +34,7 @@ package org.firstinspires.ftc.teamcode.opmodes.VeryGarbage;
 
 import com.qualcomm.ftcrobotcontroller.R;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.RobotLog;
@@ -85,7 +86,7 @@ import java.util.List;
  */
 
 @Autonomous(name="ayylmao")
-
+@Disabled
 public class Vuforiaworkpls extends LinearOpMode {
 
     public static final String TAG = "Vuforia Sample";

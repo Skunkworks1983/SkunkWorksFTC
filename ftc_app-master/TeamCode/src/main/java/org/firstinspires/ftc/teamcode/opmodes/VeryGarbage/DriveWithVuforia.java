@@ -33,6 +33,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package org.firstinspires.ftc.teamcode.opmodes.VeryGarbage;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -80,6 +81,7 @@ import java.util.List;
  */
 
 @Autonomous(name="Drive with vuforia")
+@Disabled
 public class DriveWithVuforia extends LinearOpMode {
 
     /* Declare OpMode members. */
