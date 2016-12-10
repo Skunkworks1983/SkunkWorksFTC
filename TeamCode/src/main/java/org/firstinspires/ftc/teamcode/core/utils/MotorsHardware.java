@@ -20,7 +20,6 @@ public class MotorsHardware
 
     /* local OpMode members. */
     HardwareMap hwMap =  null;
-    private ElapsedTime period  = new ElapsedTime();
 
     /* Initialize standard Hardware interfaces */
     public void init(HardwareMap ahwMap)
@@ -116,17 +115,5 @@ public class MotorsHardware
         telemetry.addData("Left Motor 2", "Power: " + leftMotor2.getPower() + " Direction: " + leftMotor2.getDirection().name());
         telemetry.addData("Right Motor 1", "Power: " + rightMotor1.getPower() + " Direction: " + rightMotor1.getDirection().name());
         telemetry.addData("Right Motor 2", "Power: " + rightMotor2.getPower() + " Direction: " + rightMotor2.getDirection().name());
-    }
-
-    public void waitForTick(long periodMs) throws InterruptedException
-    {
-        long  remaining = periodMs - (long)period.milliseconds();
-
-        // sleep for the remaining portion of the regular cycle period.
-        if(remaining > 0)
-            Thread.sleep(remaining);
-
-        // Reset the cycle clock for the next pass.
-        period.reset();
     }
 }
