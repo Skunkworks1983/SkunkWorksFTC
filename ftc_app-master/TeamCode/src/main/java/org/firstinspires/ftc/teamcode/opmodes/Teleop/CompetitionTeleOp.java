@@ -114,10 +114,10 @@ public class CompetitionTeleOp extends CustomOpMode {
             lPow = Range.clip(lPow, -1, 1); //Make sure values don't go over 1
             rPow = Range.clip(rPow, -1, 1);
 
-            MotorFL.setPower(lPow);
-            MotorBL.setPower(lPow);
-            MotorFR.setPower(rPow);
-            MotorBR.setPower(rPow); //what does this stuff mean
+            MotorFL.setPower(-lPow);
+            MotorBL.setPower(-lPow);
+            MotorFR.setPower(-rPow);
+            MotorBR.setPower(-rPow); //what does this stuff mean
 
             idle(); // Always call idle() at the bottom of your while(opModeIsActive()) loop
         }

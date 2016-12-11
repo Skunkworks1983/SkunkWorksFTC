@@ -1,9 +1,15 @@
 package org.firstinspires.ftc.teamcode.opmodes;
 
+import android.app.Activity;
+import android.view.View;
+
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DeviceInterfaceModule;
+import com.qualcomm.robotcore.hardware.DigitalChannelController;
 import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -14,14 +20,37 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  */
 
 public abstract class Base extends LinearOpMode {
+
     public DcMotor MotorFL;
     public DcMotor MotorFR;
     public DcMotor MotorBL;
     public DcMotor MotorBR;
 
+    public DcMotor frontFlyWheel;
+    public DcMotor backFlyWheel;
+
+    public Servo beaconPress;
+    public Servo ballRelease;
+
+    //color sensor
+    public ColorSensor sensorRGB;
+    public DeviceInterfaceModule cdim;
+    public float hsvValues[];
+    public final float values[] = hsvValues;
+    public final View relativeLayout = null;
+
+    public boolean bPrevState;
+    public boolean bCurrState;
+    public boolean bLedOn;
+    //end color sensor
+
     HardwareMap hwMap           = null;
     private ElapsedTime period  = new ElapsedTime();
     private ElapsedTime runtime = new ElapsedTime(); //put this in every thing which you want a runtime
+
+    //servo
+    public static final int CYCLE_MS = 100;     // period of each cycle
+
 
     //encoderdrive
     public static final double     COUNTS_PER_MOTOR_REV    = 1120;    // eg: TETRIX Motor Encoder
@@ -31,6 +60,9 @@ public abstract class Base extends LinearOpMode {
                                                              (WHEEL_DIAMETER_INCHES * 3.1415);
     //public static final double     DRIVE_SPEED             = 0.75; //Maximum speed with no load is around 50 inches per second, between 4 and 5 feet per second
     //public static final double     TURN_SPEED              = 0.6; //put speeds in everything with encoder drive
+
+    //color sensor
+    public static final int LED_CHANNEL = 5;
 
     //gyro
     public GyroSensor sensorGyro;  //General Gyro Sensor allows us to point to the sensor in the configuration file.
@@ -50,10 +82,24 @@ public abstract class Base extends LinearOpMode {
         MotorBL = hwMap.dcMotor.get("leftBack");
         MotorBR = hwMap.dcMotor.get("rightBack");
 
+        //flywheel
+        backFlyWheel  = hardwareMap.dcMotor.get("backFlyWheel");
+        frontFlyWheel = hardwareMap.dcMotor.get("frontFlyWheel");
+
+        //servo
+        beaconPress = hardwareMap.servo.get("beaconPress");
+        ballRelease = hardwareMap.servo.get("ballRelease");
+
         MotorFL.setDirection(DcMotor.Direction.FORWARD);
         MotorBL.setDirection(DcMotor.Direction.FORWARD);
         MotorFR.setDirection(DcMotor.Direction.REVERSE);
         MotorBR.setDirection(DcMotor.Direction.REVERSE);
+
+        backFlyWheel.setDirection(DcMotor.Direction.REVERSE);
+        frontFlyWheel.setDirection(DcMotor.Direction.REVERSE);
+
+        backFlyWheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontFlyWheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         sensorGyro = hardwareMap.gyroSensor.get("gyro");  //Point to the gyro in the configuration file
         mrGyro = (ModernRoboticsI2cGyro) sensorGyro;
@@ -64,6 +110,9 @@ public abstract class Base extends LinearOpMode {
         MotorBL.setPower(0);
         MotorFR.setPower(0);
         MotorBR.setPower(0);
+
+        backFlyWheel.setPower(0);
+        frontFlyWheel.setPower(0);
     }
 
     public void resetEncoders(){
@@ -204,6 +253,44 @@ public abstract class Base extends LinearOpMode {
         MotorFR.setPower(0);
         MotorBR.setPower(0);
 
+    }
+
+    public void colorInit() {
+        // hsvValues is an array that will hold the hue, saturation, and value information.
+        float hsvValues[] = {0F,0F,0F};
+
+        // values is a reference to the hsvValues array.
+        final float values[] = hsvValues;
+
+        // get a reference to the RelativeLayout so we can change the background
+        // color of the Robot Controller app to match the hue detected by the RGB sensor.
+        final View relativeLayout = ((Activity) hardwareMap.appContext).findViewById(com.qualcomm.ftcrobotcontroller.R.id.RelativeLayout);
+
+        // bPrevState and bCurrState represent the previous and current state of the button.
+        boolean bPrevState = false;
+        boolean bCurrState = false;
+
+        // bLedOn represents the state of the LED.
+        boolean bLedOn = true;
+
+        // get a reference to our DeviceInterfaceModule object.
+        cdim = hardwareMap.deviceInterfaceModule.get("dim");
+
+        // set the digital channel to output mode.
+        // remember, the Adafruit sensor is actually two devices.
+        // It's an I2C sensor and it's also an LED that can be turned on or off.
+        cdim.setDigitalChannelMode(LED_CHANNEL, DigitalChannelController.Mode.OUTPUT);
+
+        // get a reference <></>o our ColorSensor object.
+        sensorRGB = hardwareMap.colorSensor.get("sensor_color");
+
+        // turn the LED on in the beginning, just so user will know that the sensor is active.
+        cdim.setDigitalChannelState(LED_CHANNEL, bLedOn);
+    }
+
+    public void resetEverything() {
+        ballRelease.setPosition(0);
+        sleep(CYCLE_MS);
     }
 
 }

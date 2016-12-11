@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.opmodes.Autonomous;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
@@ -15,6 +16,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefau
  */
 
 @TeleOp(name = "memedreamfighingmachine")
+@Disabled
 public class VuforiaTesting extends ConceptVuforiaNavigation {
     @Override
     public void runOpMode() throws InterruptedException {

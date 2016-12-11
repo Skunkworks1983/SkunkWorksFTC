@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmodes.Autonomous;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -9,6 +11,8 @@ import org.firstinspires.ftc.teamcode.opmodes.Base;
  * Created by s-2512810 on 11/30/2016.
  */
 
+@Autonomous(name = "Flywheel")
+@Disabled
 public class FlywheelProbably extends LinearOpMode {
 
     DcMotor backFlyWheel   = null;

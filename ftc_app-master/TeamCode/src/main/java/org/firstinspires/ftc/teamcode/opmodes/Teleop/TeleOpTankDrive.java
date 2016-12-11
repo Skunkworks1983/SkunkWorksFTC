@@ -64,15 +64,12 @@ public class TeleOpTankDrive extends CustomOpMode {
     DcMotor leftBackMotor;
     DcMotor rightFrontMotor;
     DcMotor rightBackMotor;
-    Sound sound;
 
     @Override
     public void runOpMode() throws InterruptedException {
         
         telemetry.addData("Status", "Initialized");
         telemetry.update();
-
-        sound.playDesiiner();
 
         /* eg: Initialize the hardware variables. Note that the strings used here as parameters
          * to 'get' must correspond to the names assigned during the robot configuration
