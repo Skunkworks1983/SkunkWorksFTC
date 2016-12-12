@@ -97,8 +97,8 @@ public class TeleOpTankDrive extends CustomOpMode {
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             powerUpDown();
 
-            float leftPower = -gamepad1.left_stick_y * getPower();
-            float rightPower = -gamepad1.right_stick_y * getPower();
+            float leftPower = gamepad1.left_stick_y * getPower();
+            float rightPower = gamepad1.right_stick_y * getPower();
 
             // eg: Run wheels in tank mode (note: The joystick goes negative when pushed forwards)
              leftFrontMotor.setPower(leftPower);

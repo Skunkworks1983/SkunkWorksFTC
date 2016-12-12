@@ -25,13 +25,12 @@ import java.util.List;
  */
 
 @Autonomous(name="encoderdrivinghple")
-@Disabled
 public class TestingEncoderDrive extends ConceptVuforiaNavigation {
 
     //gyro and drive
-    double DRIVE_SPEED = 0.25;
+    double DRIVE_SPEED = 0.5;
     private ElapsedTime runtime = new ElapsedTime(); //put this in every thing which you want a runtime
-    int target = 60;
+    int target = -100;
     //OpenGLMatrix location;
 
     @Override
@@ -44,10 +43,14 @@ public class TestingEncoderDrive extends ConceptVuforiaNavigation {
 
         vuforiaInit();
 
-        encoderDrive(DRIVE_SPEED, 10, 10, 5.0);
+        encoderDrive(DRIVE_SPEED, 7.5, 7.5, 5.0);
 
-        //runWithoutEncoders();
-        //turnAbsolute(target);
+        sleep(5500);
+
+        encoderDrive(DRIVE_SPEED, 45, 45, 10.0);
+
+        runWithoutEncoders();
+        turnAbsolute(target);
 
         while (opModeIsActive()){
 
@@ -86,6 +89,16 @@ public class TestingEncoderDrive extends ConceptVuforiaNavigation {
 
                 telemetry.addData("Location", "X: " + x + " " + "Y: " + y);
                 telemetry.addData("Rotation", robotBearing);
+
+                while (x > 100){
+
+                    sleep(1000);
+
+                    MotorBL.setPower(0.5);
+                    MotorBR.setPower(0.5);
+                    MotorFL.setPower(0.5);
+                    MotorFL.setPower(0.5);
+                }
 
                 } else {
                     telemetry.addData("Pos", "Unknown");

@@ -47,12 +47,17 @@ public class RedSide extends ConceptVuforiaNavigation {
         frontFlyWheel.setPower(-1);
 
         //wait 5.5 seconds for full power
-        sleep(5500);
+        sleep(7000);
 
         ballRelease.setPosition(open);
         sleep(CYCLE_MS);
 
         encoderDrive(DRIVE_SPEED, 45, 45, 10.0);
+
+        sleep(1000);
+
+        backFlyWheel.setPower(0);
+        frontFlyWheel.setPower(0);
 
         while (opModeIsActive()) {
 
