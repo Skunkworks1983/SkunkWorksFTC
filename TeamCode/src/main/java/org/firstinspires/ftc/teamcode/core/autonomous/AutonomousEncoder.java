@@ -3,10 +3,15 @@ package org.firstinspires.ftc.teamcode.core.autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.core.BaseOpMode;
+import org.firstinspires.ftc.teamcode.core.utils.MotorsHardware;
 
 /**
  * Created by Adam.
  * December 02, 2016 at 4:12 PM
+ */
+
+/*
+    Red wire on outside, yellow inside twrds plugs
  */
 
 public abstract class AutonomousEncoder extends BaseOpMode
@@ -19,6 +24,7 @@ public abstract class AutonomousEncoder extends BaseOpMode
     @Override
     public void runOpMode() throws InterruptedException
     {
+        motors = new MotorsHardware();
         motors.init(hardwareMap);
 
         telemetry.addData("Status", "Resetting Encoders...");
@@ -71,7 +77,6 @@ public abstract class AutonomousEncoder extends BaseOpMode
             motors.rightMotor1.setTargetPosition(newRightTarget1);
             motors.rightMotor2.setTargetPosition(newRightTarget2);
 
-            // Turn On RUN_TO_POSITION
             motors.setLeftMode(DcMotor.RunMode.RUN_TO_POSITION);
             motors.setRightMode(DcMotor.RunMode.RUN_TO_POSITION);
 
@@ -94,15 +99,20 @@ public abstract class AutonomousEncoder extends BaseOpMode
                 telemetry.update();
             }
 
-            // Stop all motion;
             motors.setLeftPower(0);
             motors.setRightPower(0);
 
-            // Turn off RUN_TO_POSITION
             motors.setLeftMode(DcMotor.RunMode.RUN_USING_ENCODER);
             motors.setRightMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-            sleep(100);   // optional pause after each move
+            tel("Finished");
+            sleep(100);
         }
+    }
+
+    public void tel(String msg)
+    {
+        telemetry.addData(msg, "");
+        telemetry.update();
     }
 }

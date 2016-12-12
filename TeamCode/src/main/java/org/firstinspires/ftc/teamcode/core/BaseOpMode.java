@@ -15,7 +15,6 @@ public abstract class BaseOpMode extends LinearOpMode
 
     public BaseOpMode()
     {
-        motors = new MotorsHardware();
-        motors.init(hardwareMap);
+
     }
 }

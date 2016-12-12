@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.core.teleop;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.core.ButtonsOpMode;
@@ -11,6 +12,7 @@ import org.firstinspires.ftc.teamcode.core.buttons.FlyWheelButton;
  */
 
 @TeleOp(name="Fly Wheel", group="Drive")
+@Disabled
 public class FlyWheelDrive extends ButtonsOpMode
 {
     @Override

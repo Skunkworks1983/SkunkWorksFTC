@@ -30,27 +30,6 @@ public class SoundBoardButton extends Button
             return true;
         }
 
-        if(gamepad1.dpad_right)
-        {
-            if(execute)
-                sound.playBob();
-            return true;
-        }
-
-        if(gamepad1.dpad_up)
-        {
-            if(execute)
-                sound.playAwesome();
-            return true;
-        }
-
-        if(gamepad1.dpad_left)
-        {
-            if(execute)
-                sound.playAidan();
-            return true;
-        }
-
         return false;
     }
 }

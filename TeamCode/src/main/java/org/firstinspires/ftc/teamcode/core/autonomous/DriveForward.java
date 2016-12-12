@@ -12,7 +12,7 @@ import org.firstinspires.ftc.teamcode.core.utils.MotorsHardware;
  */
 // Build on motors phone
 
-@Autonomous(name="Drive Forward", group="Drive Forward")
+@Autonomous(name="Drive Forward (Don't use)", group="Time")
 public class DriveForward extends BaseOpMode
 {
     @Override

@@ -1,22 +1,16 @@
 package org.firstinspires.ftc.teamcode.core.autonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.ElapsedTime;
-
-import org.firstinspires.ftc.teamcode.core.BaseOpMode;
 import org.firstinspires.ftc.teamcode.core.utils.FlyWheel;
-import org.firstinspires.ftc.teamcode.core.utils.MotorsHardware;
 
 /**
  * Created by Adam.
  * December 02, 2016 at 4:12 PM
  */
 
-@Autonomous(name="Autonomous (THIS ONE ALEX!)", group="Encoder")
-public class Final extends AutonomousEncoder
+@Autonomous(name="Autonomous (Hail Mary)", group="Encoder")
+public class FinalTest extends AutonomousEncoder
 {
     @Override
     public void encoders() throws InterruptedException
@@ -27,7 +21,7 @@ public class Final extends AutonomousEncoder
 
         tel("Starting up fly wheel...");
         flyWheel.setPower(1);
-        sleep(9000);
+        sleep(10000);
 
         tel("Shooting balls!");
         servo.setPosition(1);
@@ -37,6 +31,11 @@ public class Final extends AutonomousEncoder
         flyWheel.setPower(0);
         servo.setPosition(0);
 
-        encoderDrive(.2, 38, 38, 5);
+        tel("Hail Mary");
+        encoderDrive(.2, 20, 20, 2.5);
+        encoderDrive(.22, -9, 9, 3);
+        encoderDrive(.2, 24, 24, 4);
+        encoderDrive(.2, -29, -29, 1);
+
     }
 }
