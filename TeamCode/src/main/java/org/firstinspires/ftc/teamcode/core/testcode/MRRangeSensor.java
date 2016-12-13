@@ -14,17 +14,16 @@ import java.util.Date;
  * November 04, 2016 at 4:13 PM
  */
 
-@Autonomous(name = "MR Range Sensor", group = "Sensor")
-@Disabled
+@Autonomous(name = "Range Sensor", group = "Sensor")
 public class MRRangeSensor extends LinearOpMode
 {
 
     ModernRoboticsI2cRangeSensor rangeSensor;
 
-    @Override public void runOpMode() throws InterruptedException
+    @Override
+    public void runOpMode() throws InterruptedException
     {
-
-        rangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "range_sensor");
+        rangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "rangeSensor");
 
         waitForStart();
 

@@ -53,6 +53,7 @@ public class Vuforia extends LinearOpMode
         parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
         this.vuforia = ClassFactory.createVuforiaLocalizer(parameters);
 
+
 //        if(currentlyDriving.equals(""))
 //        {
 //            if(!motors.isInit())
