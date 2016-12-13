@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmodes.Autonomous;
 
+import android.graphics.Color;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -41,13 +43,10 @@ public class TestingEncoderDrive extends ConceptVuforiaNavigation {
         resetEncoders();
         runUsingEncoders();
 
-        vuforiaInit();
+        colorInit();
+        vuforiaInit(); //has waitforstart
 
-        encoderDrive(DRIVE_SPEED, 7.5, 7.5, 5.0);
-
-        sleep(5500);
-
-        encoderDrive(DRIVE_SPEED, 45, 45, 10.0);
+        //encoderDrive(DRIVE_SPEED, 45, 45, 10.0);
 
         runWithoutEncoders();
         turnAbsolute(target);
@@ -106,6 +105,44 @@ public class TestingEncoderDrive extends ConceptVuforiaNavigation {
 
             telemetry.update();
 
+            //color
+
+            // check the status of the x button on gamepad.
+            bCurrState = gamepad1.x;
+
+            // check for button-press state transitions.
+            if ((bCurrState == true) && (bCurrState != bPrevState))  {
+
+                // button is transitioning to a pressed state. Toggle the LED.
+                bLedOn = !bLedOn;
+                cdim.setDigitalChannelState(LED_CHANNEL, bLedOn);
+            }
+
+            // update previous state variable.
+            bPrevState = bCurrState;
+
+            // convert the RGB values to HSV values.
+            Color.RGBToHSV((sensorRGB.red() * 255) / 800, (sensorRGB.green() * 255) / 800, (sensorRGB.blue() * 255) / 800, hsvValues);
+
+            // send the info back to driver station using telemetry function.
+            telemetry.addData("LED", bLedOn ? "On" : "Off");
+            telemetry.addData("Clear", sensorRGB.alpha());
+            telemetry.addData("Red  ", sensorRGB.red());
+            telemetry.addData("Green", sensorRGB.green());
+            telemetry.addData("Blue ", sensorRGB.blue());
+            telemetry.addData("Hue", hsvValues[0]);
+
+            // change the background color to match the color detected by the RGB sensor.
+            // pass a reference to the hue, saturation, and value array as an argument
+            // to the HSVToColor method.
+            relativeLayout.post(new Runnable() {
+                public void run() {
+                    relativeLayout.setBackgroundColor(Color.HSVToColor(0xff, values));
+                }
+            });
+
+            telemetry.update();
+            //end color
         }
     }
 }
