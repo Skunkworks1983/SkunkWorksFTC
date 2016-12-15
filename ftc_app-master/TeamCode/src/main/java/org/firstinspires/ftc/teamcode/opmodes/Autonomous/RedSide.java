@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.opmodes.Autonomous;
 import android.graphics.Color;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
@@ -18,6 +19,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefau
  */
 
 @Autonomous(name = "Red Side")
+@Disabled
 public class RedSide extends ConceptVuforiaNavigation {
 
     double closed = 0;

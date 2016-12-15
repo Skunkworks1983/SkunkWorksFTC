@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmodes.Teleop;
 
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -14,6 +15,7 @@ import org.firstinspires.ftc.teamcode.opmodes.Base;
 //import org.firstinspires.ftc.teamcode.LBHW;
 
 @TeleOp(name="Gyro", group="")
+@Disabled
 public class GyroTesting extends Base {
 
     @Override
@@ -21,28 +23,26 @@ public class GyroTesting extends Base {
 
         init(hardwareMap);
 
-        int target = 0;  //Desired angle to turn to
+        int mem = 0;  //Desired angle to turn to
 
-        telemetry.addData(">", "Gyro Calibrating. Do Not move!");
+        runWithoutEncoders();
+
+        while (mrGyro.isCalibrating()) {
+
+        }
+        telemetry.addData(">", "Gyro is calibrated");
         telemetry.update();
-        sleep(1000);  //wait for gyro to come to rest
-        mrGyro.calibrate();  //Calibrate the sensor so it knows where 0 is and what still is. DO NOT MOVE SENSOR WHILE BLUE LIGHT IS SOLID
+        waitForStart();  //Wait for play button to be pressed
 
-        while (mrGyro.isCalibrating()) { //Ensure calibration is complete (usually 2 seconds)
+        while (opModeIsActive()) {
+            if (gamepad1.a)
+                mem = mem + 45;
+            if (gamepad1.b)
+                mem = mem - 45;
 
-            telemetry.addData(">", "Gyro Calibrated.  Press Start.");
-            telemetry.update();
+            turnAbsolute(mem);
 
-            waitForStart();  //Wait for play button to be pressed
-
-            while (opModeIsActive()) {
-                if (gamepad1.a)
-                    target = target + 45;
-                if (gamepad1.b)
-                    target = target - 45;
-
-                turnAbsolute(target);
-            }
+            idle();
         }
     }
 }

@@ -32,6 +32,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.firstinspires.ftc.teamcode.opmodes.Teleop;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -55,6 +56,7 @@ import org.firstinspires.ftc.teamcode.opmodes.Button;
  */
 
 @TeleOp(name="Arcade Drive", group="Linear Opmode")  // @Autonomous(...) is the other common choice
+@Disabled
 public class CompetitionTeleOp extends CustomOpMode {
 
     /* Declare OpMode members. */

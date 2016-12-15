@@ -36,6 +36,7 @@ import android.graphics.Path;
 
 import com.qualcomm.ftcrobotcontroller.R;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.RobotLog;
 
@@ -59,7 +60,7 @@ import java.util.List;
 import java.util.Vector;
 
 @Autonomous(name="XYZ + Rot Vuforia")
-
+@Disabled
 public abstract class ConceptVuforiaNavigation extends Base {
 
     public static final String TAG = "Vuforia Sample";

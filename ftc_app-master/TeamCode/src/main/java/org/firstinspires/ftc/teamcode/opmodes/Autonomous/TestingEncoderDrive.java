@@ -27,6 +27,7 @@ import java.util.List;
  */
 
 @Autonomous(name="encoderdrivinghple")
+@Disabled
 public class TestingEncoderDrive extends ConceptVuforiaNavigation {
 
     //gyro and drive

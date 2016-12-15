@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmodes.Autonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.teamcode.opmodes.Base;
 
@@ -9,6 +10,7 @@ import org.firstinspires.ftc.teamcode.opmodes.Base;
  */
 
 @Autonomous(name = "Reset Everything")
+@Disabled
 public class resetEverything extends Base {
     @Override
     public void runOpMode() throws InterruptedException {

@@ -211,7 +211,7 @@ public abstract class Base extends LinearOpMode {
     //This function turns a number of degrees compared to where the robot was when the program started. Positive numbers trn left.
     public void turnAbsolute(int target) throws InterruptedException {
         int zAccumulated = mrGyro.getIntegratedZValue();  //Set variables to gyro readings
-        double turnSpeed = 0.7;
+        double turnSpeed = 0.5;
         //double slowdownSpeed = 0;
 
         while (Math.abs(zAccumulated - target) > 3) {  //Continue while the robot direction is further than three degrees from the target
@@ -230,7 +230,7 @@ public abstract class Base extends LinearOpMode {
             }
 
             if (Math.abs(zAccumulated - target) > 30) {
-                turnSpeed = 0.7;
+                turnSpeed = 0.5;
             } else {
                 turnSpeed = 0.3;
             }
@@ -245,6 +245,7 @@ public abstract class Base extends LinearOpMode {
             zAccumulated = mrGyro.getIntegratedZValue();  //Set variables to gyro readings
             //telemetry.addData("Turn Speed", turnSpeed);
             //telemetry.addData("1. accu", String.format("%03d", zAccumulated));
+            //telemetry.update();
             idle();
         }
 
