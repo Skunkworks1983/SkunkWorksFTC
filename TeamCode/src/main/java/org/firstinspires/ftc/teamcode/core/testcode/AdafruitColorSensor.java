@@ -15,7 +15,6 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
  */
 
 @Autonomous(name = "Adafruit Color Sensor", group = "Sensor")
-@Disabled
 public class AdafruitColorSensor extends LinearOpMode
 {
 
@@ -56,7 +55,13 @@ public class AdafruitColorSensor extends LinearOpMode
         //cdim.setDigitalChannelMode(LED_CHANNEL, DigitalChannelController.Mode.OUTPUT);
 
         // get a reference to our ColorSensor object.
-        sensorRGB = hardwareMap.colorSensor.get("color_sensor");
+        sensorRGB = hardwareMap.colorSensor.get("colorSensor");
+
+        if(sensorRGB == null)
+        {
+            telemetry.addData("Null", "");
+            telemetry.update();
+        }
 
         // turn the LED on in the beginning, just so user will know that the sensor is active.
         //cdim.setDigitalChannelState(LED_CHANNEL, bLedOn);
@@ -81,6 +86,9 @@ public class AdafruitColorSensor extends LinearOpMode
 
             // update previous state variable.
             bPrevState = bCurrState;
+
+            telemetry.addData("Info", sensorRGB.getI2cAddress());
+            telemetry.addData("B4Red", sensorRGB.red());
 
             // convert the RGB values to HSV values.
             Color.RGBToHSV((sensorRGB.red() * 255) / 800, (sensorRGB.green() * 255) / 800, (sensorRGB.blue() * 255) / 800, hsvValues);

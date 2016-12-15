@@ -1,7 +1,9 @@
 package org.firstinspires.ftc.teamcode.core.autonomous;
 
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.util.RobotLog;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
@@ -36,6 +38,22 @@ public abstract class AutonomousEncoder extends BaseOpMode
     OpenGLMatrix lastLocation = null;
     MotorsHardware motors = new MotorsHardware();
     VuforiaLocalizer vuforia;
+    ModernRoboticsI2cGyro gyro = null;
+    double P_DRIVE_COEFF = 0.15;
+    double P_TURN_COEFF = 0.1;
+    static final double     HEADING_THRESHOLD       = 1;// As tight as we can make it with an integer gyro
+    boolean gyros;
+
+
+    public AutonomousEncoder()
+    {
+        gyros = false;
+    }
+
+    public AutonomousEncoder(boolean g)
+    {
+        gyros = g;
+    }
 
     public abstract void encoders() throws InterruptedException;
 
@@ -161,9 +179,41 @@ public abstract class AutonomousEncoder extends BaseOpMode
         ((VuforiaTrackableDefaultListener)legos.getListener()).setPhoneInformation(phoneLocationOnRobot, parameters.cameraDirection);
         ((VuforiaTrackableDefaultListener)gears.getListener()).setPhoneInformation(phoneLocationOnRobot, parameters.cameraDirection);
 
+        if(gyros)
+        {
+            gyro = (ModernRoboticsI2cGyro) hardwareMap.gyroSensor.get("gyro");
 
-        telemetry.addData("Status", "Resetting Encoders...");
-        telemetry.update();
+
+            // Send telemetry message to alert driver that we are calibrating;
+            telemetry.addData(">", "Calibrating Gyro");
+            telemetry.update();
+
+            int periods = 0;
+            gyro.calibrate();
+
+            // make sure the gyro is calibrated.
+            while (gyro.isCalibrating())
+            {
+                Thread.sleep(50);
+                while (gyro.isCalibrating())
+                {
+                    String period = "";
+                    for (int i = 0; i <= periods; i++)
+                        period += ".";
+                    telemetry.addData(">", "Gyro Calibrating" + period + " Don't start!");
+                    telemetry.update();
+                    if (periods >= 4)
+                        periods = 0;
+                    else
+                        periods++;
+                    Thread.sleep(200);
+                    idle();
+                }
+            }
+
+            telemetry.addData(">", "Robot Ready.");
+            telemetry.update();
+        }
 
         motors.setLeftMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motors.setRightMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -266,6 +316,99 @@ public abstract class AutonomousEncoder extends BaseOpMode
             tel("Finished");
             sleep(100);
         }
+    }
+
+    public void gyroTurn(double speed, double angle) throws InterruptedException
+    {
+
+        // keep looping while we are still active, and not on heading.
+        while (opModeIsActive() && !onHeading(speed, angle, P_TURN_COEFF))
+        {
+            // Update telemetry & Allow time for other processes to run.
+            telemetry.update();
+            idle();
+        }
+    }
+
+
+    public void gyroHold(double speed, double angle, double holdTime) throws InterruptedException {
+
+        ElapsedTime holdTimer = new ElapsedTime();
+
+        // keep looping while we have time remaining.
+        holdTimer.reset();
+        while (opModeIsActive() && (holdTimer.time() < holdTime)) {
+            // Update telemetry & Allow time for other processes to run.
+            onHeading(speed, angle, P_TURN_COEFF);
+            telemetry.update();
+            idle();
+        }
+
+        // Stop all motion;
+        motors.setLeftPower(0);
+        motors.setRightPower(0);
+    }
+
+
+    boolean onHeading(double speed, double angle, double PCoeff) {
+        double   error ;
+        double   steer ;
+        boolean  onTarget = false ;
+        double leftSpeed;
+        double rightSpeed;
+
+        // determine turn power based on +/- error
+        error = getError(angle);
+
+        if (Math.abs(error) <= HEADING_THRESHOLD) {
+            steer = 0.0;
+            leftSpeed  = 0.0;
+            rightSpeed = 0.0;
+            onTarget = true;
+        }
+        else {
+            steer = getSteer(error, PCoeff);
+            rightSpeed  = speed * steer;
+            leftSpeed   = -rightSpeed;
+        }
+
+        // Send desired speeds to motors.
+        motors.setLeftPower(leftSpeed);
+        motors.setRightPower(rightSpeed);
+
+        // Display it for the driver.
+        telemetry.addData("Target", "%5.2f", angle);
+        telemetry.addData("Err/St", "%5.2f/%5.2f", error, steer);
+        telemetry.addData("Speed.", "%5.2f:%5.2f", leftSpeed, rightSpeed);
+
+        return onTarget;
+    }
+
+    /**
+     * getError determines the error between the target angle and the robot's current heading
+     * @param   targetAngle  Desired angle (relative to global reference established at last Gyro Reset).
+     * @return  error angle: Degrees in the range +/- 180. Centered on the robot's frame of reference
+     *          +ve error means the robot should turn LEFT (CCW) to reduce error.
+     */
+    public double getError(double targetAngle) {
+
+        double robotError;
+
+        // calculate error in -179 to +180 range  (
+        robotError = targetAngle - gyro.getIntegratedZValue();
+        while (robotError > 180)  robotError -= 360;
+        while (robotError <= -180) robotError += 360;
+        return robotError;
+    }
+
+    /**
+     * returns desired steering force.  +/- 1 range.  +ve = steer left
+     * @param error   Error angle in robot relative degrees
+     * @param PCoeff  Proportional Gain Coefficient
+     * @return
+     */
+    public double getSteer(double error, double PCoeff) {
+        return Range.clip(error * PCoeff, -1, 1);
     }
 
     public void tel(String msg)

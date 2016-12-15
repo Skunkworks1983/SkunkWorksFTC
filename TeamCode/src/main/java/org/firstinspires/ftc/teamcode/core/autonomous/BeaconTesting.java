@@ -10,10 +10,17 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 @Autonomous(name="Beacon Test", group="Test")
 public class BeaconTesting extends AutonomousEncoder
 {
+    public BeaconTesting()
+    {
+        super(true);
+    }
+
     @Override
     public void encoders() throws InterruptedException
     {
         // drive forward
-        encoderDrive(.2, 38, 38, 5);
+        encoderDrive(.2, 10, 10, 3);
+        gyroTurn(.2, 90);
+        encoderDrive(.2, 10, 10, 2);
     }
 }

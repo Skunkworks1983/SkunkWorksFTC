@@ -6,30 +6,23 @@ import com.qualcomm.robotcore.util.Range;
 import org.firstinspires.ftc.teamcode.core.ButtonsOpMode;
 import org.firstinspires.ftc.teamcode.core.buttons.FlyWheelButton;
 import org.firstinspires.ftc.teamcode.core.buttons.PowerButton;
-import org.firstinspires.ftc.teamcode.core.buttons.SoundBoardButton;
 import org.firstinspires.ftc.teamcode.core.utils.MotorsHardware;
-import org.firstinspires.ftc.teamcode.core.utils.Sound;
 
 /**
  * Created by Adam.
  * October 26, 2016 at 7:03 PM
  */
 
-@TeleOp(name="Tank Drive (Easier, less control)", group="Drive")
-public class TankDrive extends ButtonsOpMode
+@TeleOp(name="Simple Tank Drive", group="Simple")
+public class SimpleTankDrive extends ButtonsOpMode
 {
-    private PowerButton power;
-
     @Override
     public void init()
     {
         motors = new MotorsHardware();
         motors.init(hardwareMap);
 
-        power = new PowerButton();
-        manager.add(power);
-        //manager.add(new FlyWheelButton(hardwareMap));
-        //manager.add(new SoundBoardButton(new Sound(hardwareMap)));
+        manager.add(new FlyWheelButton(hardwareMap));
     }
 
     @Override
@@ -48,7 +41,7 @@ public class TankDrive extends ButtonsOpMode
         }
 
         //Set the power of the motors with the gamepad values
-        motors.setLeftPower(Range.clip(leftPower * power.getPower(), -1, 1));
-        motors.setRightPower(Range.clip(rightPower * power.getPower(), -1, 1));
+        motors.setLeftPower(Range.clip(leftPower, -1, 1));
+        motors.setRightPower(Range.clip(rightPower, -1, 1));
     }
 }

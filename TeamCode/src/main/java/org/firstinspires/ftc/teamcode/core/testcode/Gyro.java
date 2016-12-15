@@ -17,7 +17,6 @@ import org.firstinspires.ftc.teamcode.core.utils.MotorsHardware;
  */
 
 @Autonomous(name="Gyro", group="Pushbot")
-@Disabled
 public class Gyro extends LinearOpMode
 {
 
@@ -100,15 +99,9 @@ public class Gyro extends LinearOpMode
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
         // Put a hold after each turn
-        gyroDrive(DRIVE_SPEED, 48.0, 0.0);    // Drive FWD 48 inches
-        gyroTurn( TURN_SPEED, -45.0);         // Turn  CCW to -45 Degrees
-        gyroHold( TURN_SPEED, -45.0, 0.5);    // Hold -45 Deg heading for a 1/2 second
-        gyroTurn( TURN_SPEED,  45.0);         // Turn  CW  to  45 Degrees
-        gyroHold( TURN_SPEED,  45.0, 0.5);    // Hold  45 Deg heading for a 1/2 second
-        gyroTurn( TURN_SPEED,   0.0);         // Turn  CW  to   0 Degrees
-        gyroHold( TURN_SPEED,   0.0, 1.0);    // Hold  0 Deg heading for a 1 second
-        gyroDrive(DRIVE_SPEED,-48.0, 0.0);    // Drive REV 48 inches
-        gyroHold( TURN_SPEED,   0.0, 0.5);    // Hold  0 Deg heading for a 1/2 second
+        gyroDrive(DRIVE_SPEED, 10, 0.0);    // Drive FWD 48 inches
+        gyroTurn( TURN_SPEED, -90);
+        gyroDrive(DRIVE_SPEED, 7, 0.0);    // Drive FWD 48 inches
 
         telemetry.addData("Path", "Complete");
         telemetry.update();
