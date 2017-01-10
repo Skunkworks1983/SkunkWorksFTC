@@ -38,7 +38,7 @@ public class RedSide extends ConceptVuforiaNavigation {
         resetEncoders();
         runUsingEncoders();
 
-        colorInit();
+        //colorInit();
 
         vuforiaInit(); //has wait for start, put at end always
 

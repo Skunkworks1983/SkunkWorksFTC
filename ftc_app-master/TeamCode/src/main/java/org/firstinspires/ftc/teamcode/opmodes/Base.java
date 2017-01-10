@@ -82,13 +82,16 @@ public abstract class Base extends LinearOpMode {
         MotorBL = hwMap.dcMotor.get("leftBack");
         MotorBR = hwMap.dcMotor.get("rightBack");
 
+        //device interface module
+        cdim = hardwareMap.deviceInterfaceModule.get("dim");
+
         //flywheel
         backFlyWheel  = hardwareMap.dcMotor.get("backFlyWheel");
         frontFlyWheel = hardwareMap.dcMotor.get("frontFlyWheel");
 
         //servo
         beaconPress = hardwareMap.servo.get("beaconPress");
-        ballRelease = hardwareMap.servo.get("ballRelease");
+        //ballRelease = hardwareMap.servo.get("ballRelease");
 
         MotorFL.setDirection(DcMotor.Direction.FORWARD);
         MotorBL.setDirection(DcMotor.Direction.FORWARD);
@@ -103,7 +106,9 @@ public abstract class Base extends LinearOpMode {
 
         sensorGyro = hardwareMap.gyroSensor.get("gyro");  //Point to the gyro in the configuration file
         mrGyro = (ModernRoboticsI2cGyro) sensorGyro;
-        mrGyro.calibrate();
+
+        //color sensor
+        sensorRGB = hardwareMap.colorSensor.get("sensor_color");
 
         // Set all motors to zero power
         MotorFL.setPower(0);
@@ -113,6 +118,10 @@ public abstract class Base extends LinearOpMode {
 
         backFlyWheel.setPower(0);
         frontFlyWheel.setPower(0);
+    }
+
+    public void calibrateGyro(){
+        mrGyro.calibrate();
     }
 
     public void resetEncoders(){
@@ -275,7 +284,6 @@ public abstract class Base extends LinearOpMode {
         boolean bLedOn = true;
 
         // get a reference to our DeviceInterfaceModule object.
-        cdim = hardwareMap.deviceInterfaceModule.get("dim");
 
         // set the digital channel to output mode.
         // remember, the Adafruit sensor is actually two devices.
@@ -283,7 +291,6 @@ public abstract class Base extends LinearOpMode {
         cdim.setDigitalChannelMode(LED_CHANNEL, DigitalChannelController.Mode.OUTPUT);
 
         // get a reference <></>o our ColorSensor object.
-        sensorRGB = hardwareMap.colorSensor.get("sensor_color");
 
         // turn the LED on in the beginning, just so user will know that the sensor is active.
         cdim.setDigitalChannelState(LED_CHANNEL, bLedOn);

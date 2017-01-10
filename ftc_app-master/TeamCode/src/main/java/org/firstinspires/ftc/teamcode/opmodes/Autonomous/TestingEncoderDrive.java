@@ -44,7 +44,7 @@ public class TestingEncoderDrive extends ConceptVuforiaNavigation {
         resetEncoders();
         runUsingEncoders();
 
-        colorInit();
+        //colorInit();
         vuforiaInit(); //has waitforstart
 
         //encoderDrive(DRIVE_SPEED, 45, 45, 10.0);
@@ -107,7 +107,7 @@ public class TestingEncoderDrive extends ConceptVuforiaNavigation {
             telemetry.update();
 
             //color
-
+            /**
             // check the status of the x button on gamepad.
             bCurrState = gamepad1.x;
 
@@ -143,7 +143,7 @@ public class TestingEncoderDrive extends ConceptVuforiaNavigation {
             });
 
             telemetry.update();
-            //end color
+            //end color */
         }
     }
 }

@@ -55,7 +55,6 @@ import org.firstinspires.ftc.teamcode.opmodes.VeryGarbage.Sound;
  */
 
 @TeleOp(name="Tank Drive", group="Linear Opmode")  // @Autonomous(...) is the other common choice
-@Disabled
 public class TeleOpTankDrive extends CustomOpMode {
 
     /* Declare OpMode members. */

@@ -56,7 +56,6 @@ import org.firstinspires.ftc.teamcode.opmodes.Button;
  */
 
 @TeleOp(name="Arcade Drive", group="Linear Opmode")  // @Autonomous(...) is the other common choice
-@Disabled
 public class CompetitionTeleOp extends CustomOpMode {
 
     /* Declare OpMode members. */
