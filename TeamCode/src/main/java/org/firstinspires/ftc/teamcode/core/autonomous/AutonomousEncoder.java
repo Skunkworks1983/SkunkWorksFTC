@@ -411,12 +411,6 @@ public abstract class AutonomousEncoder extends BaseOpMode
         return Range.clip(error * PCoeff, -1, 1);
     }
 
-    public void tel(String msg)
-    {
-        telemetry.addData(msg, "");
-        telemetry.update();
-    }
-
     String format(OpenGLMatrix transformationMatrix)
     {
         return transformationMatrix.formatAsTransform();

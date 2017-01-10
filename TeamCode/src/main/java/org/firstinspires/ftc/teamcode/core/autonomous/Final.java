@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.core.autonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -16,6 +17,7 @@ import org.firstinspires.ftc.teamcode.core.utils.MotorsHardware;
  */
 
 @Autonomous(name="Autonomous (THIS ONE ALEX!)", group="Encoder")
+@Disabled
 public class Final extends AutonomousEncoder
 {
     @Override

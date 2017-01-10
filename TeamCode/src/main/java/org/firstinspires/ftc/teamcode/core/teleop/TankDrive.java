@@ -15,7 +15,7 @@ import org.firstinspires.ftc.teamcode.core.utils.Sound;
  * October 26, 2016 at 7:03 PM
  */
 
-@TeleOp(name="Tank Drive (Easier, less control)", group="Drive")
+@TeleOp(name="Tank Drive (With power control)", group="Drive")
 public class TankDrive extends ButtonsOpMode
 {
     private PowerButton power;
@@ -28,8 +28,8 @@ public class TankDrive extends ButtonsOpMode
 
         power = new PowerButton();
         manager.add(power);
-        //manager.add(new FlyWheelButton(hardwareMap));
-        //manager.add(new SoundBoardButton(new Sound(hardwareMap)));
+        manager.add(new FlyWheelButton(hardwareMap));
+        manager.add(new SoundBoardButton(new Sound(hardwareMap)));
     }
 
     @Override

@@ -17,4 +17,10 @@ public abstract class BaseOpMode extends LinearOpMode
     {
 
     }
+
+    public void tel(String msg)
+    {
+        telemetry.addData(msg, "");
+        telemetry.update();
+    }
 }
