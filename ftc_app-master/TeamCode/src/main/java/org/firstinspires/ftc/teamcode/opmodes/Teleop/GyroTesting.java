@@ -21,7 +21,7 @@ public class GyroTesting extends Base {
         int mem = 0;  //Desired angle to turn to
 
         while (mrGyro.isCalibrating()) {
-
+            idle();
         }
 
         telemetry.addData(">", "Gyro is calibrated");

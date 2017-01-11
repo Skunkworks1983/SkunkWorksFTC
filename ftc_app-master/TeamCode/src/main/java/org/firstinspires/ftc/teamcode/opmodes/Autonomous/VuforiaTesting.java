@@ -16,7 +16,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefau
  */
 
 @TeleOp(name = "memedreamfighingmachine")
-@Disabled
 public class VuforiaTesting extends ConceptVuforiaNavigation {
     @Override
     public void runOpMode() throws InterruptedException {
