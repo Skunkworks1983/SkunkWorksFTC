@@ -27,7 +27,6 @@ import java.util.List;
  */
 
 @Autonomous(name="encoderdrivinghple")
-@Disabled
 public class TestingEncoderDrive extends ConceptVuforiaNavigation {
 
     //gyro and drive
@@ -49,8 +48,8 @@ public class TestingEncoderDrive extends ConceptVuforiaNavigation {
 
         //encoderDrive(DRIVE_SPEED, 45, 45, 10.0);
 
-        runWithoutEncoders();
-        turnAbsolute(target);
+        //runWithoutEncoders();
+        //turnAbsolute(target);
 
         while (opModeIsActive()){
 
@@ -90,7 +89,7 @@ public class TestingEncoderDrive extends ConceptVuforiaNavigation {
                 telemetry.addData("Location", "X: " + x + " " + "Y: " + y);
                 telemetry.addData("Rotation", robotBearing);
 
-                while (x > 100){
+                /**while (x > 100){
 
                     sleep(1000);
 
@@ -98,7 +97,7 @@ public class TestingEncoderDrive extends ConceptVuforiaNavigation {
                     MotorBR.setPower(0.5);
                     MotorFL.setPower(0.5);
                     MotorFL.setPower(0.5);
-                }
+                }*/
 
                 } else {
                     telemetry.addData("Pos", "Unknown");

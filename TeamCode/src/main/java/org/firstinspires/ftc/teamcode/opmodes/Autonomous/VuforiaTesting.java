@@ -22,6 +22,8 @@ public class VuforiaTesting extends ConceptVuforiaNavigation {
 
         vuforiaInit();
 
+        waitForStart();
+
         while (opModeIsActive()){
             for (VuforiaTrackable trackable : allTrackables) {
                 /**
