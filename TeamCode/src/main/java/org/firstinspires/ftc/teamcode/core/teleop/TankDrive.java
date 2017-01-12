@@ -37,7 +37,6 @@ public class TankDrive extends ButtonsOpMode
     {
         buttons();
 
-        // Left stick is power for left side, etc
         float leftPower = gamepad1.left_stick_y;
         float rightPower = gamepad1.right_stick_y;
 
@@ -47,7 +46,6 @@ public class TankDrive extends ButtonsOpMode
             rightPower = gamepad2.right_stick_y;
         }
 
-        //Set the power of the motors with the gamepad values
         motors.setLeftPower(Range.clip(leftPower * power.getPower(), -1, 1));
         motors.setRightPower(Range.clip(rightPower * power.getPower(), -1, 1));
     }
