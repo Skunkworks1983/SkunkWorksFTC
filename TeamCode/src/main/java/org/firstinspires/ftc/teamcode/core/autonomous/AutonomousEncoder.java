@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.util.RobotLog;
+import com.vuforia.HINT;
+import com.vuforia.Vuforia;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
@@ -37,7 +39,7 @@ public abstract class AutonomousEncoder extends BaseOpMode
     public double countsPerInch = (1120 * 0.7777778) / (4.0 * 3.1415);
     OpenGLMatrix lastLocation = null;
     MotorsHardware motors = new MotorsHardware();
-    VuforiaLocalizer vuforia;
+    VuforiaTrackables beacons;
     ModernRoboticsI2cGyro gyro = null;
     double P_DRIVE_COEFF = 0.15;
     double P_TURN_COEFF = 0.1;
@@ -63,11 +65,6 @@ public abstract class AutonomousEncoder extends BaseOpMode
         motors = new MotorsHardware();
         motors.init(hardwareMap);
 
-        VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(com.qualcomm.ftcrobotcontroller.R.id.cameraMonitorViewId);
-        parameters.vuforiaLicenseKey = "AcysFCv/////AAAAGU+6qxVe10kJlTULoOQAcrkzfvgmgt5PDrL+ho/I1mX/TXlXLGeylgmNqXRyYOyr+wg8zPWXuNUR8NPyXzSEly7gMrK93SOCY/q1VKlZA0CSoifvyW8+j+TgUJT5sf6yGdB9CUK669teYc2jEz75f7b61pnZpfgIRBEypVR0lHdgFNb0Y27rXzmwwXqCwNP/WYUjMgAI5R03d1BohQao1HjC8yf+ehw+lMZznENMBCSNrYiZfMR/r5Op68p+paOTxxL4ngXC8Im2WyHtsJvt3Y96G4M3Wdx89Slj/P2nZPBFbuya0In06K4egRMc5yfZiLBIWbo67M15Q6wIzYOi8aED8bDAylYoc/+9A8vnt78d";
-        parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
-        this.vuforia = ClassFactory.createVuforiaLocalizer(parameters);
-
 
 //        if(currentlyDriving.equals(""))
 //        {
@@ -79,23 +76,6 @@ public abstract class AutonomousEncoder extends BaseOpMode
 //            motors.setRightPower(.22);
 //        }
 
-        // Pictures
-        VuforiaTrackables pictures = this.vuforia.loadTrackablesFromAsset("FTC_2016-17");
-        VuforiaTrackable wheels = pictures.get(0);
-        wheels.setName("Wheels");
-
-        VuforiaTrackable tools  = pictures.get(1);
-        tools.setName("Tools");
-
-        VuforiaTrackable legos  = pictures.get(2);
-        legos.setName("legos");
-
-        VuforiaTrackable gears  = pictures.get(3);
-        gears.setName("Gears");
-
-        /** For convenience, gather together all the trackable objects in one easily-iterable collection */
-        List<VuforiaTrackable> allTrackables = new ArrayList<>();
-        allTrackables.addAll(pictures);
 
         /**
          * We use units of mm here because that's the recommended units of measurement for the
@@ -108,47 +88,6 @@ public abstract class AutonomousEncoder extends BaseOpMode
         float mmBotWidth       = 18 * mmPerInch;            // ... or whatever is right for your motors
         float mmFTCFieldWidth  = (12*12 - 2) * mmPerInch;   // the FTC field is ~11'10" center-to-center of the glass panels
 
-
-        OpenGLMatrix wheelsLocationOnField = OpenGLMatrix
-                .translation(-mmFTCFieldWidth/2, 0, 0)
-                .multiplied(Orientation.getRotationMatrix(
-                        AxesReference.EXTRINSIC, AxesOrder.XZX,
-                        AngleUnit.DEGREES, 90, 90, 0));
-        wheels.setLocation(wheelsLocationOnField);
-        RobotLog.ii("Vuforia Sample", "Wheels=%s", format(wheelsLocationOnField));
-
-        OpenGLMatrix toolsLocationOnField = OpenGLMatrix
-                /* Then we translate the target off to the Blue Audience wall.
-                Our translation here is a positive translation in Y.*/
-                .translation(0, mmFTCFieldWidth/2, 0)
-                .multiplied(Orientation.getRotationMatrix(
-                        /* First, in the fixed (field) coordinate system, we rotate 90deg in X */
-                        AxesReference.EXTRINSIC, AxesOrder.XZX,
-                        AngleUnit.DEGREES, 90, 0, 0));
-        tools.setLocation(toolsLocationOnField);
-        RobotLog.ii("Vuforia Sample", "Tools=%s", format(toolsLocationOnField));
-
-        OpenGLMatrix legosLocationOnField = OpenGLMatrix
-                /* Then we translate the target off to the Blue Audience wall.
-                Our translation here is a positive translation in Y.*/
-                .translation(0, mmFTCFieldWidth/2, 0)
-                .multiplied(Orientation.getRotationMatrix(
-                        /* First, in the fixed (field) coordinate system, we rotate 90deg in X */
-                        AxesReference.EXTRINSIC, AxesOrder.XZX,
-                        AngleUnit.DEGREES, 90, 0, 0));
-        legos.setLocation(legosLocationOnField);
-        RobotLog.ii("Vuforia Sample", "Legos=%s", format(legosLocationOnField));
-
-        OpenGLMatrix gearsLocationOnField = OpenGLMatrix
-                /* Then we translate the target off to the Blue Audience wall.
-                Our translation here is a positive translation in Y.*/
-                .translation(0, mmFTCFieldWidth/2, 0)
-                .multiplied(Orientation.getRotationMatrix(
-                        /* First, in the fixed (field) coordinate system, we rotate 90deg in X */
-                        AxesReference.EXTRINSIC, AxesOrder.XZX,
-                        AngleUnit.DEGREES, 90, 0, 0));
-        gears.setLocation(gearsLocationOnField);
-        RobotLog.ii("Vuforia Sample", "Gears=%s", format(gearsLocationOnField));
 
         /**
          * Create a transformation matrix describing where the phone is on the motors. Here, we
@@ -174,10 +113,6 @@ public abstract class AutonomousEncoder extends BaseOpMode
          * listener is a {@link VuforiaTrackableDefaultListener} and can so safely cast because
          * we have not ourselves installed a listener of a different type.
          */
-        ((VuforiaTrackableDefaultListener)wheels.getListener()).setPhoneInformation(phoneLocationOnRobot, parameters.cameraDirection);
-        ((VuforiaTrackableDefaultListener)tools.getListener()).setPhoneInformation(phoneLocationOnRobot, parameters.cameraDirection);
-        ((VuforiaTrackableDefaultListener)legos.getListener()).setPhoneInformation(phoneLocationOnRobot, parameters.cameraDirection);
-        ((VuforiaTrackableDefaultListener)gears.getListener()).setPhoneInformation(phoneLocationOnRobot, parameters.cameraDirection);
 
         if(gyros)
         {
@@ -230,6 +165,20 @@ public abstract class AutonomousEncoder extends BaseOpMode
                 motors.rightMotor2.getCurrentPosition());
         telemetry.update();
 
+        VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(com.qualcomm.ftcrobotcontroller.R.id.cameraMonitorViewId);
+        parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
+        parameters.vuforiaLicenseKey = "AcysFCv/////AAAAGU+6qxVe10kJlTULoOQAcrkzfvgmgt5PDrL+ho/I1mX/TXlXLGeylgmNqXRyYOyr+wg8zPWXuNUR8NPyXzSEly7gMrK93SOCY/q1VKlZA0CSoifvyW8+j+TgUJT5sf6yGdB9CUK669teYc2jEz75f7b61pnZpfgIRBEypVR0lHdgFNb0Y27rXzmwwXqCwNP/WYUjMgAI5R03d1BohQao1HjC8yf+ehw+lMZznENMBCSNrYiZfMR/r5Op68p+paOTxxL4ngXC8Im2WyHtsJvt3Y96G4M3Wdx89Slj/P2nZPBFbuya0In06K4egRMc5yfZiLBIWbo67M15Q6wIzYOi8aED8bDAylYoc/+9A8vnt78d";
+        parameters.cameraMonitorFeedback = VuforiaLocalizer.Parameters.CameraMonitorFeedback.AXES;
+
+        VuforiaLocalizer vuforia = ClassFactory.createVuforiaLocalizer(parameters);
+        Vuforia.setHint(HINT.HINT_MAX_SIMULTANEOUS_IMAGE_TARGETS, 4);   // four targets on the field
+
+        beacons = vuforia.loadTrackablesFromAsset("FTC_2016-17");
+        beacons.get(0).setName("Wheels");
+        beacons.get(1).setName("Tools");
+        beacons.get(2).setName("Lego");
+        beacons.get(3).setName("Gears");
+
         waitForStart();
 
         encoders();
@@ -238,33 +187,7 @@ public abstract class AutonomousEncoder extends BaseOpMode
 //        encoderDrive(DRIVE_SPEED,  48,  48, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
 //        encoderDrive(TURN_SPEED,   12, -12, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
 //        encoderDrive(DRIVE_SPEED, -24, -24, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
-
-        pictures.activate();
-
-        while(opModeIsActive())
-        {
-            for(VuforiaTrackable trackable : allTrackables)
-            {
-                OpenGLMatrix pose = ((VuforiaTrackableDefaultListener) trackable.getListener()).getPose();
-                boolean visible = ((VuforiaTrackableDefaultListener)trackable.getListener()).isVisible();
-                telemetry.addData(trackable.getName(), visible ? "Visible" : "Not Visible");
-
-                // If it's visible call a method or something
-
-                OpenGLMatrix robotLocationTransform = ((VuforiaTrackableDefaultListener)trackable.getListener()).getUpdatedRobotLocation();
-                if (robotLocationTransform != null)
-                    lastLocation = robotLocationTransform;
-            }
-            /**
-             * Provide feedback as to where the motors was last located (if we know).
-             */
-            telemetry.addData("Position", lastLocation != null ? format(lastLocation) : "Unknown D:");
-
-            telemetry.update();
-            idle();
-        }
     }
-
 
     public void encoderDrive(double speed, double leftInches, double rightInches, double timeoutS) throws InterruptedException
     {
