@@ -57,7 +57,7 @@ public abstract class Base extends LinearOpMode {
     public static final double     DRIVE_GEAR_REDUCTION    = 0.5;     // This is < 1.0 if geared UP, driven gear diameter / driving gear diameter
     public static final double     WHEEL_DIAMETER_INCHES   = 3.875;     // For figuring circumference
     public static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
-                                                             (WHEEL_DIAMETER_INCHES * 3.1415);
+            (WHEEL_DIAMETER_INCHES * 3.1415);
     //public static final double     DRIVE_SPEED             = 0.75; //Maximum speed with no load is around 50 inches per second, between 4 and 5 feet per second
     //public static final double     TURN_SPEED              = 0.6; //put speeds in everything with encoder drive
 
@@ -91,7 +91,7 @@ public abstract class Base extends LinearOpMode {
 
         //servo
         beaconPress = hardwareMap.servo.get("beaconPress");
-        //ballRelease = hardwareMap.servo.get("ballRelease");
+        ballRelease = hardwareMap.servo.get("ballRelease");
 
         MotorFL.setDirection(DcMotor.Direction.FORWARD);
         MotorBL.setDirection(DcMotor.Direction.FORWARD);
@@ -183,18 +183,18 @@ public abstract class Base extends LinearOpMode {
 
             // keep looping while we are still active, and there is time left, and both motors are running.
             while (opModeIsActive() &&
-             (runtime.seconds() < timeoutS) &&
-             (MotorFL.isBusy() && MotorFR.isBusy() && MotorBL.isBusy() && MotorBR.isBusy())) {
+                    (runtime.seconds() < timeoutS) &&
+                    (MotorFL.isBusy() && MotorFR.isBusy() && MotorBL.isBusy() && MotorBR.isBusy())) {
 
-             // Display it for the driver.
-             /**telemetry.addData("Path1",  "Running to %7d :%7d", newFLTarget,  newFRTarget);
-             telemetry.addData("Path2",  "Running at %7d :%7d",
-             MotorFL.getCurrentPosition(),
-             MotorFR.getCurrentPosition(),
-             MotorBL.getCurrentPosition(),
-             MotorBR.getCurrentPosition());
-             telemetry.update();*/
-             }
+                // Display it for the driver.
+                /**telemetry.addData("Path1",  "Running to %7d :%7d", newFLTarget,  newFRTarget);
+                 telemetry.addData("Path2",  "Running at %7d :%7d",
+                 MotorFL.getCurrentPosition(),
+                 MotorFR.getCurrentPosition(),
+                 MotorBL.getCurrentPosition(),
+                 MotorBR.getCurrentPosition());
+                 telemetry.update();*/
+            }
 
             // Stop all motion;
             MotorFL.setPower(0);
@@ -219,11 +219,14 @@ public abstract class Base extends LinearOpMode {
 
     //This function turns a number of degrees compared to where the robot was when the program started. Positive numbers trn left.
     public void turnAbsolute(int target) throws InterruptedException {
-        int zAccumulated = mrGyro.getIntegratedZValue();  //Set variables to gyro readings
-        double turnSpeed = 0.5;
+        if (target < 0)
+            target = 360 + target;
+
+        int zAccumulated = mrGyro.getHeading();  //Set variables to gyro readings
+        double turnSpeed = 0.3;
         //double slowdownSpeed = 0;
 
-        while (Math.abs(zAccumulated - target) > 3) {  //Continue while the robot direction is further than three degrees from the target
+        while (Math.abs(zAccumulated - target) > 1) {  //Continue while the robot direction is further than three degrees from the target
             if (zAccumulated > target) {  //if gyro is positive, we will turn right
                 MotorFL.setPower(turnSpeed);
                 MotorBL.setPower(turnSpeed);
@@ -239,9 +242,9 @@ public abstract class Base extends LinearOpMode {
             }
 
             if (Math.abs(zAccumulated - target) > 30) {
-                turnSpeed = 0.5;
-            } else {
                 turnSpeed = 0.3;
+            } else {
+                turnSpeed = 0.2;
             }
             /**if (Math.abs(zAccumulated - target) < 50){ //how close are you to the target?
              slowdownSpeed = Math.abs(zAccumulated - target) *2; //set the speed based on distance (Note: distance value of 50 will give 100% speed, Distance value of 25 gives 50%, ext.)
@@ -251,7 +254,69 @@ public abstract class Base extends LinearOpMode {
              turnSpeed = 1;
              }*/
 
-            zAccumulated = mrGyro.getIntegratedZValue();  //Set variables to gyro readings
+            zAccumulated = mrGyro.getHeading();  //Set variables to gyro readings
+            //telemetry.addData("Turn Speed", turnSpeed);
+            //telemetry.addData("1. accu", String.format("%03d", zAccumulated));
+            //telemetry.update();
+            idle();
+        }
+
+        MotorFL.setPower(0);
+        MotorBL.setPower(0);
+        MotorFR.setPower(0);
+        MotorBR.setPower(0);
+
+    }
+
+
+    //This function turns a number of degrees compared to where the robot was when the program started. Positive numbers trn left.
+    public void turnAbsoluteRed(int target) throws InterruptedException {
+        if (target < 0)
+            target = 360 + target;
+
+        int zAccumulated = mrGyro.getHeading();  //Set variables to gyro readings
+        double turnSpeed = 0.3;
+        //double slowdownSpeed = 0;
+
+        if(target > 180){
+            MotorFL.setPower(-turnSpeed);
+            MotorBL.setPower(-turnSpeed);
+            MotorFR.setPower(turnSpeed);
+            MotorBR.setPower(turnSpeed);
+            while(zAccumulated > target){
+                idle();
+            }
+        }
+
+        while (Math.abs(zAccumulated - target) > 1) {  //Continue while the robot direction is further than three degrees from the target
+            if (zAccumulated > target) {  //if gyro is positive, we will turn right
+                MotorFL.setPower(turnSpeed);
+                MotorBL.setPower(turnSpeed);
+                MotorFR.setPower(-turnSpeed);
+                MotorBR.setPower(-turnSpeed);
+            }
+
+            if (zAccumulated < target) {  //if gyro is positive, we will turn left
+                MotorFL.setPower(-turnSpeed);
+                MotorBL.setPower(-turnSpeed);
+                MotorFR.setPower(turnSpeed);
+                MotorBR.setPower(turnSpeed);
+            }
+
+            if (Math.abs(zAccumulated - target) > 30) {
+                turnSpeed = 0.3;
+            } else {
+                turnSpeed = 0.2;
+            }
+            /**if (Math.abs(zAccumulated - target) < 50){ //how close are you to the target?
+             slowdownSpeed = Math.abs(zAccumulated - target) *2; //set the speed based on distance (Note: distance value of 50 will give 100% speed, Distance value of 25 gives 50%, ext.)
+             turnSpeed = slowdownSpeed / 100;
+             }
+             else {
+             turnSpeed = 1;
+             }*/
+
+            zAccumulated = mrGyro.getHeading();  //Set variables to gyro readings
             //telemetry.addData("Turn Speed", turnSpeed);
             //telemetry.addData("1. accu", String.format("%03d", zAccumulated));
             //telemetry.update();

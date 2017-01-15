@@ -124,20 +124,6 @@ public class SensorAdafruitRGB extends LinearOpMode {
     // Note we use opModeIsActive() as our loop condition because it is an interruptible method.
     while (opModeIsActive())  {
 
-      // check the status of the x button on gamepad.
-      bCurrState = gamepad1.x;
-
-      // check for button-press state transitions.
-      if ((bCurrState == true) && (bCurrState != bPrevState))  {
-
-        // button is transitioning to a pressed state. Toggle the LED.
-        bLedOn = !bLedOn;
-        cdim.setDigitalChannelState(LED_CHANNEL, bLedOn);
-      }
-
-      // update previous state variable.
-      bPrevState = bCurrState;
-
       // convert the RGB values to HSV values.
       Color.RGBToHSV((sensorRGB.red() * 255) / 800, (sensorRGB.green() * 255) / 800, (sensorRGB.blue() * 255) / 800, hsvValues);
 
@@ -148,6 +134,14 @@ public class SensorAdafruitRGB extends LinearOpMode {
       telemetry.addData("Green", sensorRGB.green());
       telemetry.addData("Blue ", sensorRGB.blue());
       telemetry.addData("Hue", hsvValues[0]);
+
+      if (sensorRGB.red() < sensorRGB.blue() && sensorRGB.green() < sensorRGB.blue()) { //If it's blue
+        telemetry.addData("status", "DO THE BLUE");
+      } else if (sensorRGB.red() > sensorRGB.blue() && sensorRGB.red() > sensorRGB.green()) { //If it's not blue
+        telemetry.addData("status", "DO THE REDD");
+      } else {
+        telemetry.addData("status", "STOP IT YOU ARE DOING ME I AM FRIGHTEN");
+      }
 
       // change the background color to match the color detected by the RGB sensor.
       // pass a reference to the hue, saturation, and value array as an argument

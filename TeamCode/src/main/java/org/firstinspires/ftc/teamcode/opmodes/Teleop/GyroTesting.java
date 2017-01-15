@@ -9,6 +9,7 @@ import org.firstinspires.ftc.teamcode.opmodes.Base;
 //import org.firstinspires.ftc.teamcode.LBHW;
 
 @TeleOp(name="Gyro", group="")
+@Disabled
 public class GyroTesting extends Base {
 
     @Override

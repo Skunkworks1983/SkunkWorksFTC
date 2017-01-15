@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.hardware.GyroSensor;
 //import org.firstinspires.ftc.teamcode.LBHW;
 
 @TeleOp(name="Gyrotesting123441o273192837", group="")
+@Disabled
 public class GyroTesting123 extends LinearOpMode {
     DcMotor mr1;
     DcMotor mr2;

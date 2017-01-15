@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.opmodes.Teleop;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -11,6 +12,7 @@ import org.firstinspires.ftc.teamcode.opmodes.CustomOpMode;
  * Created by s-4041730 on 12/14/2016.
  */
 @TeleOp(name = "Outreach Driving")
+@Disabled
 public class OutrachArcade extends CustomOpMode {
 
     /* Declare OpMode members. */

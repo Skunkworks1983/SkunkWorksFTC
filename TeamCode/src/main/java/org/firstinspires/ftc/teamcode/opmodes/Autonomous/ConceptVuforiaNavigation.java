@@ -60,6 +60,7 @@ import java.util.List;
 import java.util.Vector;
 
 @Autonomous(name="XYZ + Rot Vuforia")
+@Disabled
 public abstract class ConceptVuforiaNavigation extends Base {
 
     public static final String TAG = "Vuforia Sample";

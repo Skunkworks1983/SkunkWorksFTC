@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmodes.Teleop;
 
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -11,6 +12,7 @@ import com.qualcomm.robotcore.hardware.GyroSensor;
  */
 
 @TeleOp(name = "eeeeee")
+@Disabled
 public class GyroWorkPlease extends LinearOpMode{
 
 
