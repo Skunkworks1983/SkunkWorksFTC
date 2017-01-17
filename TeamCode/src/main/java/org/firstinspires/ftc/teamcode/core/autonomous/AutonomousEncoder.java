@@ -122,7 +122,6 @@ public abstract class AutonomousEncoder extends BaseOpMode
             motors.setRightMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
             tel("Finished");
-            sleep(100);
         }
     }
 

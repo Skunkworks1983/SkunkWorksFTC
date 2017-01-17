@@ -19,8 +19,8 @@ import org.firstinspires.ftc.teamcode.core.utils.FlyWheel;
  * January 11, 2017 at 4:04 PM
  */
 
-@Autonomous(name = "Vufoira (Blue)", group = "Vuforia")
-public class VuforiaDriveToPic extends AutonomousEncoder
+@Autonomous(name = "Vufoira (Red)", group = "Vuforia")
+public class VuforiaDriveToPicRed extends AutonomousEncoder
 {
     ColorSensor sensorRGB;
 
@@ -67,25 +67,28 @@ public class VuforiaDriveToPic extends AutonomousEncoder
 
         beacons.activate();
 
-//        FlyWheel flyWheel = new FlyWheel();
-//        flyWheel.init(hardwareMap);
-//        Servo servo = hardwareMap.servo.get("fwServo");
-//
-//        tel("Starting up fly wheel...");
-//        flyWheel.setPower(1);
-//        sleep(7000);
-//
-//        tel("Shooting balls!");
-//        servo.setPosition(1);
-//        sleep(900);
-//
-//        tel("Finishing shooting, ready to move!");
-//        flyWheel.setPower(0);
-//        servo.setPosition(0);
-//        sleep(900);
-//
-//        run(-.25, -.25, 2.1);
-//        run(-.2, .2, 1);
+        FlyWheel flyWheel = new FlyWheel();
+        flyWheel.init(hardwareMap);
+        Servo servo = hardwareMap.servo.get("fwServo");
+
+        tel("Starting up fly wheel...");
+        flyWheel.setPower(1);
+        sleep(7000);
+
+        tel("Shooting balls!");
+        servo.setPosition(1);
+        sleep(900);
+
+        tel("Finishing shooting, ready to move!");
+        flyWheel.setPower(0);
+        servo.setPosition(0);
+        sleep(900);
+
+        tel("Running");
+        encoderDrive(.2, 10, 10, 2);
+        encoderDrive(.2, -25, 25, 2.2);
+        encoderDrive(.2, -51, -51, 2);
+        encoderDrive(.2, 12.5, -12.5, 2.2);
 
         while(opModeIsActive())
         {
@@ -141,8 +144,8 @@ public class VuforiaDriveToPic extends AutonomousEncoder
                     right = 0.2;
                 }
 
-                motors.setLeftPower(left);
-                motors.setRightPower(right);
+                motors.setLeftPower(-left);
+                motors.setRightPower(-right);
 
                 if(left == 0)
                 {
@@ -171,15 +174,15 @@ public class VuforiaDriveToPic extends AutonomousEncoder
                         }
                     });
 
-                    if(beacon.getName().equals(beacons.get(0).getName()))
+                    if(beacon.getName().equals(beacons.get(18).getName()))
                         break;
 
                     run(0, 0, 2.5);
                     run(-.3, -.3, 1.2);
-                    run(-.2, .2, 1.1);
+                    run(.2, -.2, 1.1);
                     run(.25, .25, 2.3);
-                    run(.2, -.2, 1);
-                    beacon = beacons.get(0);
+                    run(-.2, .2, 1);
+                    beacon = beacons.get(1);
                 }
             }
 

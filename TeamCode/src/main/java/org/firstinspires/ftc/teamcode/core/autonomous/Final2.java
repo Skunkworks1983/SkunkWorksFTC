@@ -12,7 +12,6 @@ import org.firstinspires.ftc.teamcode.core.utils.FlyWheel;
  */
 
 @Autonomous(name="Autonomous 2 (Just Shoots)", group="Encoder")
-@Disabled
 public class Final2 extends AutonomousEncoder
 {
     private FlyWheel flyWheel;

@@ -28,8 +28,8 @@ public class TankDrive extends ButtonsOpMode
 
         power = new PowerButton();
         manager.add(power);
-        manager.add(new FlyWheelButton(hardwareMap));
-        manager.add(new SoundBoardButton(new Sound(hardwareMap)));
+        //manager.add(new FlyWheelButton(hardwareMap));
+        //manager.add(new SoundBoardButton(new Sound(hardwareMap)));
     }
 
     @Override

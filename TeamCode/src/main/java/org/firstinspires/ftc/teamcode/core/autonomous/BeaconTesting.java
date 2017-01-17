@@ -16,6 +16,7 @@ import java.util.Random;
  */
 
 @Autonomous(name="Beacon Test", group="Test")
+@Disabled
 public class BeaconTesting extends BaseOpMode
 {
     OpticalDistanceSensor distanceSensor;

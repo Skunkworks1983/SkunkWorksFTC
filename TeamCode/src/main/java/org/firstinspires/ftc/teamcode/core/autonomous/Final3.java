@@ -12,13 +12,13 @@ import org.firstinspires.ftc.teamcode.core.utils.FlyWheel;
  */
 
 @Autonomous(name="Autonomous 3 (Just Drives)", group="Encoder")
-@Disabled
 public class Final3 extends AutonomousEncoder
 {
-
     @Override
     public void encoders() throws InterruptedException
     {
-        encoderDrive(.2, 38, 38, 5);
+        encoderDrive(.2, 10, 10, 2);
+        encoderDrive(.2, -25, 25, 2);
+        run(-.2, -.2, 2.9);
     }
 }
